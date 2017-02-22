@@ -1,0 +1,51 @@
+<%= form_for @animal, :html => {:multipart => true}  do |f| %>
+  <% if @animal.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@animal.errors.count, "error") %> prohibited this animal from being saved:</h2>
+
+      <ul>
+      <% @animal.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :animal_type, "Tipo de animal" %><br>
+  <!--  <%= f.text_field :animal_type %>   -->
+    <%= f.select :animal_type, ["Gato","Perro","Otro" ]%>  
+  <div class="field">
+    <%= f.label :age %><br>
+    <%= f.number_field :age %>
+  </div>
+  <div class="field">
+    <%= f.label :sex %><br>
+   <!-- <%= f.text_field :sex %> -->
+    <%= f.select :sex, ["Hembra","Macho","Otro"]%>  
+  </div>
+  <div class="field">
+    <%= f.label :location %><br>
+    <%= f.text_area :location %>
+  </div>
+  <div class="field">
+    <%= f.label :description %><br>
+    <%= f.text_area :description %>
+  </div>
+  
+  <div class="field">
+ <!--   <%= f.label :race_id %><br>
+    <%= f.text_field :race_id %> -->
+    <% @races=Race.all %>
+    <% options = options_from_collection_for_select(@races, 'id', 'name') %>
+    <%= f.select :race_id,  options %>
+
+  </div>
+
+  <div class="field">
+    <%= file_field_tag "images[]", type: :file, multiple: true %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

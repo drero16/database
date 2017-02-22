@@ -1,0 +1,62 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @event.title %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @event.description %>
+</p>
+
+<p>
+  <strong>Date event:</strong>
+  <%= @event.date_event %>
+</p>
+
+<p>
+  <strong>Location:</strong>
+  <%= @event.location %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @event.user %>
+</p>
+
+<%= link_to 'Edit', edit_event_path(@event) %> |
+<%= link_to 'Back', events_path %>
+
+
+
+<!-- Fotos -->
+
+<div class="row">
+  <ul class="thumbnails files">
+<% unless @event.images.empty? %>
+  <% @event.images.each do |pic| %>
+    <li class="span3" id="image_<%= pic.id %>">
+    <div class="thumbnail">
+     <!-- <%= image_tag pic.image.url(:thumb) %> -->
+      <%=link_to image_tag(pic.image.url(:thumb)), pic.image.url(:original), :popup=>['original_image', 'height=700,width=900'] %>
+      <%=
+          link_to "Delete image", [@event,pic],
+            :data => { :confirm => "Are you sure?" },
+            :method => :delete
+          %>
+          
+      <div class="caption">
+        <p style="text-align: center;">
+       <!-- <%= link_to "Edit image", image_path(pic) %> -->
+
+        
+
+        </p>
+      </div>
+    </div>
+    </li>
+  <% end %>
+<% end %>
+</ul>
+</div>

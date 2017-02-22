@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  animal_type: MyString
+  sex: MyString
+  name: MyString
+  description: MyText
+  lost_on: 2017-02-11
+  lost_in: MyText
+  user_id: 
+  race_id: 
+
+two:
+  animal_type: MyString
+  sex: MyString
+  name: MyString
+  description: MyText
+  lost_on: 2017-02-11
+  lost_in: MyText
+  user_id: 
+  race_id: 

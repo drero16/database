@@ -1,0 +1,142 @@
+<p id="notice"><%= notice %></p>
+
+<!--Datos de animal -->
+<p>
+  <strong>Animal type:</strong>
+  <%= @animal.animal_type %>
+</p>
+<p>
+  <strong>id:</strong>
+  <%= @animal.id %>
+</p>
+<p>
+  <strong>Age:</strong>
+  <%= @animal.age %>
+</p>
+
+<p>
+  <strong>Sex:</strong>
+  <%= @animal.sex %>
+</p>
+
+<p>
+  <strong>Location:</strong>
+  <%= @animal.location %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @animal.description %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @animal.user.name %>
+</p>
+
+<p>
+  <strong>Race:</strong>
+  <%= @animal.race.name %>
+</p>
+
+<%= link_to 'Edit', edit_animal_path(@animal) %> |
+<%= link_to 'Back', animals_path %>
+
+
+<!--Fotos de animal -->
+
+
+<div class="row">
+  <ul class="thumbnails files">
+<% unless @animal.images.empty? %>
+  <% @animal.images.each do |pic| %>
+    <li class="span3" id="image_<%= pic.id %>">
+    <div class="thumbnail">
+     <!-- <%= image_tag pic.image.url(:thumb) %> -->
+      <%=link_to image_tag(pic.image.url(:thumb)), pic.image.url(:original), :popup=>['original_image', 'height=700,width=900'] %>
+      <% if can? :destroy, pic %>
+      <%=
+          link_to "Delete image", [@animal,pic],
+            :data => { :confirm => "Are you sure?" },
+            :method => :delete
+          %>
+       <% end %>   
+      <div class="caption">
+        <p style="text-align: center;">
+       <!-- <%= link_to "Edit image", image_path(pic) %> -->
+
+        
+
+        </p>
+      </div>
+    </div>
+    </li>
+  <% end %>
+<% end %>
+</ul>
+</div>
+
+
+
+<!--Listar todos los comentarios del animal mostrado -->
+
+  <table>
+    <tr>
+      <th>Comentario</th>
+      <th>Usuario</th>
+      <th>Creado</th>
+      <th>asd</th>
+    </tr>
+    <tr>
+      <% @animal.comments.each do |comment|%>
+      <td><%= comment.description %></td>
+      <td><%= comment.user.name %></td>
+      <td><%= comment.created_at %></td>
+      <td><%= link_to 'Edit',edit_animal_comment_path(@animal,comment)%></td>
+      <td><%= link_to 'Destroy', [@animal,comment], method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    </tr>
+    <% end %>
+  </table>
+
+<!--Formulario para ingresar comentarios -->
+
+
+<%= form_for [@animal,@comment] do |f| %>
+
+  <% if @comment.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@comment.errors.count, "error") %> prohibited this comment from being saved:</h2>
+
+      <ul>
+      <% @comment.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+
+    <%= f.label :description, "Comentario" %><br>
+    <%= f.text_area :description %>
+<!--  </div>
+  <div class="field">
+    <%= f.label :animal_id %><br>
+    <%= f.text_field :animal_id %>
+  </div>
+  <div class="field">
+    <%= f.label :pet_id %><br>
+    <%= f.text_field :pet_id %>
+  </div>
+  <div class="field">
+    <%= f.label :user_id %><br>
+    <%= f.text_field :user_id %>
+  </div>
+  -->
+
+  <div class="actions">
+  
+    <%= f.submit %>
+  </div>
+<% end %>
+
