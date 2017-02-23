@@ -6,15 +6,22 @@ Rails.application.routes.draw do
 
   #resources :images
 
-  resources :events
+  resources :events do
+    resources :images
+  end
 
-  resources :information
+  resources :information do
+    resources :images
+  end
 
   resources :notifications
 
  resources :comments
 
-  resources :pets
+  resources :pets do
+    resources :comments
+    resources :images
+  end
 
   resources :animals do
     resources :comments
@@ -23,7 +30,7 @@ Rails.application.routes.draw do
 
   resources :races
 
-  resources :roles
+  #resources :roles
 
   scope "/admin" do
   resources :users

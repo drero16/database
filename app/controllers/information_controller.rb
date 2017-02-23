@@ -1,5 +1,6 @@
 class InformationController < ApplicationController
-  before_action :set_information, only: [:show, :edit, :update, :destroy]
+ # before_action :set_information, only: [:show, :edit, :update, :destroy]
+  load_and_authorize_resource
 
   # GET /information
   # GET /information.json
@@ -25,9 +26,14 @@ class InformationController < ApplicationController
   # POST /information.json
   def create
     @information = Information.new(information_params)
-
+    @information.user_id=current_user.id
     respond_to do |format|
       if @information.save
+        if params[:images]
+          params[:images].each { |image|
+          @information.images.create(image: image)
+        }
+        end
         format.html { redirect_to @information, notice: 'Information was successfully created.' }
         format.json { render :show, status: :created, location: @information }
       else
@@ -42,6 +48,11 @@ class InformationController < ApplicationController
   def update
     respond_to do |format|
       if @information.update(information_params)
+        if params[:images]
+          params[:images].each { |image|
+          @information.images.create(image: image)
+        }
+        end
         format.html { redirect_to @information, notice: 'Information was successfully updated.' }
         format.json { render :show, status: :ok, location: @information }
       else

@@ -10,7 +10,7 @@ class User < ActiveRecord::Base
   has_many :informations, :dependent => :destroy
   has_many :pets, :dependent => :destroy
   has_many :images, :dependent => :destroy
-
+  before_create :set_default_role
   def admin?
   self.role.name == "Admin"
   end
@@ -22,4 +22,10 @@ class User < ActiveRecord::Base
   def guest?
     self.role.name =="Guest"
   end  
+
+  private
+  def set_default_role
+    self.role ||= Role.find_by_name('Member')
+  end
+
 end

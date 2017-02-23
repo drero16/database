@@ -1,4 +1,4 @@
-<%= form_for(@pet) do |f| %>
+<%= form_for @pet, :html => {:multipart => true}   do |f| %>
   <% if @pet.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@pet.errors.count, "error") %> prohibited this pet from being saved:</h2>
@@ -11,13 +11,15 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :animal_type %><br>
-    <%= f.text_field :animal_type %>
-  </div>
+    <div class="field">
+    <%= f.label :animal_type, "Tipo de animal" %><br>
+  <!--  <%= f.text_field :animal_type %>   -->
+    <%= f.select :animal_type, ["Gato","Perro","Otro" ]%>  
+    </div>
   <div class="field">
     <%= f.label :sex %><br>
-    <%= f.text_field :sex %>
+   <!-- <%= f.text_field :sex %> -->
+    <%= f.select :sex, ["Hembra","Macho","Otro"]%>  
   </div>
   <div class="field">
     <%= f.label :name %><br>
@@ -35,13 +37,19 @@
     <%= f.label :lost_in %><br>
     <%= f.text_area :lost_in %>
   </div>
+
+ 
   <div class="field">
-    <%= f.label :user_id %><br>
-    <%= f.text_field :user_id %>
+ <!--   <%= f.label :race_id %><br>
+    <%= f.text_field :race_id %> -->
+    <% @races=Race.all %>
+    <% options = options_from_collection_for_select(@races, 'id', 'name') %>
+    <%= f.select :race_id,  options %>
+
   </div>
+
   <div class="field">
-    <%= f.label :race_id %><br>
-    <%= f.text_field :race_id %>
+    <%= file_field_tag "images[]", type: :file, multiple: true %>
   </div>
   <div class="actions">
     <%= f.submit %>

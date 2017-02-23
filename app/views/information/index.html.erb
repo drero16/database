@@ -17,15 +17,24 @@
       <tr>
         <td><%= information.title %></td>
         <td><%= information.description %></td>
-        <td><%= information.user %></td>
+        <td><%= information.user.name %></td>
         <td><%= link_to 'Show', information %></td>
-        <td><%= link_to 'Edit', edit_information_path(information) %></td>
-        <td><%= link_to 'Destroy', information, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td>
+        <% if can? :update, information %>
+        <%= link_to 'Edit', edit_information_path(information) %>
+          <% end %>
+        </td>
+        <td>
+        <% if can? :destroy, information %>
+        <%= link_to 'Destroy', information, method: :delete, data: { confirm: 'Are you sure?' } %>
+          <%end %>
+        </td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
 <br>
-
+<% if can? :create, Information %>
 <%= link_to 'New Information', new_information_path %>
+<% end %>

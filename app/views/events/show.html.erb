@@ -40,12 +40,13 @@
     <div class="thumbnail">
      <!-- <%= image_tag pic.image.url(:thumb) %> -->
       <%=link_to image_tag(pic.image.url(:thumb)), pic.image.url(:original), :popup=>['original_image', 'height=700,width=900'] %>
+      <% if can? :destroy, pic %>
       <%=
           link_to "Delete image", [@event,pic],
             :data => { :confirm => "Are you sure?" },
             :method => :delete
           %>
-          
+          <% end %>
       <div class="caption">
         <p style="text-align: center;">
        <!-- <%= link_to "Edit image", image_path(pic) %> -->

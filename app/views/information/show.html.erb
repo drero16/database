@@ -17,3 +17,36 @@
 
 <%= link_to 'Edit', edit_information_path(@information) %> |
 <%= link_to 'Back', information_index_path %>
+
+
+<!-- Fotos -->
+
+<div class="row">
+  <ul class="thumbnails files">
+<% unless @information.images.empty? %>
+  <% @information.images.each do |pic| %>
+    <li class="span3" id="image_<%= pic.id %>">
+    <div class="thumbnail">
+     <!-- <%= image_tag pic.image.url(:thumb) %> -->
+      <%=link_to image_tag(pic.image.url(:thumb)), pic.image.url(:original), :popup=>['original_image', 'height=700,width=900'] %>
+      <% if can? :destroy, pic %>
+      <%=
+          link_to "Delete image", [@information,pic],
+            :data => { :confirm => "Are you sure?" },
+            :method => :delete
+          %>
+          <% end %>
+      <div class="caption">
+        <p style="text-align: center;">
+       <!-- <%= link_to "Edit image", image_path(pic) %> -->
+
+        
+
+        </p>
+      </div>
+    </div>
+    </li>
+  <% end %>
+<% end %>
+</ul>
+</div>

@@ -1,6 +1,11 @@
 class ImagesController < ApplicationController
   before_action :set_image, only: [:show, :edit, :update, :destroy]
-
+  load_and_authorize_resource :animal
+  load_and_authorize_resource :pet
+  load_and_authorize_resource :event
+  load_and_authorize_resource :information
+  load_and_authorize_resource :user
+  load_and_authorize_resource :comment, :through => [:animal,:pet,:event,:information,:user]
   # GET /images
   # GET /images.json
   def index

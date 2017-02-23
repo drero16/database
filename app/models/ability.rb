@@ -57,12 +57,24 @@ class Ability
         can :read, Image
         can :create, Image
         can :update, Image do |image|
-            image.animal.try(:user)==user
-            image.pet.try(:user)==user
+            image.animal.try(:user)==user || image.pet.try(:user)==user ||
+            image.information.try(:user)==user || image.try(:user)==user
         end
         can :destroy, Image do |image|
-            
-                        
+            image.animal.try(:user)==user || image.pet.try(:user)==user ||
+            image.information.try(:user)==user || image.try(:user)==user                 
+        end
+
+        can :read, Event
+        can :read, Information
+
+        can :read, Pet
+        can :create, Pet
+        can :update, Pet do |pet|
+            pet.try(:user)==user
+        end
+        can :destroy, Pet do |pet|
+            pet.try(:user)==user
         end
 
     else

@@ -1,5 +1,7 @@
 class PetsController < ApplicationController
-  before_action :set_pet, only: [:show, :edit, :update, :destroy]
+  #before_action :set_pet, only: [:show, :edit, :update, :destroy]
+  before_filter :authenticate_user!, except: [:index]
+  load_and_authorize_resource
 
   # GET /pets
   # GET /pets.json
@@ -10,6 +12,7 @@ class PetsController < ApplicationController
   # GET /pets/1
   # GET /pets/1.json
   def show
+    @comment=Comment.new
   end
 
   # GET /pets/new
@@ -25,9 +28,14 @@ class PetsController < ApplicationController
   # POST /pets.json
   def create
     @pet = Pet.new(pet_params)
-
+    @pet.user_id = current_user.id
     respond_to do |format|
       if @pet.save
+        if params[:images]
+          params[:images].each { |image|
+          @pet.images.create(image: image)
+        }
+        end
         format.html { redirect_to @pet, notice: 'Pet was successfully created.' }
         format.json { render :show, status: :created, location: @pet }
       else
@@ -42,6 +50,11 @@ class PetsController < ApplicationController
   def update
     respond_to do |format|
       if @pet.update(pet_params)
+        if params[:images]
+          params[:images].each { |image|
+          @pet.images.create(image: image)
+        }
+        end
         format.html { redirect_to @pet, notice: 'Pet was successfully updated.' }
         format.json { render :show, status: :ok, location: @pet }
       else

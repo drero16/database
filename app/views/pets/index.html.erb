@@ -29,8 +29,16 @@
         <td><%= pet.user %></td>
         <td><%= pet.race %></td>
         <td><%= link_to 'Show', pet %></td>
-        <td><%= link_to 'Edit', edit_pet_path(pet) %></td>
-        <td><%= link_to 'Destroy', pet, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td>
+        <% if can? :update, pet %>
+          <%= link_to 'Edit', edit_pet_path(pet) %>
+        <% end %>
+        </td>
+        <td>
+        <% if can? :destroy, pet %>
+          <%= link_to 'Destroy', pet, method: :delete, data: { confirm: 'Are you sure?' } %>
+        <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>
@@ -38,4 +46,6 @@
 
 <br>
 
+<% if can? :create, Pet %>
 <%= link_to 'New Pet', new_pet_path %>
+<% end %>
