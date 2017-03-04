@@ -32,6 +32,22 @@ class CommentsController < ApplicationController
     @comment.pet_id=params[:pet_id]
     respond_to do |format|
       if @comment.save
+          if (params[:animal_id])
+            post=Animal.find(params[:animal_id])
+            url="/animals/"+params[:animal_id]
+          elsif (params[:pet_id])
+            post=Pet.find(params[:pet_id])
+            url="/pets/"+params[:pet_id]
+          end
+
+          user=post.user
+          unless(@comment.user==user)
+            title=@comment.user.email << " ha respondido a tu publicación."
+            body=@comment.description
+            notify(user,title,body,url)
+          end
+
+
         format.html { redirect_to :back, notice: 'Comment was successfully created.' }
         format.json { render :show, status: :created, location: @comment }
       else

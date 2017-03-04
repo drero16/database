@@ -77,6 +77,7 @@ class Ability
             pet.try(:user)==user
         end
 
+
     else
       can :read, :all
     end

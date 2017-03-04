@@ -1,4 +1,6 @@
 source 'https://rubygems.org'
+gem 'webpush'
+gem 'serviceworker-rails'
 gem 'cancancan'
 gem 'paperclip'
 gem 'devise' , '4.1.1'

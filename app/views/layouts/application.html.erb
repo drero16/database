@@ -3,14 +3,19 @@
 <head>
   <title>Database</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <% @decodedVapidPublicKey = Base64.urlsafe_decode64(ENV['VAPID_PUBLIC_KEY']).bytes%>
+<script>
+window.vapidPublicKey = new Uint8Array(<%= @decodedVapidPublicKey %>);
+</script>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <link rel="manifest" href="/manifest.json" />
   <%= csrf_meta_tags %>
 </head>
 <body>
 <% if user_signed_in? %>
   Signed in as <%= current_user.email %>. Not you?
   <%= link_to "Edit profile", edit_user_registration_path %>
-  <%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
+  <%= link_to "Sign out", destroy_user_session_path, :method => :delete, class: 'log-out-btn'%>
 <% else %>
   <%= link_to "Sign up", new_user_registration_path %> or <%= link_to "sign in", new_user_session_path %>
 <% end %>
@@ -18,7 +23,18 @@
 <% flash.each do |name, msg| %>
   <%= content_tag :div, msg, id: "flash_#{name}" %>
 <% end %>
+
+<button class="webpush-button"> boton</button>
 <%= yield %>
 
+<script>
+$(".log-out-btn").click(function(){
+    navigator.serviceWorker.ready.then((serviceWorkerRegistration) => {
+   ServiceWorkerRegistration.unregister().then(function(boolean) {
+      console.log('[Service Worker] Unregister')
+});
+});
+})
+</script>
 </body>
 </html>

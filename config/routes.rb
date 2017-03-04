@@ -1,10 +1,14 @@
 Rails.application.routes.draw do
+  
+
   devise_for :users
  
   
-  root to: "users#index"
+  root to: "information#index"
 
   #resources :images
+#post '/push'=> "push_notifications#create"  
+post '/unsubscribe'=>"devices#unsubscribe"
 
   resources :events do
     resources :images
@@ -36,6 +40,7 @@ Rails.application.routes.draw do
   resources :users
   end
 
+  resources :devices, :only => [:create]
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
