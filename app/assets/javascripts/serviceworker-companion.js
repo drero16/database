@@ -17,12 +17,7 @@ var login= getUrlParameter('login');
 
 
 
-function refreshSubscription(pushManager, subscription, onSubscribed) {
-  logger.log('Refreshing subscription');
-  return subscription.unsubscribe().then((bool) => {
-    pushManagerSubscribe(pushManager);
-  });
-}
+
 
 var logout= getUrlParameter('logout');
 
