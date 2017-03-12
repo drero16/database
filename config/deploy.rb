@@ -1,5 +1,5 @@
 # Change these
-server '179.4.9.242', port: 3000, roles: [:web, :app, :db], primary: true
+server '179.4.9.242', port: 22, roles: [:web, :app, :db], primary: true
 
 set :repo_url,        'git@github.com:drero16/database.git'
 set :application,     'database'
