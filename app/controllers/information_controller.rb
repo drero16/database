@@ -6,6 +6,7 @@ class InformationController < ApplicationController
   # GET /information.json
   def index
     @information = Information.all
+    @secret=ENV['secret_key_base']
   end
 
   # GET /information/1
