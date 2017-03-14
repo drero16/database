@@ -23,7 +23,8 @@ set :puma_preload_app, true
 set :puma_worker_timeout, nil
 set :puma_init_active_record, true  # Change to false when not using ActiveRecord
 set :default_env, {'VAPID_PUBLIC_KEY' => 'BLkuGusxjLlZdYSi0pk1RoMdVQbK6AEsdNej2RwVG9iRgdti0VTju1qZXic-wW72EfbzwrpLsqmdgPjrxEV58mw=',
-'VAPID_PRIVATE_KEY'=>'l1dfTrdJPbZvJCh9Awg5dyhAnxiGuASp9jfsU1vI928='}
+'VAPID_PRIVATE_KEY'=>'l1dfTrdJPbZvJCh9Awg5dyhAnxiGuASp9jfsU1vI928=',
+'secret_key_base'=> '5db7edc8eb3b70e97813ee8419d31762dc80a1a8abc544da307a268c71da95c1f5b6cdf88cbffcc4585528eb6cc94f9b671cbe0d40f6948d0c3b1c8f8c896bee'}
 ## Defaults:
 # set :scm,           :git
 # set :branch,        :master
