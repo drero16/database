@@ -22,6 +22,8 @@ set :ssh_options,     { forward_agent: true, user: fetch(:user), keys: %w(~/.ssh
 set :puma_preload_app, true
 set :puma_worker_timeout, nil
 set :puma_init_active_record, true  # Change to false when not using ActiveRecord
+set :default_env, {'VAPID_PUBLIC_KEY' => 'Rails.application.secrets.VAPID_PUBLIC_KEY',
+  'VAPID_PRIVATE_KEY'=>'Rails.application.secrets.VAPID_PRIVATE_KEY'}
 ## Defaults:
 # set :scm,           :git
 # set :branch,        :master
