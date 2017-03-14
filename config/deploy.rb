@@ -22,8 +22,8 @@ set :ssh_options,     { forward_agent: true, user: fetch(:user), keys: %w(~/.ssh
 set :puma_preload_app, true
 set :puma_worker_timeout, nil
 set :puma_init_active_record, true  # Change to false when not using ActiveRecord
-set :default_env, {'VAPID_PUBLIC_KEY' => 'Rails.application.secrets.VAPID_PUBLIC_KEY',
-  'VAPID_PRIVATE_KEY'=>'Rails.application.secrets.VAPID_PRIVATE_KEY'}
+set :default_env, {'VAPID_PUBLIC_KEY' => 'BLkuGusxjLlZdYSi0pk1RoMdVQbK6AEsdNej2RwVG9iRgdti0VTju1qZXic-wW72EfbzwrpLsqmdgPjrxEV58mw=',
+  'VAPID_PRIVATE_KEY'=>'l1dfTrdJPbZvJCh9Awg5dyhAnxiGuASp9jfsU1vI928='}
 ## Defaults:
 # set :scm,           :git
 # set :branch,        :master
@@ -32,7 +32,7 @@ set :default_env, {'VAPID_PUBLIC_KEY' => 'Rails.application.secrets.VAPID_PUBLIC
 # set :keep_releases, 5
 
 ## Linked Files & Directories (Default None):
-set :linked_files, %w{.env.production}
+# set :linked_files, %w{config/database.yml}
 # set :linked_dirs,  %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
 namespace :puma do
   desc 'Create Directories for Puma Pids and Socket'
