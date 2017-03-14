@@ -41,5 +41,6 @@ Rails.application.configure do
 
   config.action_mailer.default_url_options = {:host => 'localhost:3000'}
   Paperclip.options[:command_path] = "/usr/local/bin/"
-
+  VAPID_PUBLIC_KEY= Rails.application.secrets.VAPID_PUBLIC_KEY
+  VAPID_PRIVATE_KEY= Rails.application.secrets.VAPID_PRIVATE_KEY
 end

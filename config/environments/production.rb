@@ -76,4 +76,6 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+  VAPID_PUBLIC_KEY= Rails.application.secrets.VAPID_PUBLIC_KEY
+  VAPID_PRIVATE_KEY= Rails.application.secrets.VAPID_PRIVATE_KEY
 end

@@ -39,6 +39,7 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
-
+  VAPID_PUBLIC_KEY= Rails.application.secrets.VAPID_PUBLIC_KEY
+  VAPID_PRIVATE_KEY= Rails.application.secrets.VAPID_PRIVATE_KEY
   
 end

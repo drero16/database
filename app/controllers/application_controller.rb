@@ -31,8 +31,8 @@ before_filter :configure_permitted_parameters, if: :devise_controller?
 	 	ttl: 24 * 60 * 60,
 	 	vapid: {
 	 	subject: 'mailto:sender@example.com',
-	 	public_key: ENV['VAPID_PUBLIC_KEY'],
-     	private_key: ENV['VAPID_PRIVATE_KEY']
+	 	public_key: Rails.application.secrets.VAPID_PUBLIC_KEY,
+    private_key: Rails.application.secrets.VAPID_PRIVATE_KEY
    }
  )
   	end

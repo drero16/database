@@ -3,7 +3,7 @@
 <head>
   <title>Database</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <% @decodedVapidPublicKey = Base64.urlsafe_decode64(ENV['VAPID_PUBLIC_KEY']).bytes%>
+  <% @decodedVapidPublicKey = Base64.urlsafe_decode64(Rails.application.secrets.VAPID_PUBLIC_KEY).bytes%>
 <script>
 window.vapidPublicKey = new Uint8Array(<%= @decodedVapidPublicKey %>);
 </script>
