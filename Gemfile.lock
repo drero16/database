@@ -1,6 +1,8 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    acme-client (0.5.5)
+      faraday (~> 0.9, >= 0.9.1)
     actionmailer (4.2.0)
       actionpack (= 4.2.0)
       actionview (= 4.2.0)
@@ -53,6 +55,9 @@ GEM
     capistrano-bundler (1.2.0)
       capistrano (~> 3.1)
       sshkit (~> 1.2)
+    capistrano-lets-encrypt (0.3.0)
+      capistrano (>= 3.0.0)
+      letsencrypt-cli (>= 0.1.4)
     capistrano-rails (1.2.3)
       capistrano (~> 3.1)
       capistrano-bundler (~> 1.1)
@@ -80,6 +85,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.12.2)
+    colorize (0.8.1)
     concurrent-ruby (1.0.4)
     debug_inspector (0.0.2)
     devise (4.1.1)
@@ -90,6 +96,8 @@ GEM
       warden (~> 1.2.3)
     erubis (2.7.0)
     execjs (2.7.0)
+    faraday (0.11.0)
+      multipart-post (>= 1.2, < 3)
     globalid (0.3.7)
       activesupport (>= 4.1.0)
     hkdf (0.3.0)
@@ -103,6 +111,10 @@ GEM
       thor (>= 0.14, < 2.0)
     json (1.8.6)
     jwt (1.5.6)
+    letsencrypt-cli (0.4.1)
+      acme-client (>= 0.2.4)
+      colorize
+      thor
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
     mail (2.6.4)
@@ -114,6 +126,7 @@ GEM
     mini_portile2 (2.1.0)
     minitest (5.10.1)
     multi_json (1.12.1)
+    multipart-post (2.0.0)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
     net-ssh (4.1.0)
@@ -214,6 +227,7 @@ DEPENDENCIES
   cancancan
   capistrano
   capistrano-bundler
+  capistrano-lets-encrypt
   capistrano-rails
   capistrano-rails-console
   capistrano-rake

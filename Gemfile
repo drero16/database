@@ -55,6 +55,7 @@ group :development do
     gem 'capistrano-secrets-yml'
     gem 'capistrano-rails-console', require: false
     gem 'capistrano-rake', require: false
+    gem 'capistrano-lets-encrypt'
 end
 
 gem 'puma'
