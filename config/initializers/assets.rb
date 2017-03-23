@@ -10,5 +10,5 @@ Rails.application.config.assets.version = '1.0'
 # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
 # Rails.application.config.assets.precompile += %w( search.js )
 Rails.application.configure do
-  config.assets.precompile += %w[serviceworker.js manifest.json]
+  config.assets.precompile += %w[serviceworker.js manifest.json form-elements.css styleLogin.css jquery.backstretch.js main.scss centered-columns.scss  ejemploPerdido.scss gmaps.js jquery.backstretch.js]
 end

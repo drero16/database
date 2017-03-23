@@ -1,0 +1,178 @@
+<% content_for :stylesheets do %>
+  <%= stylesheet_link_tag "centered-columns" %>
+<% end %>
+
+<% content_for :js do %>
+  <%= javascript_include_tag "gmaps" %>
+<% end %>
+
+<!--FILTROS DE BUSQUEDA-->
+<div class="container-fluid">
+<div class="row">
+        <h1 class="page-header text-center">Busco...algo!</h1>
+        <h5 class="text-center"> No te desesperes! Usa los filtros de abajo para especificar que buscas.</h5>
+      </div>
+
+
+	<form>
+		<div class="row row-centered">
+			<div class="col-xs-8 col-md-8 col-centered">
+				<label for="gmaps-input-address" class="control-label">Dirección</label>
+				<input type="text"  class="form-control" id="gmaps-input-address">
+				<div id='gmaps-error'></div>
+                <div id='gmaps-canvas' class=" hidden"></div>
+			</div>
+			<div class="col-xs-4 col-md-2  col-centered">
+				<button type="submit" class="btn btn-default">Listo!</button>
+			</div>
+		</div>
+		<div class="row row-centered">
+			<div class="col-xs-4 col-md-2  col-centered">
+				<label for="animal">Animal</label>
+				<select class="form-control" id="animal">
+					<option>Perro</option>
+					<option>Gato</option>
+				</select>
+			</div>
+
+			<div class="col-xs-4 col-md-2  col-centered">
+				<label for="raza">Raza</label>
+				<select class="form-control" id="raza">
+					<option>Pitbull</option>
+					<option>Pastor Alemán</option>
+				</select>
+			</div>
+
+			<div class="col-xs-4 col-md-2  col-centered">
+				<label for="sexo">Sexo</label>
+				<select class="form-control" id="sexo">
+					<option>Macho</option>
+					<option>Hembra</option>
+				</select>
+			</div>
+
+			<div class="col-xs-4 col-md-2  col-centered">
+				<label for="fecha">Fecha</label>
+				<input type="date" id="fecha" class="form-control">
+			</div>
+
+			<div class="col-xs-4 col-md-2  col-centered">
+				<label for="sort">Ordenar por</label>
+				<select class="form-control" id="sort">
+					<option>Recientes</option>
+					<option>Antiguos-</option>
+					<option>Cercanía</option>
+					<option>Raza</option>
+					<option>Sexo</option>
+				</select>
+			</div>
+
+		</div>
+	</form>
+</div>
+
+
+<!--FIN FILTROS DE BUSQUEDA-->
+<br>
+<!--RESUTADOS DE BUSQUEDA-->
+<!--
+<div class="container">
+	<div class="row row-centered">
+		<div class="panel panel-default col-xs-12 col-centered">
+			<ul class="media-list">
+			
+  				<li class="media">
+  				<div class="panel panel-default ">
+    				<div class="media-left">
+      					<a href="#">
+        					<img class="media-object img-responsive" src="http://estilcani.com/wp-content/uploads/2016/09/perro-perdido.jpg" style="max-width:130px;" alt="...">
+      					</a>
+				    </div>
+    				<div class="media-body">
+      					<h3 class="media-heading text-center">Perdido cerca de Metro Sta Ana</h3>
+      						<p>hola</p>
+      						<p>me perdi</p>
+    				</div>
+    				</div>
+  				</li>
+  				
+
+
+
+  				<li class="media">
+  				<div class="panel panel-default ">
+    				<div class="media-left">
+      					<a href="#">
+        					<img class="media-object" src="http://estilcani.com/wp-content/uploads/2016/09/perro-perdido.jpg" width="200" alt="...">
+      					</a>
+				    </div>
+    				<div class="media-body">
+      					<h3 class="media-heading text-center">Encontrado cerca de Los nidos 7009</h3>
+      						...poo
+    				</div>
+    				</div>
+  				</li>
+
+
+
+  				<li class="media">
+  				<div class="panel panel-default ">
+    				<div class="media-left">
+      					<a href="#">
+        					<img class="media-object" src="http://estilcani.com/wp-content/uploads/2016/09/perro-perdido.jpg" width="200" alt="...">
+      					</a>
+				    </div>
+    				<div class="media-body">
+      					<h4 class="media-heading text-center">Media heading</h4>
+      						...poo
+    				</div>
+    				</div>
+  				</li>
+
+
+
+			</ul>
+		</div>
+	</div>
+</div> -->
+<!--FIN RESULTADOS DE BUSQUEDA-->
+
+
+
+
+<!--busqueda prueba-->
+
+
+
+
+<div class="row row-centered">
+<div class="panel panel-default col-md-8 col-centered">
+<div class="well search-result">
+            	<div class="row row-centered">
+            		<a href="#">
+                		<div class="col-xs-6 col-sm-3 col-md-3 col-lg-2">
+	                    	<img class="img-responsive" src="http://estilcani.com/wp-content/uploads/2016/09/perro-perdido.jpg" alt="">
+                		</div>
+                		<div class="col-xs-6 col-sm-9 col-md-9 col-lg-10 title">
+	                    	<h3>Result name one</h3>
+	                    	<p>Ut quis libero id orci semper porta ac vel ante. In nec laoreet sapien. Nunc hendrerit ligula at massa sodales, ullamcorper rutrum orci semper.</p>
+                		</div>
+            		</a>
+            	</div>
+            </div>
+            <div class="well search-result">
+            	<div class="row">
+            		<a href="#">
+                		<div class="col-xs-6 col-sm-3 col-md-5 col-lg-4">
+	                    	<img class="img-responsive" src="http://lorempixel.com/400/200/sports/3/" alt="">
+                		</div>
+                		<div class="col-xs-6 col-sm-9 col-md-7 col-lg-8 title">
+	                    	<h3>Blueberry Sport</h3>
+	                    	<p>Nulla rhoncus lacus tortor, vel tincidunt dolor eleifend et. Ut consequat elit quam, iaculis volutpat ipsum fermentum pulvinar. Pellentesque nec sem vel arcu ornare faucibus.</p>
+                		</div>
+            		</a>
+            	</div>
+            </div>
+
+</div>
+</div>

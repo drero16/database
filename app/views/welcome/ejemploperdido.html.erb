@@ -1,0 +1,180 @@
+<% content_for :stylesheets do %>
+  <%= stylesheet_link_tag "centered-columns" %>
+  <%= stylesheet_link_tag "ejemploPerdido" %>
+<% end %>
+
+<% content_for :js do %>
+
+  <%= javascript_include_tag "gmaps" %>
+<script>
+	$(document).ready(function() { 
+ 
+  if($('#map').length ){
+    onlymap("los nidos 7009");
+  }
+
+});
+
+</script>
+
+<% end %>
+
+
+
+<div class="container-fluid">
+	<div class="row row-centered">
+		<div class="panel panel-default col-xs-12 col-md-8 col-centered">
+			<div class="col-md-4">
+				<img src="http://www.michaeldvd.com.au/articles/16x9Enhancement/185Image.JPG" class="img-responsive" alt="Image">
+			</div>
+			<div class="panel-body col-md-8 ">
+				<dl class="dl-horizontal">
+					<dt>Animal</dt>
+					<dd>Perro</dd>
+					<hr>
+					<dt>Raza</dt>
+					<dd>Quiltro</dd>
+					<hr>
+					<dt>Sexo</dt>
+					<dd>Macho</dd>
+					<hr>
+					<dt>Nombre</dt>
+					<dd>Firulais</dd>
+					<hr>
+					<dt>Descripción</dt>
+					<dd>Cachorro que se fue de la vecindad porque le dijeron ratero, tiene una bolsita como la de la foto.</dd>
+					<hr>
+					<dt>Fecha de extravío</dt>
+					<dd>11/09/2016</dd>
+					<hr>
+					<dt>Lugar de extravío</dt>
+					<dd>Los nidos 7009, Pudahuel, Santiago</dd>
+					<hr>
+					<dt>Comparte!</dt>
+					<dd>
+						<ul class="share-buttons">
+  				<li>
+  				<a href="https://www.facebook.com/sharer/sharer.php?u=#url&t=" title="Compartir en Facebook" target="_blank">
+  				
+  				 <%=image_tag("social_flat_rounded_rects_svg/Facebook.svg", alt: "" )%>
+  				</a>
+  				</li>
+  				<li>
+  				<a href="https://twitter.com/intent/tweet?source=#&text=:%20" target="_blank" title="Tweet">
+  				
+  				 <%=image_tag("social_flat_rounded_rects_svg/Twitter.svg", alt: "" )%>
+  				</a>
+  				</li>
+  				<li>
+  				<a href="https://plus.google.com/share?url=#url" target="_blank" title="Compartir en Google+">
+  				
+  				 <%=image_tag("social_flat_rounded_rects_svg/Google.svg", alt: "" )%>
+  				</a>
+  				</li>
+				</ul>
+					</dd>
+
+				</dl>
+
+				<div id="map" style="height:200px; width:200px;"></div>
+
+			</div>
+			
+
+		</div>
+	</div>
+
+
+<div class="container">
+	
+
+
+
+
+<div class="row row-centered">
+<h3>Comentarios</h3>
+	<div class="col-md-8 col-xs-12 col-centered" >
+		<div class="col-md-2 col-xs-4">
+			<div class="thumbnail">
+				<img class="img-responsive" src="http://www.revistaxy.com/assets/Chuck-Norris1.jpg">
+			</div><!-- /thumbnail -->
+		</div><!-- /col-sm-1 -->
+
+		<div class="col-md-10 col-xs-8">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<strong>Cuck Norris</strong> <span class="text-muted">Hace (?) días</span>
+				</div>
+			<div class="panel-body">
+				<p>Cuando grité Firulais el perro ya estaba a mi lado.</p>
+			</div><!-- /panel-body -->
+			</div><!-- /panel panel-default -->
+		</div><!-- /col-sm-5 -->
+	
+	</div>
+</div><!-- /row -->
+
+
+
+<div class="row row-centered">
+	<div class="col-md-8 col-xs-12 col-centered" >
+		<div class="col-md-2 col-xs-4">
+			<div class="thumbnail">
+				<img class="img-responsive" src="http://www.intramed.net/userfiles/2014/images/dr_house2.jpg">
+			</div><!-- /thumbnail -->
+		</div><!-- /col-sm-1 -->
+
+		<div class="col-md-10 col-xs-8">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<strong>House</strong> <span class="text-muted">Hace (1) día</span>
+				</div>
+			<div class="panel-body">
+				<p>Denle comida y volverá.</p>
+			</div><!-- /panel-body -->
+			</div><!-- /panel panel-default -->
+		</div><!-- /col-sm-5 -->
+	
+	</div>
+</div><!-- /row -->
+
+
+
+<div class="row row-centered">
+	<div class="col-md-8 col-xs-12 col-centered" >
+		<div class="col-md-2 col-xs-4">
+			<div class="thumbnail">
+				<img class="img-responsive" src="http://www.intramed.net/userfiles/2014/images/dr_house2.jpg">
+			</div><!-- /thumbnail -->
+		</div><!-- /col-sm-1 -->
+
+		<div class="col-md-10 col-xs-8">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<strong>House</strong> <span class="text-muted">Hace (1) día</span>
+					
+
+
+				</div>
+			<div class="panel-body">
+				<p>Denle comida y volverá.</p>
+			</div><!-- /panel-body -->
+			</div><!-- /panel panel-default -->
+		</div><!-- /col-sm-5 -->
+	
+	</div>
+</div><!-- /row -->
+
+
+
+
+
+
+
+
+
+</div>
+
+</div>
+
+

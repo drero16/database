@@ -1,0 +1,155 @@
+@import "font-awesome-sprockets";
+@import "font-awesome";
+@import "bootstrap-sprockets";
+@import "bootstrap";
+/*@import "style"; */
+/*@import "form-elements";
+@import "styleLogin";*/
+@import "main";
+@import "jquery-ui/jquery-ui-1.8.16.custom";
+
+.backstretch img {
+  opacity: 0.3;
+  filter: alpha(opacity=90);
+}   
+
+.navbar-default {
+  background-color: white;
+  border-bottom-color: lightblue;
+  margin-bottom: 0px;
+}
+.navbar-brand {
+  padding-bottom: 5px;
+  padding-top: 5px;
+}
+@media (min-width: 768px){
+.navbar-default {
+    height: 80px;
+  }
+
+.navbar-li {
+    /*height: 50px;
+    padding-bottom: 15px;*/
+    padding-top: 15px;
+  }
+.navbar-brand {
+  padding-left: 100px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  height: 80px; 
+}
+}
+
+/*.top-menu {
+	.open > a {
+    &,
+    &:hover,
+    &:focus {
+      background-color: $nav-link-hover-bg;
+      border-color: $link-color;
+    }
+  }
+
+
+	> .dropdown .dropdown-menu {
+    top: auto;
+    left: auto;
+
+
+  }
+
+
+
+  @media (max-width: $grid-float-breakpoint-max) {
+    // Dropdowns get custom display when collapsed
+    .open .dropdown-menu {
+      position: static;
+      float: none;
+      width: auto;
+      margin-top: 0;
+      background-color: transparent;
+      border: 0;
+      box-shadow: none;
+      > li > a,
+      .dropdown-header {
+        padding: 5px 15px 5px 25px;
+      }
+      > li > a {
+        line-height: $line-height-computed;
+        &:hover,
+        &:focus {
+          background-image: none;
+        }
+      }
+    }
+  }
+
+
+
+}
+
+
+
+.top-menu > li > .dropdown-menu {
+  margin-top: 0;
+  @include border-top-radius(0);
+}
+
+.top-menu ul li .dropdown-menu >li
+{
+	display: list-item;
+	margin-left: 0px;
+	margin-right: 0px;	 
+}
+
+
+
+
+// Dropdown menu items
+  .top-menu {
+    // Remove background color from open dropdown
+    > .open > a {
+      &,
+      &:hover,
+      &:focus {
+        background-color: $navbar-default-link-active-bg;
+        color: $navbar-default-link-active-color;
+      }
+    }
+
+    @media (max-width: $grid-float-breakpoint-max) {
+      // Dropdowns get custom display when collapsed
+      .open .dropdown-menu {
+        > li > a {
+          color: $navbar-default-link-color;
+          &:hover,
+          &:focus {
+            color: $navbar-default-link-hover-color;
+            background-color: $navbar-default-link-hover-bg;
+          }
+        }
+        > .active > a {
+          &,
+          &:hover,
+          &:focus {
+            color: $navbar-default-link-active-color;
+            background-color: $navbar-default-link-active-bg;
+          }
+        }
+        > .disabled > a {
+          &,
+          &:hover,
+          &:focus {
+            color: $navbar-default-link-disabled-color;
+            background-color: $navbar-default-link-disabled-bg;
+          }
+        }
+      }
+    }
+  }
+
+*/
+.transparent
+{
+  background-color: rgba(0,0,0,0.6);
+}

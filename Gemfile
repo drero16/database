@@ -1,4 +1,8 @@
 source 'https://rubygems.org'
+gem 'bootstrap-sass', '~> 3.3.6'
+gem 'font-awesome-sass', '~> 4.6.2'
+gem 'jquery-ui-rails'
+
 gem 'webpush'
 gem 'serviceworker-rails'
 gem 'cancancan'

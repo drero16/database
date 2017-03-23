@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Database</title>
+  <%= favicon_link_tag 'favicon.ico' %>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBFkGU6pJyyWqKe_ViHOQU_AZaXxXCVZAU&callback=initMap"></script>
+
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <% @decodedVapidPublicKey = Base64.urlsafe_decode64(Rails.application.secrets.VAPID_PUBLIC_KEY).bytes%>
+<script>
+window.vapidPublicKey = new Uint8Array(<%= @decodedVapidPublicKey %>);
+</script>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <link rel="manifest" href="/manifest.json" />
+  <%= yield :js%>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+
+<% if user_signed_in? %>
+  Signed in as <%= current_user.email %>. Not you?
+  <%= link_to "Edit profile", edit_user_registration_path %>
+  <%= link_to "Sign out", destroy_user_session_path, :method => :delete, class: 'log-out-btn'%>
+<% else %>
+  <%= link_to "Sign up", new_user_registration_path %> or <%= link_to "sign in", new_user_session_path %>
+<% end %>
+
+<% flash.each do |name, msg| %>
+  <%= content_tag :div, msg, id: "flash_#{name}" %>
+<% end %>
+
+<div class="header">
+      <div class="header-bottom">
+        <div class="container">
+          <div class="logo">
+            <a href="index.html"><%=image_tag("logoram.png", alt: "example" )%></a>
+          </div>
+          <span class="menu"></span>
+          <div class="top-menu">
+            <ul>
+              <nav class="cl-effect-5">
+                
+                <li> <a href="#"> <i class="glyphicon glyphicon-home"> </i></a></li>
+
+                <li>
+                  <a href="index.html"><span data-hover="Mascota Perdida">Mascota Perdida</span></a>
+                </li>
+                
+                <li>
+                  <a href="404.html"><span data-hover="Eventos RAM">Eventos RAM</span></a>
+                </li>
+                <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true" > Dropdown <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="#">Action</a></li>
+            <li><a href="#">Another action</a></li>
+            <li><a href="#">Something else here</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="#">Separated link</a></li>
+          </ul>
+        </li>
+                <li>
+                  <a href="blog.html"><span data-hover="Información interés">Información de interés</span></a>
+                </li>
+
+
+                </nav>
+            </ul>
+          </div>
+          <script>
+        $( "span.menu" ).click(function() {
+          $( ".top-menu" ).slideToggle( "slow", function() {
+            // Animation complete.
+          });
+        });
+      </script>
+      <!-- script for menu -->
+        <div class="clearfix"></div>
+        </div>
+</div>
+</div>
+
+<div class="content"  id="loginContainer">
+<%= yield %>
+</div>
+
+
+<div class="footer">
+      <div class="container">
+        
+        <div class="col-md-10 follow-us">
+          <h4>Siguenos </h4>
+          <div class="social-icons">
+            <i class="facebook"></i>
+            <i class="twitter"></i>
+            <i class="pinterest"></i>
+            <i class="googlepluse"></i>
+          </div>
+      
+          <div class="copyright">
+            <p>Design by
+              <a href="http://w3layouts.com">  W3layouts</a>
+            </p>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+    </div>
+
+
+<%= yield %>
+
+<script>
+$(".log-out-btn").click(function(){
+    navigator.serviceWorker.ready.then((serviceWorkerRegistration) => {
+   ServiceWorkerRegistration.unregister().then(function(boolean) {
+      console.log('[Service Worker] Unregister')
+});
+});
+})
+</script>
+</body>
+</html>

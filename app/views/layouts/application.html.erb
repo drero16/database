@@ -2,16 +2,23 @@
 <html>
 <head>
   <title>Database</title>
+  <%= favicon_link_tag 'favicon.ico' %>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBFkGU6pJyyWqKe_ViHOQU_AZaXxXCVZAU&callback=initMap"></script>
+
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <% @decodedVapidPublicKey = Base64.urlsafe_decode64(Rails.application.secrets.VAPID_PUBLIC_KEY).bytes%>
-<script>
-window.vapidPublicKey = new Uint8Array(<%= @decodedVapidPublicKey %>);
-</script>
+  <script>
+    window.vapidPublicKey = new Uint8Array(<%= @decodedVapidPublicKey %>);
+  </script>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <link rel="manifest" href="/manifest.json" />
+  <%= yield :js%>
   <%= csrf_meta_tags %>
 </head>
 <body>
+<!--
 <% if user_signed_in? %>
   Signed in as <%= current_user.email %>. Not you?
   <%= link_to "Edit profile", edit_user_registration_path %>
@@ -19,12 +26,84 @@ window.vapidPublicKey = new Uint8Array(<%= @decodedVapidPublicKey %>);
 <% else %>
   <%= link_to "Sign up", new_user_registration_path %> or <%= link_to "sign in", new_user_session_path %>
 <% end %>
-
+-->
 <% flash.each do |name, msg| %>
   <%= content_tag :div, msg, id: "flash_#{name}" %>
 <% end %>
 
-<button class="webpush-button"> boton</button>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">
+        <%=image_tag("logoram.png", alt: "example")%>
+      </a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav navbar-right">
+        <li class="navbar-li"><a href="#">Información de Interés</a></li>
+        <li class="navbar-li"><a href="#">Eventos RAM</a></li>
+        <li class="navbar-li dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Registra tu animal <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="#">Mascota perdida</a></li>
+            <li><a href="#">Animal encontrado</a></li>
+            <li><a href="#">Animal en riesgo</a></li>
+            <li><a href="#">Mascota en adopción</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> 
+            <%=image_tag("profile-pictures.png", alt: "example",width:"50",height: "50" )%>
+          <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><%= link_to "Iniciar sesión", new_user_session_path %></li>
+            <li role="separator" class="divider"></li>
+            <li><%= link_to "Registrarse", new_user_registration_path %></li>
+          </ul>
+        </li>
+
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+<div class="content"  id="loginContainer">
+<%= yield %>
+</div>
+
+
+<div class="footer">
+      <div class="container">
+        
+        <div class="col-md-10 follow-us">
+          <h4>Siguenos </h4>
+          <div class="social-icons">
+            <i class="facebook"></i>
+            <i class="twitter"></i>
+            <i class="pinterest"></i>
+            <i class="googlepluse"></i>
+          </div>
+      
+          <div class="copyright">
+            <p>Design by
+              <a href="http://w3layouts.com">  W3layouts</a>
+            </p>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+    </div>
+
+
 <%= yield %>
 
 <script>
@@ -35,6 +114,8 @@ $(".log-out-btn").click(function(){
 });
 });
 })
+
+$("body").backstretch('<%= image_path("muchatransparencia.png") %>', {speed: 150});
 </script>
 </body>
 </html>

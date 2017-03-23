@@ -41,6 +41,19 @@ post '/unsubscribe'=>"devices#unsubscribe"
   end
 
   resources :devices, :only => [:create]
+
+  get 'nav/index'
+
+  get 'welcome/nav'
+
+  get 'welcome/index'
+
+  get 'welcome/login'
+  get 'welcome/perdido'
+  get 'welcome/buscar'
+  get 'welcome/ejemploperdido'
+  get 'welcome/info'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
