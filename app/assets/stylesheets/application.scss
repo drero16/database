@@ -8,6 +8,9 @@
 @import "main";
 @import "jquery-ui/jquery-ui-1.8.16.custom";
 
+body {
+  font-family: FontAwesome;
+}
 .backstretch img {
   opacity: 0.3;
   filter: alpha(opacity=90);
@@ -25,6 +28,7 @@
 @media (min-width: 768px){
 .navbar-default {
     height: 80px;
+    margin-bottom: 50px;
   }
 
 .navbar-li {

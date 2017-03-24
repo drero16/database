@@ -1,8 +1,7 @@
 <% content_for :stylesheets do %>
-  <%= stylesheet_link_tag "form-elements" %>
-  <%= stylesheet_link_tag "styleLogin" %>
   <%= stylesheet_link_tag "gmaps" %>
-  <%= stylesheet_link_tag "main" %>
+    <%= stylesheet_link_tag "centered-columns" %>
+  <%= stylesheet_link_tag "ejemploPerdido" %>
 <% end %>
 
 <% content_for :js do %>
@@ -20,18 +19,13 @@
   </script>
 <% end %>
 
-
-<div class="section">
-      <div class="container">
-      <div class="row">
+<div class="container-fluid">
+  <div class="row row-centered">
+    <div class="panel panel-default col-xs-12 col-md-8 col-centered">
+      <div class="row text-center">
         <h1 class="page-header">Perdí a mi mascota!</h1>
         <h5> Mantén la calma! Por favor entreganos los siguientes datos para que otros puedan ayudarte.</h5>
-      </div>
-      <br>
-      <br>
-        <div class="row">
-          <div class="col-md-12 center-block" style="float:none;">
-            <form class="form-horizontal form-bottom">
+        <form class="form-horizontal form-bottom">
 
               <div class="form-group">
                 <label for="animal" class="col-sm-2 control-label">Animal</label>
@@ -126,7 +120,7 @@
 
 
             </form>
-          </div>
-        </div>
       </div>
     </div>
+  </div>
+</div>

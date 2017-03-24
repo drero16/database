@@ -11,4 +11,10 @@ class WelcomeController < ApplicationController
   end
   def info
   end
+  def encontrado
+  end
+  def ejemploencontrado
+  end
+  def eventos
+  end
 end

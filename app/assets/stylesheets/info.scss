@@ -1,0 +1,33 @@
+#bs-example-navbar-collapse-2 > ul > li.active > a{
+
+}
+
+.nav-pills > li > a {
+    color: #777;
+    &:hover{
+    	 color: #333;
+    	background-color: transparent;
+    }
+    &:active{
+    	color: #333;
+    	font-weight: bold;
+    	background-color: inherit;
+    }
+}
+
+.nav-pills > li.active > a {
+	color: #333;
+    font-weight: bold;
+    background-color: inherit;
+    &:hover{
+    	background-color:inherit;
+    	color: #333;
+    }
+}
+
+.nav-pills > li.active > a:focus {
+	    color: #333;
+    background-color: transparent;
+    border: inherit;
+    border-color: inherit;
+}

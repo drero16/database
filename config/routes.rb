@@ -53,6 +53,10 @@ post '/unsubscribe'=>"devices#unsubscribe"
   get 'welcome/buscar'
   get 'welcome/ejemploperdido'
   get 'welcome/info'
+  get 'welcome/ejemploencontrado'
+  get 'welcome/encontrado'
+  get 'welcome/eventos'
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

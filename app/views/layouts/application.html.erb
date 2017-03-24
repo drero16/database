@@ -14,7 +14,9 @@
   </script>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <link rel="manifest" href="/manifest.json" />
+  <%= stylesheet_link_tag "application", params[:controller], :media => "all" %>
   <%= yield :js%>
+  <%= yield :stylesheets%>
   <%= csrf_meta_tags %>
 </head>
 <body>
@@ -27,9 +29,6 @@
   <%= link_to "Sign up", new_user_registration_path %> or <%= link_to "sign in", new_user_session_path %>
 <% end %>
 -->
-<% flash.each do |name, msg| %>
-  <%= content_tag :div, msg, id: "flash_#{name}" %>
-<% end %>
 
 <nav class="navbar navbar-default">
   <div class="container-fluid">
@@ -49,9 +48,7 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-right">
-        <li class="navbar-li"><a href="#">Información de Interés</a></li>
-        <li class="navbar-li"><a href="#">Eventos RAM</a></li>
-        <li class="navbar-li dropdown">
+      <li class="navbar-li dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Registra tu animal <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a href="#">Mascota perdida</a></li>
@@ -60,6 +57,8 @@
             <li><a href="#">Mascota en adopción</a></li>
           </ul>
         </li>
+        <li class="navbar-li"><a href="#">Información de Interés</a></li>
+        <li class="navbar-li"><a href="#">Eventos RAM</a></li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> 
             <%=image_tag("profile-pictures.png", alt: "example",width:"50",height: "50" )%>
@@ -80,8 +79,15 @@
 <%= yield %>
 </div>
 
+<div class="errors">
+<% flash.each do |name, msg| %>
+  <%= content_tag :div, msg, id: "flash_#{name}" %>
+<% end %>
 
-<div class="footer">
+</div>
+
+
+<!--<div class="footer">
       <div class="container">
         
         <div class="col-md-10 follow-us">
@@ -92,20 +98,11 @@
             <i class="pinterest"></i>
             <i class="googlepluse"></i>
           </div>
-      
-          <div class="copyright">
-            <p>Design by
-              <a href="http://w3layouts.com">  W3layouts</a>
-            </p>
-          </div>
         </div>
         <div class="clearfix"></div>
       </div>
     </div>
-
-
-<%= yield %>
-
+    -->
 <script>
 $(".log-out-btn").click(function(){
     navigator.serviceWorker.ready.then((serviceWorkerRegistration) => {
