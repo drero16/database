@@ -5,7 +5,7 @@ class WelcomeController < ApplicationController
   end
   def perdido
   end
-  def buscar
+  def buscarperdido
   end
   def ejemploperdido
   end
@@ -16,5 +16,19 @@ class WelcomeController < ApplicationController
   def ejemploencontrado
   end
   def eventos
+  end
+  def buscarencontrado
+  end
+  def buscaradoptado
+  end
+  def adoptado
+  end
+  def ejemploadoptado
+  end
+  def buscarenriesgo
+  end
+  def animalenriesgo
+  end
+  def ejemploenriesgo
   end
 end

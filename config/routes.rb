@@ -50,12 +50,19 @@ post '/unsubscribe'=>"devices#unsubscribe"
 
   get 'welcome/login'
   get 'welcome/perdido'
-  get 'welcome/buscar'
+  get 'welcome/buscarperdido'
   get 'welcome/ejemploperdido'
   get 'welcome/info'
   get 'welcome/ejemploencontrado'
   get 'welcome/encontrado'
   get 'welcome/eventos'
+  get 'welcome/buscarencontrado'
+  get 'welcome/buscaradoptado'
+  get 'welcome/adoptado'
+  get 'welcome/ejemploadoptado'
+  get 'welcome/buscarenriesgo'
+  get 'welcome/animalenriesgo'
+  get 'welcome/ejemploenriesgo'
 
 
   # The priority is based upon order of creation: first created -> highest priority.

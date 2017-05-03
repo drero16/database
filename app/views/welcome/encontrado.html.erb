@@ -1,0 +1,113 @@
+<% content_for :stylesheets do %>
+  <%= stylesheet_link_tag "gmaps" %>
+    <%= stylesheet_link_tag "centered-columns" %>
+  <%= stylesheet_link_tag "ejemploPerdido" %>
+<% end %>
+
+<% content_for :js do %>
+  <%= javascript_include_tag "jquery.backstretch" %>
+  <%= javascript_include_tag "gmaps" %>
+  <script>
+    $(document).ready(function() { 
+  if( $('#gmaps-canvas').length  ) {
+    gmaps_init();
+    autocomplete_init();
+  }; 
+  
+
+});
+  </script>
+<% end %>
+
+<div class="container-fluid">
+  <div class="row row-centered">
+    <div class="panel panel-default col-xs-12 col-md-8 col-centered">
+      <div class="row text-center">
+        <h1 class="page-header">Publica un animal encontrado</h1>
+        <h5> ¿Encontraste un animal?, ingresa los siguientes datos para ayudar a tu rescatado y así encontrar a su dueño.</h5>
+        <form class="form-horizontal form-bottom">
+
+              <div class="form-group">
+                <label for="animal" class="col-sm-2 control-label">Animal</label>
+                <div class="col-sm-10">
+                  <select class="form-control" id="animal">
+                    <option>Perro</option>
+                    <option>Gato</option>
+                    </select> 
+                </div>
+               </div>
+
+              <div class="form-group">
+                <label for="raza" class="col-sm-2 control-label">Raza</label>
+                <div class="col-sm-10">
+                  <select class="form-control" id="raza">
+                    <option>Quiltro</option>
+                    <option>Chihuahua</option>
+                    <option>Pastor Alemán</option>
+                  </select>
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <label for="raza" class="col-sm-2 control-label">Edad</label>
+                <div class="col-sm-10">
+                  <select class="form-control" id="raza">
+                    <option>Quiltro</option>
+                    <option>Chihuahua</option>
+                    <option>Pastor Alemán</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="sexo" class="col-sm-2 control-label">Sexo</label>
+                <div class="col-sm-10">
+                  <select class="form-control" id="raza">
+                    <option>Hembra</option>
+                    <option>Macho</option>
+                    <option>No lo sé</option>
+                  </select>
+                </div>
+              </div>
+                                         
+              <div class="form-group">
+                <label for="gmaps-input-address" class="col-sm-2 control-label">¿Dónde lo encontraste?
+                </label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" id='gmaps-input-address' placeholder='Empieza escribiendo una dirección...' />
+                  <div id='gmaps-error'></div>
+                  <div id='gmaps-canvas' class=" hidden-sm hidden-xs"></div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="descripcion" class="col-sm-2 control-label">Descripción</label>
+                <div class="col-sm-10">
+                  <textarea class="form-control" rows="5" id="descripcion"></textarea>
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <label for="foto" class="col-sm-2 control-label">¡Sube una foto del animal!</label>
+                <div class="col-sm-10">
+                  <input type="file" class="form-control" id="foto">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                  <button type="submit" class="btn btn-default">¡Listo!</button>
+                </div>
+                
+              </div>
+
+
+
+              
+
+
+            </form>
+      </div>
+    </div>
+  </div>
+</div>
