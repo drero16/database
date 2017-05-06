@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170228124617) do
+ActiveRecord::Schema.define(version: 20170504080604) do
 
   create_table "animals", force: :cascade do |t|
     t.string   "animal_type"
@@ -27,6 +27,7 @@ ActiveRecord::Schema.define(version: 20170228124617) do
     t.string   "image_content_type"
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
+    t.integer  "animal_state"
   end
 
   add_index "animals", ["race_id"], name: "index_animals_on_race_id"
@@ -119,8 +120,9 @@ ActiveRecord::Schema.define(version: 20170228124617) do
     t.text     "lost_in"
     t.integer  "user_id"
     t.integer  "race_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.integer  "animal_state"
   end
 
   add_index "pets", ["race_id"], name: "index_pets_on_race_id"

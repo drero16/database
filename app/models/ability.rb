@@ -36,6 +36,16 @@ class Ability
     if user.admin?
       can :manage, :all
     elsif user.member?
+
+        can :read, Adoption
+        can :create, Adoption
+        can :update, Adoption do |adoption|
+            adoption.try(:user)==user
+        end
+        can :destroy, Adoption do |adoption|
+            adoption.try(:user)==user
+        end
+
         can :read, Animal
         can :create, Animal
         can :update, Animal do |animal|
@@ -75,6 +85,15 @@ class Ability
         end
         can :destroy, Pet do |pet|
             pet.try(:user)==user
+        end
+
+        can :read, Risk
+        can :create, Risk
+        can :update, Risk do |risk|
+            risk.try(:user)==user
+        end
+        can :destroy, Risk do |risk|
+            risk.try(:user)==user
         end
 
 

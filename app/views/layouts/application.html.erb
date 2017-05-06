@@ -64,9 +64,15 @@
             <%=image_tag("profile-pictures.png", alt: "example",width:"50",height: "50" )%>
           <span class="caret"></span></a>
           <ul class="dropdown-menu">
+          <% if user_signed_in? %>
+            <li><%= link_to "Edit profile", edit_user_registration_path %></li>
+            <li role="separator" class="divider"></li>
+            <li><%= link_to "Sign out", destroy_user_session_path, :method => :delete, class: 'log-out-btn'%></li>
+          <% else %>
             <li><%= link_to "Iniciar sesión", new_user_session_path %></li>
             <li role="separator" class="divider"></li>
             <li><%= link_to "Registrarse", new_user_registration_path %></li>
+            <% end %>
           </ul>
         </li>
 

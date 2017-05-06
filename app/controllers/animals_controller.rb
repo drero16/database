@@ -5,10 +5,8 @@ class AnimalsController < ApplicationController
   # GET /animals
   # GET /animals.json
   def index
-
-    @animals = Animal.all
+    @animals = Animal.where(animal_state: 0)
   end
-
   # GET /animals/1
   # GET /animals/1.json
   def show
@@ -35,6 +33,7 @@ class AnimalsController < ApplicationController
      
     @animal = Animal.new(animal_params)
     @animal.user_id = current_user.id
+    @animal.animal_state= 0
   
     respond_to do |format|
       if @animal.save

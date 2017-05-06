@@ -1,0 +1,5 @@
+animal_state:
+0 para animal=animal encontrado
+1=en riesgo
+0 para pet= pet perdida
+1 pet= adoptado

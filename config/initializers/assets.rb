@@ -13,6 +13,6 @@ Rails.application.configure do
   config.assets.precompile += %w[serviceworker.js manifest.json form-elements.css style.scss styleLogin.css jquery.backstretch.js main.scss centered-columns.scss  ejemploPerdido.scss gmaps.js jquery.backstretch.json auth.scss info.scss]
 end
 
-%w( animals comments devices events images information notifications pets races roles users welcome  ).each do |controller|
+%w( adoptions risks animals comments devices events images information notifications pets races roles users welcome  ).each do |controller|
   Rails.application.config.assets.precompile += ["#{controller}.js.coffee", "#{controller}.scss"]
 end

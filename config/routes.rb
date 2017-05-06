@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
   
 
+  resources :adoptions
+
+  resources :risks
+
   devise_for :users
  
   
@@ -30,6 +34,9 @@ post '/unsubscribe'=>"devices#unsubscribe"
   resources :animals do
     resources :comments
     resources :images
+    collection do
+    get 'perdidos'
+  end
   end
 
   resources :races

@@ -12,6 +12,8 @@ class User < ActiveRecord::Base
   has_many :images, :dependent => :destroy
   has_many :devices, :dependent => :destroy
   has_many :notifications, :dependent => :destroy
+  has_many :risks, :dependent => :destroy
+  has_many :adoptions, :dependent => :destroy
   before_create :set_default_role
   def admin?
   self.role.name == "Admin"
