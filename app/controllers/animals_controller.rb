@@ -5,7 +5,12 @@ class AnimalsController < ApplicationController
   # GET /animals
   # GET /animals.json
   def index
-    @animals = Animal.where(animal_state: 0)
+    #@animals = Animal.where(animal_state: 0)
+    @animals = Animal.where(nil)
+    filtering_params(params).each do |key, value|
+      @animals=@animals.public_send(key,value) if value.present?
+    end
+
   end
   # GET /animals/1
   # GET /animals/1.json
@@ -90,4 +95,9 @@ class AnimalsController < ApplicationController
     def animal_params
       params.require(:animal).permit(:animal_type, :age, :sex, :location, :description, :user_id, :race_id)
     end
+
+    def filtering_params(params)
+      params.slice(:animal_type, :sex)
+    end
+
 end
