@@ -31,4 +31,6 @@ class WelcomeController < ApplicationController
   end
   def ejemploenriesgo
   end
+  def ram
+  end
 end
