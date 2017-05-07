@@ -6,7 +6,7 @@ class PetsController < ApplicationController
   # GET /pets
   # GET /pets.json
   def index
-    @pets = Pet.all
+    @pets = Pet.where(animal_state: 0)
   end
 
   # GET /pets/1
@@ -29,6 +29,7 @@ class PetsController < ApplicationController
   def create
     @pet = Pet.new(pet_params)
     @pet.user_id = current_user.id
+    @pet.animal_state= 0
     respond_to do |format|
       if @pet.save
         if params[:images]

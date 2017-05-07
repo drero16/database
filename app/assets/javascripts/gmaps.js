@@ -6,10 +6,10 @@ var marker;
 function gmaps_init(){
 
   // center of the universe
-  var latlng = new google.maps.LatLng(51.751724,-1.255284);
+  var latlng = new google.maps.LatLng(-33.509767, -70.756834);
 
   var options = {
-    zoom: 2,
+    zoom: 15,
     center: latlng,
     mapTypeId: google.maps.MapTypeId.ROADMAP
   };
@@ -117,7 +117,13 @@ function autocomplete_init() {
       // the geocode method takes an address or LatLng to search for
       // and a callback function which should process the results into
       // a format accepted by jqueryUI autocomplete
-      geocoder.geocode( {'address': request.term }, function(results, status) {
+      var req= {
+    address: request.term,
+    componentRestrictions: {
+        country: 'CL'
+    }
+}
+      geocoder.geocode( req, function(results, status) {
         response($.map(results, function(item) {
           return {
             label: item.formatted_address, // appears in dropdown box
@@ -148,6 +154,8 @@ function autocomplete_init() {
     }
   });
 }; // autocomplete_init
+
+
 
 
 

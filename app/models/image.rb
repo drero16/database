@@ -4,6 +4,8 @@ class Image < ActiveRecord::Base
   belongs_to :event
   belongs_to :information
   belongs_to :user
+  belongs_to :adoption
+  belongs_to :risk
 
   has_attached_file :image,
 :styles => { :original => ["1000x1000",:jpg],:thumb => ["100x100#",:jpg]},
