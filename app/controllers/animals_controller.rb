@@ -6,11 +6,22 @@ class AnimalsController < ApplicationController
   # GET /animals.json
   def index
     #@animals = Animal.where(animal_state: 0)
-    @animals = Animal.where(nil)
-    filtering_params(params).each do |key, value|
-      @animals=@animals.public_send(key,value) if value.present?
+#    @filters= Animal.new(animal_params)
+    @animals = Animal.where(animal_state: 0)
+    @animals = @animals.animal_type(params[:animal_type]) if params[:animal_type].present?
+    @animals = @animals.sex(params[:sex]) if params[:sex].present?
+    @animals = @animals.race(params[:race]) if params[:race].present?
+    @animals = @animals.date(params[:date]) if params[:date].present?
+#    @animals = @animals.status(params[:status]) if params[:status].present?
+    if params[:location].present?
+      coords=Geocoder.coordinates(params[:location]) 
+      @animals = @animals.near(coords,2)
     end
-
+#    filtering_params(params).each do |key, value|
+#      @animals=@animals.public_send(key,value) if value.present?
+#    end
+    
+    
   end
   # GET /animals/1
   # GET /animals/1.json
@@ -96,8 +107,8 @@ class AnimalsController < ApplicationController
       params.require(:animal).permit(:animal_type, :age, :sex, :location, :description, :user_id, :race_id)
     end
 
-    def filtering_params(params)
-      params.slice(:animal_type, :sex)
+    def filtering_params
+      params.slice(:animal_type, :sex, :location)
     end
 
 end

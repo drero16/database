@@ -23,13 +23,11 @@
         <h1 class="page-header text-center">Busca un animal encontrado</h1>
         <h5 class="text-center"> Utiliza los filtros de abajo que te ayudaran a especificar tu busqueda.</h5>
   </div>
-
-
-  <form >
+  <form action="/animals">
     <div class="row row-centered">
       <div class="col-xs-8 col-md-8 col-centered">
         <label for="gmaps-input-address" class="control-label">Dirección</label>
-        <input type="text"  class="form-control" id="gmaps-input-address">
+        <input type="text" name="location" class="form-control" id="gmaps-input-address" value="<%=params[:location]%>">
         <div id='gmaps-error'></div>
                 <div id='gmaps-canvas' class=" hidden"></div>
       </div>
@@ -41,31 +39,37 @@
     <div class="row row-centered">
       <div class="col-xs-4 col-md-2  col-centered">
         <label for="animal">Animal</label>
-        <select class="form-control" id="animal">
-          <option>Perro</option>
-          <option>Gato</option>
-        </select>
+       
+         <% option = options_for_select(["Perro","Gato","Otro"],:selected=> params[:animal_type]) %>
+        <%= select_tag :animal_type,  option, {:class=>'form-control', :include_blank=>"Todas"}%>
       </div>
 
       <div class="col-xs-4 col-md-2  col-centered">
         <label for="raza">Raza</label>
-        <select class="form-control" id="raza">
+<!--        <select class="form-control" id="raza">
           <option>Pitbull</option>
           <option>Pastor Alemán</option>
-        </select>
+        </select>-->
+        <% @races=Race.all %>
+    <% options = options_from_collection_for_select(@races, 'id', 'name',:selected=> params[:race]) %>
+    <%= select_tag :race,  options, {:class=>'form-control', :include_blank=>"Todas",}%>
       </div>
 
       <div class="col-xs-4 col-md-2  col-centered">
         <label for="sexo">Sexo</label>
-        <select class="form-control" id="sexo">
+<!--        <select class="form-control" id="sexo">
+          <option>Cualquiera</option>
           <option>Macho</option>
           <option>Hembra</option>
-        </select>
+        </select> -->
+        <% options2 = options_for_select(["Macho","Hembra"],:selected=> params[:sex]) %>
+        <%= select_tag :sex,  options2, {:class=>'form-control', :include_blank=>"Cualquiera"}%>
+
       </div>
 
       <div class="col-xs-4 col-md-2  col-centered">
         <label for="fecha">Fecha</label>
-        <input type="date" id="fecha" class="form-control">
+        <input name="date" type="date" id="fecha" value="<%=params[:date]%>"class="form-control">
       </div>
 
       <div class="col-xs-4 col-md-2  col-centered">
@@ -89,22 +93,24 @@
 <% @animals.each do |animal| %>
 <div class="well search-result">
   <div class="row">
-    <a href="#">
         <div class="col-xs-6 col-sm-3 col-md-5 col-lg-4">
           <% unless animal.images.empty? %>
             <%= link_to image_tag(animal.images.first.image.url(:original), :class=>"img-responsive" ), animal%>
             <% end %>
+            
         </div>
         <div class="col-xs-6 col-sm-9 col-md-7 col-lg-8 title">
             <h3><%= animal.location%></h3>
             <p><%= animal.description %>.</p>
+            <p><%= link_to 'Ver más', animal %></p>
         </div>
-    </a>
   </div>
 </div>
 <%end%>
+</div>
+</div>
 
-<table>
+<!--<table>
   <thead>
     <tr>
       <th>Animal type</th>
@@ -128,6 +134,7 @@
         <td><%= animal.description %></td>
         <td><%= animal.user.name   %></td>
         <td><%= animal.race.name %></td>
+        <td><%= animal.created_at %></td>
         <td><%= link_to 'Show', animal %></td>
           <td>
           <% if can? :update, animal %>
@@ -149,3 +156,4 @@
 <%= link_to 'New Animal', new_animal_path %>
 <% end %>
 
+-->

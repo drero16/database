@@ -1,4 +1,26 @@
-<%= form_for @animal, :html => {:multipart => true}  do |f| %>
+<% content_for :stylesheets do %>
+  <%= stylesheet_link_tag "gmaps" %>
+    <%= stylesheet_link_tag "centered-columns" %>
+  <%= stylesheet_link_tag "ejemploPerdido" %>
+<% end %>
+
+<% content_for :js do %>
+  <%= javascript_include_tag "jquery.backstretch" %>
+  <%= javascript_include_tag "gmaps" %>
+  <script>
+    $(document).ready(function() { 
+  if( $('#gmaps-canvas').length  ) {
+    gmaps_init();
+    autocomplete_init();
+  }; 
+  
+
+});
+  </script>
+<% end %>
+
+
+<%= form_for @animal, :html => {:multipart => true,:class => "form-horizontal form-bottom"}  do |f| %>
   <% if @animal.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@animal.errors.count, "error") %> prohibited this animal from being saved:</h2>
@@ -11,42 +33,55 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :animal_type, "Tipo de animal" %><br>
-  <!--  <%= f.text_field :animal_type %>   -->
-    <%= f.select :animal_type, ["Gato","Perro","Otro" ]%>  
+  <div class="form-group">
+    <%= f.label :animal_type, "Tipo de animal", class: "col-sm-2 control-label" %>
+    <div class="col-sm-10">
+      <%= f.select :animal_type, ["Gato","Perro","Otro" ],{},{class: 'form-control'}%>
+    </div>  
+  </div>
+
+  <div class="form-group">
+    <%= f.label :race_id, "Raza", class: "col-sm-2 control-label" %>
+    <div class="col-sm-10">
+      <% @races=Race.all %>
+      <% options = options_from_collection_for_select(@races, 'id', 'name') %>
+      <%= f.select :race_id,  options,{},{class: 'form-control'} %>
     </div>
-  <div class="field">
-    <%= f.label :age %><br>
-    <%= f.number_field :age %>
   </div>
-  <div class="field">
-    <%= f.label :sex %><br>
-   <!-- <%= f.text_field :sex %> -->
-    <%= f.select :sex, ["Hembra","Macho","Otro"]%>  
+
+  <div class="form-group">
+    <%= f.label :sex, "Sexo", class: "col-sm-2 control-label" %>
+    <div class="col-sm-10">
+      <%= f.select :sex, ["Hembra","Macho","Otro"],{},{class: 'form-control'}%>
+    </div>  
   </div>
-  <div class="field">
-    <%= f.label :location %><br>
-    <%= f.text_area :location %>
-  </div>
-  <div class="field">
-    <%= f.label :description %><br>
-    <%= f.text_area :description %>
-  </div>
-  
-  <div class="field">
- <!--   <%= f.label :race_id %><br>
-    <%= f.text_field :race_id %> -->
-    <% @races=Race.all %>
-    <% options = options_from_collection_for_select(@races, 'id', 'name') %>
-    <%= f.select :race_id,  options %>
+  <div class="form-group">
+    <%= f.label :location,"¿Dónde lo encontraste?", class: "col-sm-2 control-label", for:"gmaps-input-address" %>
+	   <div class="col-sm-10">
+        <%= f.text_field :location,class: "form-control",id:"gmaps-input-address",placeholder:"Empieza escribiendo una dirección..."%>
+        <div id='gmaps-error'></div>
+        <div id='gmaps-canvas' class=" hidden-sm hidden-xs"></div>
+	   </div>
 
   </div>
 
-  <div class="field">
-    <%= file_field_tag "images[]", type: :file, multiple: true %>
+  <div class="form-group">
+    <%= f.label :description,"Descripción", class: "col-sm-2 control-label" %>
+	   <div class="col-sm-10">
+        <%= f.text_area :description, class: "form-control",rows: "5" %>
+	   </div>
   </div>
-  <div class="actions">
-    <%= f.submit %>
+
+  <div class="form-group">
+    <%= f.label :image_id,"¡Sube una foto del animal!", class: "col-sm-2 control-label" %>
+     <div class="col-sm-10">    
+        <%= file_field_tag "images[]", type: :file, multiple: true,class: "form-control" %>
+      </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <%= f.submit "¡Listo!",class: "btn btn-default" %>
+    </div>  
   </div>
 <% end %>
