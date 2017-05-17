@@ -5,14 +5,14 @@
 <% content_for :js do %>
   <%= javascript_include_tag "gmaps" %>
   <script>
-    $(document).ready(function() { 
+    $(document).on('turbolinks:load', function() { 
   if( $('#gmaps-canvas').length  ) {
     gmaps_init();
     autocomplete_init();
   }; 
   
 
-});
+  });
   </script>
 <% end %>
 

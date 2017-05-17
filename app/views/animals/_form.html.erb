@@ -4,20 +4,19 @@
   <%= stylesheet_link_tag "ejemploPerdido" %>
 <% end %>
 
-<% content_for :js do %>
+<!--<% content_for :js do %>
   <%= javascript_include_tag "jquery.backstretch" %>
   <%= javascript_include_tag "gmaps" %>
   <script>
-    $(document).ready(function() { 
-  if( $('#gmaps-canvas').length  ) {
+
+    $(document).on('turbolinks:load', function() {
+      if( $('#gmaps-canvas').length  ) {
     gmaps_init();
     autocomplete_init();
   }; 
-  
-
 });
   </script>
-<% end %>
+<% end %> -->
 
 
 <%= form_for @animal, :html => {:multipart => true,:class => "form-horizontal form-bottom"}  do |f| %>
@@ -71,14 +70,49 @@
         <%= f.text_area :description, class: "form-control",rows: "5" %>
 	   </div>
   </div>
+  <% if @animal.persisted?%>
+    <div class="form-group">
+      <%= f.label "Selecciona las fotos que deseas eliminar", class: "col-sm-2 control-label" %>
+      <div class="col-sm-10">
+        <ul class="thumbnails files list-inline">
+          <% unless @animal.images.empty? %>
+            <% @animal.images.each do |pic| %>
+              <li class="span3" id="image_<%= pic.id %>">
+                <div class="thumbnail">
+                  <!-- <%= image_tag pic.image.url(:thumb) %> -->
+                  <%=link_to image_tag(pic.image.url(:thumb)), pic.image.url(:original), :popup=>[  '   original_image', 'height=700,width=900'] %>
+                  <% if can? :destroy, pic %>
+                   <!-- <%=
+                      link_to '<i class="fa fa-times fa-2x" aria-hidden="true"></i>'.html_safe, [@animal,pic],
+                      :data => { :confirm => "Are you sure?" },
+                      :method => :delete
+                    %> -->
+                    <%= check_box_tag "selected[]", pic.id, false, :id => pic.id%>
 
-  <div class="form-group">
-    <%= f.label :image_id,"¡Sube una foto del animal!", class: "col-sm-2 control-label" %>
-     <div class="col-sm-10">    
-        <%= file_field_tag "images[]", type: :file, multiple: true,class: "form-control" %>
+                  <% end %> 
+                </div>
+             </li>
+            <% end %>
+          <% end %>
+        </ul>
       </div>
-  </div>
+    </div>
+    
 
+    <div class="form-group">
+      <%= f.label :image_id,"¡Sube mas fotos del animal!", class: "col-sm-2 control-label" %>
+       <div class="col-sm-10">    
+          <%= file_field_tag "images[]", type: :file, multiple: true,class: "form-control" %>
+        </div>
+    </div> 
+  <% else %>
+   <div class="form-group">
+      <%= f.label :image_id,"¡Sube una foto del animal!", class: "col-sm-2 control-label" %>
+       <div class="col-sm-10">    
+          <%= file_field_tag "images[]", type: :file, multiple: true,class: "form-control" %>
+        </div>
+    </div>
+  <%end%>
   <div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">
       <%= f.submit "¡Listo!",class: "btn btn-default" %>
