@@ -71,6 +71,8 @@ post '/unsubscribe'=>"devices#unsubscribe"
   get 'welcome/animalenriesgo'
   get 'welcome/ejemploenriesgo'
   get 'welcome/ram'
+  get 'welcome/notificaciones'
+  get 'welcome/temascreados'
 
 
   # The priority is based upon order of creation: first created -> highest priority.

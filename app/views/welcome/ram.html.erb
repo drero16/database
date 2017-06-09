@@ -1,10 +1,13 @@
 <% content_for :stylesheets do %>
   <%= stylesheet_link_tag "ram" %>
+  <%= stylesheet_link_tag "centered-columns" %>
 <% end %>
 
-    <div class="row">
+    <div class= "content">
           <div class="col-md-12">
-            <h1 class="text-center">Acerca de RAM</h1>
+          <br></br>
+          <h1 class="text-center"> Acerca de RAM</h1>
+          <br> </br>
           </div>
     </div>
 
@@ -14,49 +17,107 @@
 					<div class="col-md-6 welcome-grid text-center">
 						<h3>¿QUÉ ES RAM?</h3>
 						
-						<p>Rescate Animal Maipú es un equipo de rescatistas preocupados por la tenencia responsable de mascotas. Trabajamos en conjunto por el rescate de aquellos animales en situación de abandono. </p>
+						<p>“Rescate Animal Maipú” es una agrupación animalista de la comuna de Maipú con personalidad jurídica n° 3047, su labor en la comunidad es rescatar, rehabilitar y dar en adopción a perros, gatos y animales que se encuentren en situación de abandono. En general, tomar conciencia de la realidad que sufre la comuna y su entorno con respecto al abandono animal o animal callejero. </p>
 
-	<p>Entre las actividades realizamos esterilizaciones, charlas sobre tenencia responsable y 	maltrato animal, rehabilitación y lo más importante lograr la ¡ADOPCIÓN! de aquellos más necesitados. Seguimos con la convicción de que de esta forma podremos cambiar el destino de aquellos seres abandonados, atropellados, maltratados, enfermos, violentados; y la de esta sociedad.</p>
-
+						<p>La agrupación se inicia en Julio de 2015. Se ha rehabilitado aproximadamente a más de 500 animales en situación de abandono, entregándolos en adopción a casi la totalidad. El grupo conforma un equipo de alrededor de 20 socios y voluntarios. Tiene aproximadamente 15.000 seguidores o conocedores de su labor, quienes la mayoría son parte de la comuna de Maipú.</p>
 					</div>
+
 					<div class="col-md-6 images">
 						<div class="img1">
-							<%=image_tag("z6.jpg", class:"img-responsive", alt: "" )%>
+						<%=image_tag("z6.jpg", class:"img-responsive", alt: "" )%>
 						</div>
 						<div class="img2">
 						<%=image_tag("z7.jpg", class:"img-responsive", alt: "" )%>
 						</div>
-						<div class="clearfix"></div>
 					</div>
-					<div class="clearfix"></div>
 				</div>
 			</div>
-			<div class="about-section text-center">
-				<div class="container">
-					<h2>¿CÓMO AYUDAR?</h2>
-					<div class="col-md-6 about-section-grid text-left">
-						<p>¡ADOPTA! Es nuestra misión fundamental tras finalizar nuestro proceso de rescate, Adoptando no solo nos ayudas a nosotros a continuar con este hermoso trabajo, si no que le da una nueva posibilidad de vida a un animal.
 
-						</p>
 
-						<p>Se hogar temporal. Si decides dar hogar temporal, puedes  </p>
-					</div>
-					<div class="col-md-6 about-section-grid text-left">
+			<div class="ayuda text-center">
+				
+				<div class="section">
+              <div class="container">
+                  <div class="row">
+                    <div class="col-md-12">
+                    <h1 class="text-center text-primary">¿Cómo ayudar? </h1>
+                    <p class="text-center"> </p>
+                    <br></br>
+                    </div>
+                  </div>
 
-						<p>Hazte SOCIO RAM. Necesitamos en esta labor un fondo constante para el rescate, por ello solicitamos la inscripción de socios que aporten mensualmente con una cuota mínima fija para que este trabajo continúe y no decaiga.</p>
-					</div>
-					<div class="clearfix"></div>
-					
-					
-				</div>
-			</div>
+                  <div class="row">
+                    <div class=" col-xs-4 col-md-2">
+                    <%=image_tag("ayuda1.png",  class: "center-block img-circle img-responsive" )%>         <h3 class="text-center">Adopta!</h3>
+                    </div>
+                    <div class="col-xs-4 col-md-2">
+                    <%=image_tag("ayuda2.png",  class: "center-block img-circle img-responsive" )%>   
+                    <h3 class="text-center">Sé hogar temporal</h3>
+                    </div>
+                    <div class="col-xs-4 col-md-2">
+                    <%=image_tag("ayuda3.png",  class: "center-block img-circle img-responsive" )%>   
+                    <h3 class="text-center">Hazte Socio</h3>
+                    <p class="text-center">Aporta desde luka mensual</p>
+                    </div>
+                    <div class="col-xs-4 col-md-2">
+                    <%=image_tag("ayuda4.png",  class: "center-block img-circle img-responsive" )%>   
+                    <h3 class="text-center">Hazte Voluntario</h3>
+                    </div>
+                    <div class="col-xs-4 col-md-2">
+                    <%=image_tag("ayuda5.png",  class: "center-block img-circle img-responsive" )%>   
+                    <h3 class="text-center">Apadrina un animal</h3>
+                    </div>
+                    <div class="col-xs-4 col-md-2">
+                    <%=image_tag("ayuda6.png",  class: "center-block img-circle img-responsive" )%>   
+                    <h3 class="text-center">Aportes monetarios y donaciones</h3>
+                    </div>
+                  </div>
+              </div>
+        </div>
+      </div>
+
 
 			<div class="welcome-section text-center">
-				<div class="container">
- 				<h1>NUESTRO EQUIPO </h1>
 
- 				<p>Revisa las siguientes imagenes para concer parte de nuestro equipo RAM y el trabajo que realizamos diariamente para mejorar la calidad de vida de nuestros hermanos pequeños.</p>
-				</div>
-			</div>
+				<div class="section">
+              <div class="container">
+                  <div class="row">
+                    <div class="col-md-12 welcome-grid nofloat text-center">
+                    <h1> Nuestro equipo </h1>
+                    <p>Revisa las siguientes imagenes para conocer a la directiva de nuestro equipo RAM </p><br> </br>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class=" col-xs-6 col-md-3 col-circle">
+                    <div class="circle-avatar" style="background-image:url(<%=image_url('Lucia.jpg')%>)"></div>
+                    <h3 class="text-center">Lucia Ulloa Anguita</h3>
+                    <p class="text-center">Presidenta</p>
+                    </div>
+                    <div class=" col-xs-6 col-md-3 col-circle">
+                    <div class="circle-avatar" style="background-image:url(<%=image_url('Gabriela.jpg')%>)"></div>
+                    <h3 class="text-center">Gabriela Parra Llancán</h3>
+                    <p class="text-center">Vicepresidenta</p>
+                    </div>
+                    <div class=" col-xs-6 col-md-3 col-circle">
+                    <div class="circle-avatar" style="background-image:url(<%=image_url('David.jpg')%>)"></div>
+                    <h3 class="text-center">David Álvarez Salas</h3>
+                    <p class="text-center">Secretario</p>
+                    </div>
+                    <div class=" col-xs-6 col-md-3 col-circle">
+                    <div class="circle-avatar" style="background-image:url(<%=image_url('Tamara.jpg')%>)"></div>
+                    <h3 class="text-center">Tamara Adasme Campos</h3>
+                    <p class="text-center">Tesorera</p>
+                    </div>
+                  </div>
+              </div>
+        </div>
+      </div>
+
+
+
+
+      
 			
-		</div>
+			
+

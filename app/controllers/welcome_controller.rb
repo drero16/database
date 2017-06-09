@@ -33,4 +33,8 @@ class WelcomeController < ApplicationController
   end
   def ram
   end
+  def notificaciones
+  end
+  def temascreados
+  end
 end
