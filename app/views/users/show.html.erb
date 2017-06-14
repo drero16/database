@@ -25,5 +25,12 @@
   <%= @user.role %>
 </p>
 
+<p>
+fotos
+<%@user.images.each do |pic|%>
+<%=image_tag pic.image %>
+<% end %>
+</p>
+
 <%= link_to 'Edit', edit_user_path(@user) %> |
 <%= link_to 'Back', users_path %>

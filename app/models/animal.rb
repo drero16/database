@@ -12,5 +12,4 @@ class Animal < ActiveRecord::Base
   scope :date, ->(date) {where("DATE(created_at)= date(?)",date)}
   geocoded_by :location
   after_validation :geocode
-  
 end

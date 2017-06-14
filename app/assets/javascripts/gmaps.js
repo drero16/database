@@ -4,16 +4,16 @@ var marker;
 
 // initialise the google maps objects, and add listeners
 function gmaps_init(){
-
+var latlng;
+var options;
   // center of the universe
-  var latlng = new google.maps.LatLng(-33.509767, -70.756834);
 
-  var options = {
+   latlng = new google.maps.LatLng(-33.509767, -70.756834);
+   options = {
     zoom: 15,
     center: latlng,
     mapTypeId: google.maps.MapTypeId.ROADMAP
-  };
-
+  };  
   // create our map object
   map = new google.maps.Map(document.getElementById("gmaps-canvas"), options);
 
@@ -37,6 +37,7 @@ function gmaps_init(){
     geocode_lookup( 'latLng', event.latLng  );
   });
 
+
   $('#gmaps-error').hide();
 }
 
@@ -50,8 +51,8 @@ function update_map( geometry ) {
 function update_ui( address, latLng ) {
   $('#gmaps-input-address').autocomplete("close");
   $('#gmaps-input-address').val(address);
-  //$('#gmaps-output-latitude').html(latLng.lat());
-  //$('#gmaps-output-longitude').html(latLng.lng());
+  //$('#gmaps-output-latitude').val(latLng.lat());
+  //$('#gmaps-output-longitude').val(latLng.lng());
 }
 
 // Query the Google geocode object
@@ -189,7 +190,7 @@ function onlymap(address){
     
       // create our map object
       map = new google.maps.Map(document.getElementById("map"), options);
-    
+      
     
     
       // the marker shows us the position of the latest address

@@ -71,11 +71,17 @@ class AnimalsController < ApplicationController
   # PATCH/PUT /animals/1.json
   def update
     respond_to do |format|
+      
       if @animal.update(animal_params)
         if params[:images]
           params[:images].each { |image|
           @animal.images.create(image: image)
         }
+        end
+        if params[:selected]
+          params[:selected].each { |selecte|
+            @animal.images.destroy(selecte)
+          }
         end
         format.html { redirect_to @animal, notice: 'Animal was successfully updated.' }
         format.json { render :show, status: :ok, location: @animal }

@@ -7,14 +7,14 @@
     <meta charset="UTF-8">
     <meta name="google" content="notranslate">
     <meta http-equiv="Content-Language" content="es">
-  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBFkGU6pJyyWqKe_ViHOQU_AZaXxXCVZAU&callback=initMap"></script>
+  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBFkGU6pJyyWqKe_ViHOQU_AZaXxXCVZAU"></script>
 
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag    'application', media: 'all'%>
   <% @decodedVapidPublicKey = Base64.urlsafe_decode64(Rails.application.secrets.VAPID_PUBLIC_KEY).bytes%>
   <script>
     window.vapidPublicKey = new Uint8Array(<%= @decodedVapidPublicKey %>);
   </script>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application' %>
   <link rel="manifest" href="/manifest.json" />
   <%= stylesheet_link_tag "application", params[:controller], :media => "all" %>
   <%= yield :js%>

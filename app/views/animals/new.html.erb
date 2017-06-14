@@ -11,3 +11,16 @@
 </div>			
 
 <%= link_to 'Back', animals_path %>
+
+<% content_for :js do %>
+	<%= javascript_include_tag "jquery.backstretch"  %>
+	<%= javascript_include_tag "gmaps" %>
+	<script>
+    	$(document).ready(function() { 
+			if( $('#gmaps-canvas').length  ) {
+    		gmaps_init();
+    		autocomplete_init();
+  			}; 
+  		});
+  	</script>
+<% end %>
