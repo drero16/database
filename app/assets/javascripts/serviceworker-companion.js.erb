@@ -23,18 +23,20 @@ var logout= getUrlParameter('logout');
 
 if(logout=="true")
 {
+  console.log("1");
   navigator.serviceWorker.ready.then(function(reg) {
     reg.pushManager.getSubscription().then(function(subscription) {
       subscription: subscription,
-
+      console.log("2");
       subscription.unsubscribe().then(function(successful) {
         // You've successfully unsubscribed
-        
+        console.log("3");
         $.post('/unsubscribe',{
           subscription: subscription.toJSON()
         });
       }).catch(function(e) {
         // Unsubscription failed
+        
       })
 
                navigator.serviceWorker.getRegistrations().then(function(registrations) {
@@ -89,3 +91,9 @@ function registerDevice()
 
 
 
+//navigator.serviceWorker.ready.then((serviceWorkerRegistration) => {
+//  serviceWorkerRegistration.pushManager.getSubscription().then((subscription) => {
+//    subscription: subscription.toJSON();
+//    console.log(subscription);
+//  });
+//});//

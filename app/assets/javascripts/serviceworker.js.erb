@@ -67,22 +67,23 @@ self.addEventListener('activate', onActivate)
 
 
 self.addEventListener("push", function(event) {
+
   var json = event.data.json();
-  var icon = json.icon;
-  var data= {
-    doge: {
-      url: json.url,
-      user: json.user
-    }
-  };
-    console.log(json);
-    event.waitUntil(self.registration.showNotification(json.title, {
-    body: json.body,
-    data: data,
-   icon: icon
-  }));
- 
+    var icon = json.icon;
+    var data= {
+      doge: {
+        url: json.url,
+        user: json.user
+      }
+    };
+      console.log(json);
+      event.waitUntil(self.registration.showNotification(json.title, {
+      body: json.body,
+      data: data,
+     icon: icon
+    }));
 });
+
 
 
 

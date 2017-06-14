@@ -41,19 +41,23 @@ class CommentsController < ApplicationController
           end
 
           user=post.user
-          unless(@comment.user==user)
-            title=@comment.user.email << " ha respondido a tu publicación."
-            body=@comment.description
-            notify(user,title,body,url)
-          end
+
 
 
         format.html { redirect_to :back, notice: 'Comment was successfully created.' }
         format.json { render :show, status: :created, location: @comment }
+        format.js
+
       else
         format.html { render :new }
         format.json { render json: @comment.errors, status: :unprocessable_entity }
       end
+            unless(@comment.user==user)
+            title=@comment.user.email << " ha respondido a tu publicación."
+            body=@comment.description
+            Notification.create(user: user, titulo: title, mensaje: body, url: url, seen: 0)
+            notify(user,title,body,url)
+          end
     end
   end
 
@@ -78,6 +82,7 @@ class CommentsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to :back, notice: 'Comment was successfully destroyed.' }
       format.json { head :no_content }
+      format.js
     end
   end
 

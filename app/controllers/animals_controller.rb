@@ -17,6 +17,7 @@ class AnimalsController < ApplicationController
       coords=Geocoder.coordinates(params[:location]) 
       @animals = @animals.near(coords,2)
     end
+    #@animals= @animals.paginate(page: params[:page], per_page: 5)
 #    filtering_params(params).each do |key, value|
 #      @animals=@animals.public_send(key,value) if value.present?
 #    end
@@ -60,6 +61,17 @@ class AnimalsController < ApplicationController
         end
         format.html { redirect_to @animal, notice: 'Animal was successfully created.' }
         format.json { render :show, status: :created, location: @animal }
+ #       coord=Geocoder.coordinates(params[:location]) 
+ #       @users_near= User.near(coord,2)
+ #       @users_near.each do |near|
+ #           unless (near==@animal.user)
+ #             user=near
+ #             title="Se ha perdido un animal cerca tuyo!"
+ #             body= near.location
+ #             url= animal_url(@animal)
+ #             Notification.create(user: user, titulo: title, mensaje: body, url: url, seen: 0)
+ #           end
+        end
       else
         format.html { render :new }
         format.json { render json: @animal.errors, status: :unprocessable_entity }

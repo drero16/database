@@ -1,9 +1,10 @@
 source 'https://rubygems.org'
-
+gem 'best_in_place', '~> 3.0.1'
+gem 'phony_rails'
 gem 'geocoder'
 gem 'will_paginate', '~> 3.1.0'
 gem 'bootstrap-sass', '~> 3.3.6'
-gem 'font-awesome-sass', '~> 4.6.2'
+gem 'font-awesome-sass', '~> 4.7.0'
 gem 'jquery-ui-rails'
 
 gem 'webpush'

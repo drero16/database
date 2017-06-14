@@ -4,7 +4,7 @@ class Comment < ActiveRecord::Base
   belongs_to :user
   belongs_to :risk
   belongs_to :adoption
-  has_many :notifications, :dependent => :destroy
+  #has_many :notifications, :dependent => :destroy
   validates :description, :user_id, presence: true
 
 # validate :animal_or_pet

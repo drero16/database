@@ -78,6 +78,13 @@ class Ability
         can :read, Event
         can :read, Information
 
+        can :read, Notification do |notification|
+            notification.try(:user)==user
+        end
+        can :destroy, Notification do |notification|
+            notification.try(:user)==user
+        end
+
         can :read, Pet
         can :create, Pet
         can :update, Pet do |pet|

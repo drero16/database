@@ -1,0 +1,8 @@
+      $('.new_comment').bind('ajax:success', function() {  
+        var pathtopage = window.location.href;
+        console.log(pathtopage);
+        $('#all_comments').load(pathtopage+' #all_comments', function(){
+        	jQuery(".best_in_place").best_in_place();
+        	
+        });
+      }); 
