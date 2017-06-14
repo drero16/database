@@ -24,7 +24,7 @@ post '/unsubscribe'=>"devices#unsubscribe"
 
   resources :notifications
 
- resources :comments
+ resources :comments, only: [:show]
 
   resources :pets do
     resources :comments

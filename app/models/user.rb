@@ -9,12 +9,22 @@ class User < ActiveRecord::Base
   has_many :comments, :dependent => :destroy
   has_many :informations, :dependent => :destroy
   has_many :pets, :dependent => :destroy
-  has_many :images, :dependent => :destroy
   has_many :devices, :dependent => :destroy
   has_many :notifications, :dependent => :destroy
   has_many :risks, :dependent => :destroy
   has_many :adoptions, :dependent => :destroy
   before_create :set_default_role
+
+  phony_normalize :phone, default_country_code: 'CL'
+
+  has_attached_file :avatar,
+:styles => { :original => ["1000x1000",:jpg],:thumb => ["100x100#",:jpg]},
+    :path => ":rails_root/public/profile/:id/:style/:filename",
+    :url  => "/profile/:id/:style/:filename",
+    default_url: "/profile/missing.png"
+  validates_attachment_content_type :avatar, content_type: ['image/jpeg', 'image/png', 'image/gif']
+
+
   def admin?
   self.role.name == "Admin"
   end

@@ -5,10 +5,10 @@
 <table>
   <thead>
     <tr>
-      <th>Description</th>
+      <th>mensaje</th>
       <th>Seen</th>
-      <th>Comment</th>
-      <th>Event</th>
+      <th>titulo</th>
+      <th>user</th>
       <th>Information</th>
       <th colspan="3"></th>
     </tr>
@@ -17,11 +17,10 @@
   <tbody>
     <% @notifications.each do |notification| %>
       <tr>
-        <td><%= notification.description %></td>
+        <td><%= notification.mensaje %></td>
         <td><%= notification.seen %></td>
-        <td><%= notification.comment %></td>
-        <td><%= notification.event %></td>
-        <td><%= notification.information %></td>
+        <td><%= notification.titulo %></td>
+        <td><%= notification.user.name %></td>
         <td><%= link_to 'Show', notification %></td>
         <td><%= link_to 'Edit', edit_notification_path(notification) %></td>
         <td><%= link_to 'Destroy', notification, method: :delete, data: { confirm: 'Are you sure?' } %></td>

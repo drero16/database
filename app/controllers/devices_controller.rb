@@ -28,7 +28,7 @@ class DevicesController < ApplicationController
     unless current_user
       render json: current_user, status: :ok and return
     end    
-    existing_device=current_user.devices.find_by(endpoint: params[:subscription][:endpoint])
+    existing_device=Device.find_by(endpoint: params[:subscription][:endpoint])
     if existing_device
       #endpoint= params[:subscription][:endpoint]
       #p256dh= params[:subscription][:keys][:p256dh]

@@ -15,14 +15,18 @@ before_filter :configure_permitted_parameters, if: :devise_controller?
 
 
   def notify(user,title,body,url)
+    
   	message = {
 	  title: title,
 	  body: body,
 	  icon: "/icon-min.png",
-	  url: url
+	  url: url,
+    idkey: user.id,
+    tag: "1"
 	}
   	user.devices.each do |device|
       #TRY CATCH PARA WEBPUSH, MANEJO DE ERRORES
+      begin
   	 Webpush.payload_send(
      	message: JSON.generate(message),
 	 	endpoint: device.endpoint,
@@ -35,7 +39,11 @@ before_filter :configure_permitted_parameters, if: :devise_controller?
     private_key: Rails.application.secrets.VAPID_PRIVATE_KEY
    }
  )
+     rescue
+      device.destroy
+  end
   	end
+  
   end
 
 
@@ -43,5 +51,6 @@ protected
 def configure_permitted_parameters
   devise_parameter_sanitizer.for(:sign_up) << :name
   devise_parameter_sanitizer.for(:account_update) << :name
+  devise_parameter_sanitizer.permit(:sign_up, keys: [:avatar,:phone])
 end
 end

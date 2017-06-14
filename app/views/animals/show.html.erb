@@ -28,7 +28,7 @@
                 w: <%=@dim.width.to_i%>,
                 h: <%=@dim.height.to_i%>
               },
-              <% end %>
+      <% end %>
             ];
           
           // define options (if needed)
@@ -49,6 +49,7 @@
       
       
       document.getElementById('btn').onclick = openPhotoSwipe;
+      jQuery(".best_in_place").best_in_place();
     });
   </script>
 
@@ -59,14 +60,14 @@
     <div class="panel panel-default col-xs-12 col-md-8 col-centered">
       <div class="col-md-4">
         <img src="https://www.petdarling.com/articulos/wp-content/uploads/2014/05/perro-perdido-que-hago.jpg" class="img-responsive" alt="Image">
-                <dl class="dl-horizontal">
-          <dt>Usuario</dt>
+                <dl class="dl-horizontal dl-info-user">
+          <dt><i class="fa fa-user" aria-hidden="true"></i></dt>
           <dd><%=@animal.user.name%></dd>
           <hr>
-          <dt>N° de contacto</dt>
+          <dt><i class="fa fa-phone" aria-hidden="true"></i></dt>
           <dd><%=@animal.user.phone%></dd>
           <hr>
-          <dt>Email</dt>
+          <dt><i class="fa fa-envelope" aria-hidden="true"></i></dt>
           <dd><%=@animal.user.email%></dd>
         </dl>
 
@@ -74,84 +75,88 @@
 
 
 
+      <% if (@animal.images.count==1) %>
+      <button id="btn" class="btn btn-default"><i class="fa fa-picture-o fa-lg" aria-hidden="true"></i      >
+      Ver foto</button>
+      <% elsif (@animal.images.count>1)%>
+              <button id="btn" class="btn btn-default"><i class="fa fa-picture-o fa-lg" aria-hidden="true"></i      >
+      Mas fotos</button>
+      <% end %> 
 
-<button id="btn" class="btn btn-default"><i class="fa fa-picture-o fa-lg" aria-hidden="true"></i>
-Mas fotos</button>
+      <% if can? :edit, @animal %>
+        <%= link_to 'Editar publicacion', edit_animal_path(@animal), class: "btn btn-warning" %>
+      <% end %>
 
-<!-- Root element of PhotoSwipe. Must have class pswp. -->
-<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
-
-    <!-- Background of PhotoSwipe. 
-         It's a separate element, as animating opacity is faster than rgba(). -->
-    <div class="pswp__bg"></div>
-
-    <!-- Slides wrapper with overflow:hidden. -->
-    <div class="pswp__scroll-wrap">
-
-        <!-- Container that holds slides. PhotoSwipe keeps only 3 slides in DOM to save memory. -->
-        <div class="pswp__container">
-            <!-- don't modify these 3 pswp__item elements, data is added later on -->
-            <div class="pswp__item"></div>
-            <div class="pswp__item"></div>
-            <div class="pswp__item"></div>
-        </div>
-
-        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
-        <div class="pswp__ui pswp__ui--hidden">
-
-            <div class="pswp__top-bar">
-
-                <!--  Controls are self-explanatory. Order can be changed. -->
-
-                <div class="pswp__counter"></div>
-
-                <button class="pswp__button pswp__button--close" title="Cerrar"></button>
-
-                <button class="pswp__button pswp__button--share" title="Share"></button>
-
-                <button class="pswp__button pswp__button--fs" title="Pantalla completa"></button>
-
-                <button class="pswp__button pswp__button--zoom" title="Zoom +/-"></button>
-
-                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
-                <!-- element will get class pswp__preloader--active when preloader is running -->
-                <div class="pswp__preloader">
-                    <div class="pswp__preloader__icn">
-                      <div class="pswp__preloader__cut">
-                        <div class="pswp__preloader__donut"></div>
+      <% if can? :destroy, @animal %>
+        <%= link_to 'Eliminar publicación', @animal, method: :delete, data: { confirm: 'Are you sure?' },class: "btn btn-danger" %>
+      <% end %>
+      <!-- Root element of PhotoSwipe. Must have class pswp. -->
+      <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+      
+          <!-- Background of PhotoSwipe. 
+               It's a separate element, as animating opacity is faster than rgba(). -->
+          <div class="pswp__bg"></div>
+      
+          <!-- Slides wrapper with overflow:hidden. -->
+          <div class="pswp__scroll-wrap">
+      
+              <!-- Container that holds slides. PhotoSwipe keeps only 3 slides in DOM to save memory.       -->
+              <div class="pswp__container">
+                  <!-- don't modify these 3 pswp__item elements, data is added later on -->
+                  <div class="pswp__item"></div>
+                  <div class="pswp__item"></div>
+                  <div class="pswp__item"></div>
+              </div>
+      
+              <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed.       -->
+              <div class="pswp__ui pswp__ui--hidden">
+      
+                  <div class="pswp__top-bar">
+      
+                      <!--  Controls are self-explanatory. Order can be changed. -->
+      
+                      <div class="pswp__counter"></div>
+      
+                      <button class="pswp__button pswp__button--close" title="Cerrar"></button>
+      
+                      <button class="pswp__button pswp__button--share" title="Share"></button>
+      
+                      <button class="pswp__button pswp__button--fs" title="Pantalla completa"></button      >
+      
+                      <button class="pswp__button pswp__button--zoom" title="Zoom +/-"></button>
+      
+                      <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                      <!-- element will get class pswp__preloader--active when preloader is running       -->
+                      <div class="pswp__preloader">
+                          <div class="pswp__preloader__icn">
+                            <div class="pswp__preloader__cut">
+                              <div class="pswp__preloader__donut"></div>
+                            </div>
+                          </div>
                       </div>
-                    </div>
+                  </div>
+      
+                  <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                      <div class="pswp__share-tooltip"></div> 
+                  </div>
+      
+                  <button class="pswp__button pswp__button--arrow--left" title="Anterior">
+                  </button>
+      
+                  <button class="pswp__button pswp__button--arrow--right" title="Siguiente">
+                  </button>
+      
+                  <div class="pswp__caption">
+                      <div class="pswp__caption__center"></div>
+                  </div>
+      
                 </div>
-            </div>
-
-            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
-                <div class="pswp__share-tooltip"></div> 
-            </div>
-
-            <button class="pswp__button pswp__button--arrow--left" title="Anterior">
-            </button>
-
-            <button class="pswp__button pswp__button--arrow--right" title="Siguiente">
-            </button>
-
-            <div class="pswp__caption">
-                <div class="pswp__caption__center"></div>
-            </div>
-
-          </div>
-
-        </div>
-
-</div>
-
-
-
-
-
-
-
-
+      
+              </div>
+      
       </div>
+    </div>
+
       <div class="panel-body col-md-8 ">
         <dl class="dl-horizontal">
           <dt>Animal</dt>
@@ -207,109 +212,99 @@ Mas fotos</button>
 
 
 
-
-
-<p id="notice"><%= notice %></p>
-
-<!--Datos de animal -->
-<p>
-  <strong>Animal type:</strong>
-  <%= @animal.animal_type %>
-</p>
-<p>
-  <strong>id:</strong>
-  <%= @animal.id %>
-</p>
-<p>
-  <strong>Age:</strong>
-  <%= @animal.age %>
-</p>
-
-<p>
-  <strong>Sex:</strong>
-  <%= @animal.sex %>
-</p>
-
-<p>
-  <strong>Location:</strong>
-  <%= @animal.location %>
-</p>
-
-<p>
-  <strong>Description:</strong>
-  <%= @animal.description %>
-</p>
-
-<p>
-  <strong>User:</strong>
-  <%= @animal.user.name %>
-</p>
-
-<p>
-  <strong>Race:</strong>
-  <%= @animal.race.name %>
-</p>
-
-<%= link_to 'Edit', edit_animal_path(@animal) %> |
-<%= link_to 'Back', animals_path %>
-
-
 <!--Fotos de animal -->
-
-
-<div class="row">
-  <ul class="thumbnails files">
-    <% unless @animal.images.empty? %>
-      <% @animal.images.each do |pic| %>
-        <li class="span3" id="image_<%= pic.id %>">
-          <div class="thumbnail">
-            <!-- <%= image_tag pic.image.url(:thumb) %> -->
-            <%=link_to image_tag(pic.image.url(:thumb)), pic.image.url(:original), :popup=>['original_image', 'height=700,width=900'] %>
-            <% if can? :destroy, pic %>
-              <%=
-                link_to "Delete image", [@animal,pic],
-                :data => { :confirm => "Are you sure?" },
-                :method => :delete
-              %>
-            <% end %>   
-            <div class="caption">
-              <p style="text-align: center;">
-              <!-- <%= link_to "Edit image", image_path(pic) %> -->
-              </p>
-            </div>
-          </div>
-       </li>
-      <% end %>
-    <% end %>
-  </ul>
-</div>
 
 
 
 <!--Listar todos los comentarios del animal mostrado -->
 
-  <table>
-    <tr>
-      <th>Comentario</th>
-      <th>Usuario</th>
-      <th>Creado</th>
-      <th>asd</th>
-    </tr>
-    <tr>
-      <% @animal.comments.each do |comment|%>
-      <td><%= comment.description %></td>
-      <td><%= comment.user.name %></td>
-      <td><%= comment.created_at %></td>
-      <td><%= link_to 'Edit',edit_animal_comment_path(@animal,comment)%></td>
-      <td><%= link_to 'Destroy', [@animal,comment], method: :delete, data: { confirm: 'Are you sure?' } %></td>
-    </tr>
-    <% end %>
-  </table>
+
+
+
+  <div class="container">
+    <div class="row row-centered" id="all_comments">
+    <h3>Comentarios</h3>
+      <% @i=1 %>
+      <% @animal.comments.each_with_index do |comment,index|%>
+        <div class="col-md-8 col-xs-12 col-centered" id="comment_box" >
+          <div class="col-md-2 col-xs-3">
+            <div class="thumbnail">
+              <%= image_tag comment.user.avatar, class: "img-responsive" %>
+            </div><!-- /thumbnail -->
+          </div><!-- /col-sm-1 -->
+      
+          <div class="col-md-10 col-xs-9">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <strong><%=comment.user.name%></strong> <span class="text-muted">Hace <%=distance_of_time_in_words(Time.now,comment.created_at)%></span>
+                 <div class="pull-right">
+                 <% if ((current_user == @animal.user) or (current_user.admin?))%>
+                    <a role="button" data-toggle="collapse" data-target="  #comment<%=index%>"><i class="fa fa-id-card-o fa-lg fa-fw" aria-hidden="true"></i> </a>
+                    <%end%>
+
+                    <% if can? :edit, comment %>
+                        <a id="activator<%=index%>"  role="button"><i class="fa fa-pencil fa-lg fa-fw" aria-hidden="true"></i></a>
+                     <% end %>
+                     <% if can? :destroy, comment %>
+                        <%= link_to raw('<i class="fa fa-trash fa-lg fa-fw" aria-hidden="true"></i>'), [@animal,comment], method: :delete, data: { confirm: 'Are you sure?' }, :remote => true, :class => 'delete_comment' %>
+
+                     <%end%>
+                    </div>
+                    <% if ((current_user == @animal.user) or (current_user.admin?))%>
+                    <div id="comment<%=index%>" class="collapse">
+                      <dl class="dl-horizontal dl-data-comment">
+                        <hr>
+                        <dt><i class="fa fa-phone" aria-hidden="true"></i></dt>
+                        <dd><%=@animal.user.phone%></dd>
+                        <hr>
+                        <dt><i class="fa fa-envelope" aria-hidden="true"></i></dt>
+                        <dd><%=@animal.user.email%></dd>
+                      </dl>
+                    </div>
+
+                  <% end %>
+              </div>
+            <div class="panel-body media-body">
+            
+              <%= best_in_place_if (can? :edit, comment),   [@animal,comment], :description, :as => :textarea, :inner_class =>"comment-area", :activator => "#activator#{index}",:ok_button => "Listo" %>
+
+
+            </div><!-- /panel-body -->
+            </div><!-- /panel panel-default -->
+          </div><!-- /col-sm-5 -->
+        
+        </div>
+      <% end%>
+
+        <div class="col-md-8 col-xs-12 col-centered" id="new_comment_box" >
+          <div class="col-md-2 col-xs-3">
+            <div class="thumbnail">
+              <%= image_tag current_user.avatar, class: "img-responsive" %>
+            </div><!-- /thumbnail -->
+          </div><!-- /col-sm-1 -->
+            <div class="col-md-10 col-xs-9">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <strong><%=current_user.name%></strong>
+                </div>
+                <div class="panel-body media-body">
+                  <%= form_for [@animal,@comment] , remote: true do |f| %>
+                  <%= f.text_area :description, class: "comment-area" %>
+                  <%= f.submit %>
+                  <%end %>
+                </div>
+              </div>
+            </div>
+        </div>
+
+    </div> <!-- row centered -->
+  </div>
+
 
 <!--Formulario para ingresar comentarios -->
 
 
-<%= form_for [@animal,@comment] do |f| %>
+<%= form_for [@animal,@comment], remote: true do |f| %>
 
   <% if @comment.errors.any? %>
     <div id="error_explanation">
@@ -327,24 +322,10 @@ Mas fotos</button>
 
     <%= f.label :description, "Comentario" %><br>
     <%= f.text_area :description %>
-<!--  </div>
-  <div class="field">
-    <%= f.label :animal_id %><br>
-    <%= f.text_field :animal_id %>
-  </div>
-  <div class="field">
-    <%= f.label :pet_id %><br>
-    <%= f.text_field :pet_id %>
-  </div>
-  <div class="field">
-    <%= f.label :user_id %><br>
-    <%= f.text_field :user_id %>
-  </div>
-  -->
-
   <div class="actions">
   
-    <%= f.submit %>
+    <%= f.submit 'ss', class: 'create_comment' %>
   </div>
 <% end %>
 
+  
