@@ -1,63 +1,212 @@
-<p id="notice"><%= notice %></p>
+<% content_for :stylesheets do %>
+  <%= stylesheet_link_tag "centered-columns" %>
+  <%= stylesheet_link_tag "ejemploPerdido" %>
+  <%= stylesheet_link_tag "photoswipe" %>
+  <%= stylesheet_link_tag "default-skin" %>
+<% end %>
 
-<p>
-  <strong>Title:</strong>
-  <%= @event.title %>
-</p>
+<% content_for :js do %>
 
-<p>
-  <strong>Description:</strong>
-  <%= @event.description %>
-</p>
+  <%= javascript_include_tag "gmaps" %>
+  <%= javascript_include_tag "photoswipe" %>
+  <%= javascript_include_tag "photoswipe-ui-default" %>
+  <script>
+    $(document).ready(function() { 
+      if($('#map').length ){
+        onlymap("<%=@event.location%>");
+      }
+      <% if @event.images.present? %>
+            var openPhotoSwipe = function() {
+            var pswpElement = document.querySelectorAll('.pswp')[0];
+      
+            // build items array
+            var items = [
+              <% @event.images.each do |attach| %>
+              {
+                src: '<%=image_path attach.image%>'
+                <%@dim=Paperclip::Geometry.from_file(attach.image)%>,
+                w: <%=@dim.width.to_i%>,
+                h: <%=@dim.height.to_i%>
+              },
+      <% end %>
+            ];
+          
+          // define options (if needed)
+            var options = {
+                   // history & focus options are disabled on CodePen        
+              history: false,
+              focus: false,
+      
+              showAnimationDuration: 0,
+              hideAnimationDuration: 0
+              
+            };
+          
+            var gallery = new PhotoSwipe( pswpElement, PhotoSwipeUI_Default, items, options);
+            gallery.init();
+          };
+      <% end %>
+      
+      
+      document.getElementById('btn').onclick = openPhotoSwipe;
+      jQuery(".best_in_place").best_in_place();
+    });
+  </script>
 
-<p>
-  <strong>Date event:</strong>
-  <%= @event.date_event %>
-</p>
+<% end %>
 
-<p>
-  <strong>Location:</strong>
-  <%= @event.location %>
-</p>
+<div class="container-fluid">
+    <div class="row row-centered">
+    <div class="panel panel-default col-xs-12 col-md-8 col-centered">
+      <div class="col-md-4">
+        <% if @event.images.first.present? %>
+        <%= image_tag @event.images.first.image.url, class: "img-responsive" %>
+        <% end %>
+      <% if (@event.images.count==1) %>
+      <button id="btn" class="btn btn-default"><i class="fa fa-picture-o fa-lg" aria-hidden="true"></i      >
+      Ver imágen</button>
+      <% elsif (@event.images.count>1)%>
+              <button id="btn" class="btn btn-default"><i class="fa fa-picture-o fa-lg" aria-hidden="true"></i      >
+      Mas imágenes</button>
+      <% end %> 
 
-<p>
-  <strong>User:</strong>
-  <%= @event.user %>
-</p>
+<% if (can? :edit, @event) or (can? :destroy, @event) %>
+<div class="btn-group">
+  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <i class="fa fa-cog fa-lg"></i> Opciones<span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu">
+    <% if can? :edit, @event %>
+    <li><%= link_to edit_event_path(@event) do%>
+      <i class="fa fa-pencil fa-lg"></i> Editar
+      <% end %>
+    </li>
+    <% end %>
 
-<%= link_to 'Edit', edit_event_path(@event) %> |
-<%= link_to 'Back', events_path %>
-
-
-
-<!-- Fotos -->
-
-<div class="row">
-  <ul class="thumbnails files">
-<% unless @event.images.empty? %>
-  <% @event.images.each do |pic| %>
-    <li class="span3" id="image_<%= pic.id %>">
-    <div class="thumbnail">
-     <!-- <%= image_tag pic.image.url(:thumb) %> -->
-      <%=link_to image_tag(pic.image.url(:thumb)), pic.image.url(:original), :popup=>['original_image', 'height=700,width=900'] %>
-      <% if can? :destroy, pic %>
-      <%=
-          link_to "Delete image", [@event,pic],
-            :data => { :confirm => "Are you sure?" },
-            :method => :delete
-          %>
-          <% end %>
-      <div class="caption">
-        <p style="text-align: center;">
-       <!-- <%= link_to "Edit image", image_path(pic) %> -->
-
-        
-
-        </p>
+    <% if can? :destroy, @event %>
+    <li><%= link_to @event, method: :delete, data: { confirm: 'Are you sure?' } do%>
+      <i class="fa fa-trash-o fa-lg"></i> Eliminar
+      <% end %>
+    </li>
+    <% end %>    
+    
+  </ul>
+</div>
+<% end %>
+      <!-- Root element of PhotoSwipe. Must have class pswp. -->
+      <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+      
+          <!-- Background of PhotoSwipe. 
+               It's a separate element, as animating opacity is faster than rgba(). -->
+          <div class="pswp__bg"></div>
+      
+          <!-- Slides wrapper with overflow:hidden. -->
+          <div class="pswp__scroll-wrap">
+      
+              <!-- Container that holds slides. PhotoSwipe keeps only 3 slides in DOM to save memory.       -->
+              <div class="pswp__container">
+                  <!-- don't modify these 3 pswp__item elements, data is added later on -->
+                  <div class="pswp__item"></div>
+                  <div class="pswp__item"></div>
+                  <div class="pswp__item"></div>
+              </div>
+      
+              <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed.       -->
+              <div class="pswp__ui pswp__ui--hidden">
+      
+                  <div class="pswp__top-bar">
+      
+                      <!--  Controls are self-explanatory. Order can be changed. -->
+      
+                      <div class="pswp__counter"></div>
+      
+                      <button class="pswp__button pswp__button--close" title="Cerrar"></button>
+      
+                      <button class="pswp__button pswp__button--share" title="Share"></button>
+      
+                      <button class="pswp__button pswp__button--fs" title="Pantalla completa"></button      >
+      
+                      <button class="pswp__button pswp__button--zoom" title="Zoom +/-"></button>
+      
+                      <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                      <!-- element will get class pswp__preloader--active when preloader is running       -->
+                      <div class="pswp__preloader">
+                          <div class="pswp__preloader__icn">
+                            <div class="pswp__preloader__cut">
+                              <div class="pswp__preloader__donut"></div>
+                            </div>
+                          </div>
+                      </div>
+                  </div>
+      
+                  <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                      <div class="pswp__share-tooltip"></div> 
+                  </div>
+      
+                  <button class="pswp__button pswp__button--arrow--left" title="Anterior">
+                  </button>
+      
+                  <button class="pswp__button pswp__button--arrow--right" title="Siguiente">
+                  </button>
+      
+                  <div class="pswp__caption">
+                      <div class="pswp__caption__center"></div>
+                  </div>
+      
+                </div>
+      
+              </div>
+      
       </div>
     </div>
-    </li>
-  <% end %>
-<% end %>
-</ul>
+
+      <div class="panel-body col-md-8 ">
+        <dl class="dl-horizontal">
+          <dt>Evento</dt>
+          <dd><%=@event.title%></dd>
+          <hr>
+          <dt>Descripción</dt>
+          <dd><%=@event.description%></dd>
+          <hr>
+          <dt>Fecha</dt>
+          <dd><%=@event.date_event%></dd>
+          <hr>
+          <dt>Ubicación</dt>
+          <dd><%=@event.location%></dd>
+          <hr>
+          
+          <dt>Comparte!</dt>
+          <dd>
+            <ul class="share-buttons">
+          <li>
+          <a href="https://www.facebook.com/sharer/sharer.php?u=#url&t=" title="Compartir en Facebook" target="_blank">
+          
+           <%=image_tag("social_flat_rounded_rects_svg/Facebook.svg", alt: "" )%>
+          </a>
+          </li>
+          <li>
+          <a href="https://twitter.com/intent/tweet?text=<%=request.original_url%>" target="_blank" title="Tweet">
+          
+           <%=image_tag("social_flat_rounded_rects_svg/Twitter.svg", alt: "" )%>
+          </a>
+          </li>
+          <li>
+          <a href="https://plus.google.com/share?url=#url" target="_blank" title="Compartir en Google+">
+          
+           <%=image_tag("social_flat_rounded_rects_svg/Google.svg", alt: "" )%>
+          </a>
+          </li>
+        </ul>
+          </dd>
+
+        </dl>
+
+        <div class="col-md-12" id="map" style="height:200px;"></div>
+
+      </div>
+      
+
+    </div>
+  </div>
 </div>
+

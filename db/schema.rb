@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170517084240) do
+ActiveRecord::Schema.define(version: 20170620040016) do
 
   create_table "animals", force: :cascade do |t|
     t.string   "animal_type"
@@ -68,6 +68,8 @@ ActiveRecord::Schema.define(version: 20170517084240) do
     t.integer  "user_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.float    "latitude"
+    t.float    "longitude"
   end
 
   add_index "events", ["user_id"], name: "index_events_on_user_id"
@@ -104,13 +106,22 @@ ActiveRecord::Schema.define(version: 20170517084240) do
   add_index "information", ["user_id"], name: "index_information_on_user_id"
 
   create_table "notifications", force: :cascade do |t|
-    t.string  "titulo"
-    t.text    "mensaje"
-    t.string  "url"
-    t.boolean "seen"
-    t.integer "user_id"
+    t.string   "titulo"
+    t.text     "mensaje"
+    t.string   "url"
+    t.boolean  "seen"
+    t.integer  "user_id"
+    t.string   "pic_url"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "comment_id"
+    t.integer  "animal_id"
+    t.integer  "pet_id"
   end
 
+  add_index "notifications", ["animal_id"], name: "index_notifications_on_animal_id"
+  add_index "notifications", ["comment_id"], name: "index_notifications_on_comment_id"
+  add_index "notifications", ["pet_id"], name: "index_notifications_on_pet_id"
   add_index "notifications", ["user_id"], name: "index_notifications_on_user_id"
 
   create_table "pets", force: :cascade do |t|
@@ -125,6 +136,8 @@ ActiveRecord::Schema.define(version: 20170517084240) do
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
     t.integer  "animal_state"
+    t.float    "latitude"
+    t.float    "longitude"
   end
 
   add_index "pets", ["race_id"], name: "index_pets_on_race_id"
@@ -166,6 +179,8 @@ ActiveRecord::Schema.define(version: 20170517084240) do
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
+    t.float    "latitude"
+    t.float    "longitude"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

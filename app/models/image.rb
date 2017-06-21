@@ -10,11 +10,14 @@ class Image < ActiveRecord::Base
   has_attached_file :image,
 :styles => { :original => ["1000x1000",:jpg],:thumb => ["100x100#",:jpg]},
     :path => ":rails_root/public/images/:id/:style/:filename",
-    :url  => "/images/:id/:style/:filename"
-  
+    :url  => "/images/:id/:style/:filename",
+    default_url: "/profile/missing.png"
 
+
+validates_attachment_presence :image
 validates_attachment_content_type :image, content_type: ['image/jpeg', 'image/png', 'image/gif']
-  validates_attachment_presence :image
+
+
 
 end
 

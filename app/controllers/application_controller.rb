@@ -20,9 +20,7 @@ before_filter :configure_permitted_parameters, if: :devise_controller?
 	  title: title,
 	  body: body,
 	  icon: "/icon-min.png",
-	  url: url,
-    idkey: user.id,
-    tag: "1"
+	  url: url
 	}
   	user.devices.each do |device|
       #TRY CATCH PARA WEBPUSH, MANEJO DE ERRORES
@@ -46,6 +44,31 @@ before_filter :configure_permitted_parameters, if: :devise_controller?
   
   end
 
+  #def notify(user,notid)
+  #  message= {
+  #    icon: "/icon-min.png",
+  #    url: "/notifications/#{notid}"
+  #  }
+#
+  #  user.devices.each do |device|
+  #    begin
+  #      Webpush.payload_send(
+  #        message: JSON.generate(message),
+  #        endpoint: device.endpoint,
+  #        p256dh: device.p256dh,
+  #        auth: device.auth,
+  #        ttl: 24 * 60 * 60,
+  #        vapid: {
+  #          subject: 'mailto:sender@example.com',
+  #          public_key: Rails.application.secrets.VAPID_PUBLIC_KEY,
+  #          private_key: Rails.application.secrets.VAPID_PRIVATE_KEY
+  #        }
+  #      )
+  #    rescue
+  #      device.destroy
+  #    end
+  #  end 
+  #end
 
 protected
 def configure_permitted_parameters

@@ -5,7 +5,7 @@
 <% content_for :js do %>
   <%= javascript_include_tag "gmaps" %>
   <script>
-    $(document).on('turbolinks:load', function() { 
+    $(document).ready(function() { 
   if( $('#gmaps-canvas').length  ) {
     gmaps_init();
     autocomplete_init();

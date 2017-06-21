@@ -47,17 +47,22 @@ class CommentsController < ApplicationController
         format.html { redirect_to :back, notice: 'Comment was successfully created.' }
         format.json { render :show, status: :created, location: @comment }
         format.js
+        Spawnling.new do
+            unless(@comment.user==user)
+            title=@comment.user.name << " ha respondido a tu publicación."
+            body=@comment.description
+            pic_url=@comment.user.avatar.url
+            noti=Notification.create(user: user, titulo: title, mensaje: body, url: url, seen: 0, pic_url: pic_url, comment: @comment)
+            notify(user,title,body,notification_url(noti))
+            #notify(user,noti.id)
+            end
+        end
 
       else
         format.html { render :new }
         format.json { render json: @comment.errors, status: :unprocessable_entity }
       end
-            unless(@comment.user==user)
-            title=@comment.user.email << " ha respondido a tu publicación."
-            body=@comment.description
-            Notification.create(user: user, titulo: title, mensaje: body, url: url, seen: 0)
-            notify(user,title,body,url)
-          end
+
     end
   end
 

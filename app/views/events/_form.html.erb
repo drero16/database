@@ -1,6 +1,27 @@
-<%= form_for @event, :html => {:multipart => true} do |f| %>
+<% content_for :stylesheets do %>
+  <%= stylesheet_link_tag "gmaps" %>
+    <%= stylesheet_link_tag "centered-columns" %>
+  <%= stylesheet_link_tag "ejemploPerdido" %>
+<% end %>
+
+<!--<% content_for :js do %>
+  <%= javascript_include_tag "jquery.backstretch" %>
+  <%= javascript_include_tag "gmaps" %>
+  <script>
+
+    $(document).on('turbolinks:load', function() {
+      if( $('#gmaps-canvas').length  ) {
+    gmaps_init();
+    autocomplete_init();
+  }; 
+});
+  </script>
+<% end %> -->
+
+
+<%= form_for @event, :html => {:multipart => true,:class => "form-horizontal form-bottom"}  do |f| %>
   <% if @event.errors.any? %>
-    <div id="error_explanation">
+    <div id="error_explanation" class="alert alert-danger" role="alert">
       <h2><%= pluralize(@event.errors.count, "error") %> prohibited this event from being saved:</h2>
 
       <ul>
@@ -11,26 +32,84 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :title %><br>
-    <%= f.text_area :title %>
+  <div class="form-group">
+    <%= f.label :title, "Título", class: "col-sm-2 control-label" %>
+    <div class="col-sm-10">
+      <%= f.text_field :title,class: 'form-control',:required => true %>
+    </div>  
   </div>
-  <div class="field">
-    <%= f.label :description %><br>
-    <%= f.text_area :description %>
+
+  <div class="form-group">
+    <%= f.label :description,"Descripción", class: "col-sm-2 control-label" %>
+     <div class="col-sm-10">
+        <%= f.text_area :description, class: "form-control",rows: "5",:required => true  %>
+     </div>
   </div>
-  <div class="field">
-    <%= f.label :date_event %><br>
-    <%= f.date_select :date_event %>
+
+
+  <div class="form-group">
+    <%= f.label :date_event, "Fecha", class: "col-sm-2 control-label" %>
+    <div class="col-sm-10">
+      <%= f.date_field :date_event, class: 'form-control',:required => true %>
+    </div>  
   </div>
-  <div class="field">
-    <%= f.label :location %><br>
-    <%= f.text_area :location %>
+  <div class="form-group">
+    <%= f.label :location,"Ubicación", class: "col-sm-2 control-label", for:"gmaps-input-address" %>
+     <div class="col-sm-10">
+        <%= f.text_field :location,class: "form-control",id:"gmaps-input-address",placeholder:"Empieza escribiendo una dirección...",:required => true %>
+        <div id='gmaps-error'></div>
+        <div id='gmaps-canvas' class=" hidden-sm hidden-xs"></div>
+     </div>
+
   </div>
-   <div class="field">
-    <%= file_field_tag "images[]", type: :file, multiple: true %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
+
+
+  <% if @event.persisted?%>
+    <div class="form-group">
+      <%= f.label "Selecciona las fotos que deseas eliminar", class: "col-sm-2 control-label" %>
+      <div class="col-sm-10">
+        <ul class="thumbnails files list-inline">
+          <% unless @event.images.empty? %>
+            <% @event.images.each do |pic| %>
+              <li class="span3" id="image_<%= pic.id %>">
+                <div class="thumbnail">
+                  <!-- <%= image_tag pic.image.url(:thumb) %> -->
+                  <%=link_to image_tag(pic.image.url(:thumb)), pic.image.url(:original), :popup=>[  '   original_image', 'height=700,width=900'] %>
+                  <% if can? :destroy, pic %>
+                   <!-- <%=
+                      link_to '<i class="fa fa-times fa-2x" aria-hidden="true"></i>'.html_safe, [@event,pic],
+                      :data => { :confirm => "Are you sure?" },
+                      :method => :delete
+                    %> -->
+                    <%= check_box_tag "selected[]", pic.id, false, :id => pic.id%>
+
+                  <% end %> 
+                </div>
+             </li>
+            <% end %>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+    
+
+    <div class="form-group">
+      <%= f.label :image_id,"¡Sube mas fotos del evento!", class: "col-sm-2 control-label" %>
+       <div class="col-sm-10">    
+          <%= file_field_tag "images[]", type: :file, multiple: true,class: "form-control" %>
+        </div>
+    </div> 
+  <% else %>
+   <div class="form-group">
+      <%= f.label :image_id,"¡Sube una imagen del evento!", class: "col-sm-2 control-label" %>
+       <div class="col-sm-10">    
+          <%= file_field_tag "images[]", type: :file, multiple: true,class: "form-control",:required => true %>
+        </div>
+    </div>
+  <%end%>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <%= f.submit "¡Listo!",class: "btn btn-default" %>
+    </div>  
   </div>
 <% end %>

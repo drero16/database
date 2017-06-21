@@ -1,4 +1,7 @@
 source 'https://rubygems.org'
+
+gem 'bootstrap-will_paginate'
+gem 'spawnling', '~>2.1'
 gem 'best_in_place', '~> 3.0.1'
 gem 'phony_rails'
 gem 'geocoder'
