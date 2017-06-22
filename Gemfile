@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
-
+gem 'paperclip-compression'
+gem 'summernote-rails', '0.7.1.0'
+gem 'simple_form'
 gem 'bootstrap-will_paginate'
 gem 'spawnling', '~>2.1'
 gem 'best_in_place', '~> 3.0.1'

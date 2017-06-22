@@ -6,7 +6,7 @@ Rails.application.routes.draw do
 
   devise_for :users
  
-  
+  post 'images' => 'images#create'
   root to: "information#index"
 
   #resources :images

@@ -1,29 +1,13 @@
-<%= form_for @information, :html => {:multipart => true}  do |f| %>
-  <% if @information.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@information.errors.count, "error") %> prohibited this information from being saved:</h2>
+<%= simple_form_for(@information) do |f| %>
+  <%= f.error_notification %>
+<h1 class="page-header">  <%= f.input :title,label:false ,placeholder:"Título",required: false %></h1>
+    <%= f.input :description, as: :summernote, label:false, required: false %>
 
-      <ul>
-      <% @information.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
+  <div class="form-actions">
+  <% if @information.persisted? %>
+    <%= f.button :submit, "Actualizar información" %>
+    <% elsif %>
+    <%= f.button :submit, "Crear información" %>
       <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :title %><br>
-    <%= f.text_area :title %>
-  </div>
-  <div class="field">
-    <%= f.label :description %><br>
-    <%= f.text_area :description %>
-  </div>
- 
-  <div class="field">
-    <%= file_field_tag "images[]", type: :file, multiple: true %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
   </div>
 <% end %>
