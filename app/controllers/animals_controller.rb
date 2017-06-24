@@ -71,7 +71,7 @@ class AnimalsController < ApplicationController
  #             url= animal_url(@animal)
  #             Notification.create(user: user, titulo: title, mensaje: body, url: url, seen: 0)
  #           end
-        end
+       
       else
         format.html { render :new }
         format.json { render json: @animal.errors, status: :unprocessable_entity }
