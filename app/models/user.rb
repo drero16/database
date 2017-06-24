@@ -14,7 +14,7 @@ class User < ActiveRecord::Base
   has_many :risks, :dependent => :destroy
   has_many :adoptions, :dependent => :destroy
   before_create :set_default_role
-
+  scope :email, -> (email) { where email: email }
   phony_normalize :phone, default_country_code: 'CL'
 
   has_attached_file :avatar,

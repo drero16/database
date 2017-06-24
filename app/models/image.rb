@@ -8,7 +8,7 @@ class Image < ActiveRecord::Base
   belongs_to :risk
 
   has_attached_file :image,
-:styles => { :original => ["500x500",:jpg],:thumb => ["100x100#",:jpg]},
+:styles => { :original => ["700x700",:jpg],:thumb => ["100x100#",:jpg]},
     :path => ":rails_root/public/images/:id/:style/:filename",
     :url  => "/images/:id/:style/:filename",
     default_url: "/profile/missing.png",

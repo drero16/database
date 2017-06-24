@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170620040016) do
+ActiveRecord::Schema.define(version: 20170623043531) do
 
   create_table "animals", force: :cascade do |t|
     t.string   "animal_type"
@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(version: 20170620040016) do
     t.integer  "animal_state"
     t.float    "latitude"
     t.float    "longitude"
+    t.boolean  "solved"
   end
 
   add_index "animals", ["race_id"], name: "index_animals_on_race_id"
@@ -138,6 +139,7 @@ ActiveRecord::Schema.define(version: 20170620040016) do
     t.integer  "animal_state"
     t.float    "latitude"
     t.float    "longitude"
+    t.boolean  "solved"
   end
 
   add_index "pets", ["race_id"], name: "index_pets_on_race_id"

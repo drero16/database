@@ -43,7 +43,11 @@ post '/unsubscribe'=>"devices#unsubscribe"
   #resources :roles
 
   scope "/admin" do
-  resources :users
+  resources :users do
+    member do
+      get 'all'
+    end
+  end
   end
 
   resources :devices, :only => [:create]
