@@ -51,8 +51,8 @@ function update_map( geometry ) {
 function update_ui( address, latLng ) {
   $('#gmaps-input-address').autocomplete("close");
   $('#gmaps-input-address').val(address);
-  //$('#gmaps-output-latitude').val(latLng.lat());
-  //$('#gmaps-output-longitude').val(latLng.lng());
+  $('#gmaps-output-latitude').val(latLng.lat());
+  $('#gmaps-output-longitude').val(latLng.lng());
 }
 
 // Query the Google geocode object
@@ -109,7 +109,7 @@ function geocode_lookup( type, value, update ) {
 
 // initialise the jqueryUI autocomplete element
 function autocomplete_init() {
-  $("#gmaps-input-address").autocomplete({
+  $("#gmaps-input-address").autocomplete({  
 
     // source is the list of input options shown in the autocomplete dropdown.
     // see documentation: http://jqueryui.com/demos/autocomplete/
@@ -224,6 +224,27 @@ function onlymap(address){
 
 }
 
+//function onlymap(lat,lon){
+//        var latlng = new google.maps.LatLng(lat, lon);
+//    
+//      var options = {
+//        zoom: 15,
+//        center: latlng,
+//        mapTypeId: google.maps.MapTypeId.ROADMAP
+//      };
+//    
+//      // create our map object
+//      map = new google.maps.Map(document.getElementById("map"), options);
+//      
+//    
+//    
+//      // the marker shows us the position of the latest address
+//      marker = new google.maps.Marker({
+//        position: latlng,
+//        map: map,
+//        draggable: false
+//      });
+//}
 
 /*$(document).ready(function() { 
   if( $('#gmaps-canvas').length  ) {

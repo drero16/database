@@ -239,7 +239,7 @@
                 <strong><%=comment.user.name%></strong> <span class="text-muted">Hace <%=distance_of_time_in_words(Time.now,comment.created_at)%></span>
                  <div class="pull-right">
                  <% if ((current_user == @animal.user) or (current_user.admin?))%>
-                    <a role="button" data-toggle="collapse" data-target="  #comment<%=index%>"><i class="fa fa-id-card-o fa-lg fa-fw" aria-hidden="true"></i> </a>
+                    <a role="button" data-toggle="collapse" data-target="#comment<%=index%>"><i class="fa fa-id-card-o fa-lg fa-fw" aria-hidden="true"></i></a>
                     <%end%>
 
                     <% if can? :edit, comment %>
@@ -266,8 +266,7 @@
               </div>
             <div class="panel-body media-body">
             
-              <%= best_in_place_if (can? :edit, comment),   [@animal,comment], :description, :as => :textarea, :inner_class =>"comment-area", :activator => "#activator#{index}",:ok_button => "Listo" %>
-
+              <%= best_in_place_if (can? :edit, comment),   [@animal,comment], :description, :as => :textarea, :inner_class =>"comment-area", :activator => "#activator#{index}",:ok_button => "Listo",:ok_button_class=>"btn btn-default" %>
 
             </div><!-- /panel-body -->
             </div><!-- /panel panel-default -->
@@ -290,7 +289,7 @@
                 <div class="panel-body media-body">
                   <%= form_for [@animal,@comment] , remote: true do |f| %>
                   <%= f.text_area :description, class: "comment-area" %>
-                  <%= f.submit %>
+                  <%= f.submit 'Crear comentario', :role => 'button', :class => "btn btn-default" %>
                   <%end %>
                 </div>
               </div>
@@ -304,7 +303,7 @@
 <!--Formulario para ingresar comentarios -->
 
 
-<%= form_for [@animal,@comment], remote: true do |f| %>
+<!--<%= form_for [@animal,@comment], remote: true do |f| %>
 
   <% if @comment.errors.any? %>
     <div id="error_explanation">
@@ -327,5 +326,5 @@
     <%= f.submit 'ss', class: 'create_comment' %>
   </div>
 <% end %>
-
+-->
   

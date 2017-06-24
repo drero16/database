@@ -72,8 +72,7 @@ self.addEventListener("push", function(event) {
     var icon = json.icon;
     var data= {
       doge: {
-        url: json.url,
-        user: json.user
+        url: json.url
       }
     };
       console.log(json);
@@ -84,7 +83,46 @@ self.addEventListener("push", function(event) {
     }));
 });
 
+//self.addEventListener("push", function(event) {
+//
+//      event.waitUntil(self.registration.showNotification("titulo", {
+//      body: "mensaje"
+//    }));
+//});
 
+//self.addEventListener("push", function(event) {
+//  var jsonnoti= event.data.json();
+//  var icon= jsonnoti.icon;
+//  var datos = {
+//    doge: {
+//      url: jsonnoti.url
+//    }
+//  };
+//  fetch(jsonnoti.url+'.json').then(  
+//    function(response) {  
+//      console.log("hola");    
+//      if (response.status !== 200) {  
+//        console.log('Looks like there was a problem. Status Code: ' +  
+//          response.status);  
+//        return;  
+//      }
+//
+//      // Examine the text in the response
+//        console.log("hola");    
+//      response.json().then(function(data) {  
+//         console.log("data");  
+//        event.waitUntil(self.registration.showNotification(data.titulo, {
+//        body: data.mensaje,
+//        data: datos,
+//        icon: icon
+//        }));
+//      });  
+//    }  
+//  )  
+//  .catch(function(err) {  
+//    console.log('Fetch Error :-S', err);  
+//  });
+//});
 
 
 self.addEventListener('notificationclick', function(event) {

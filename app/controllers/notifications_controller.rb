@@ -1,27 +1,40 @@
 class NotificationsController < ApplicationController
-  #before_filter :authenticate_user!
+  before_filter :authenticate_user!
   before_action :set_notification, only: [:show, :edit, :update, :destroy]
+  protect_from_forgery :except => [:show]
   load_and_authorize_resource
 
   # GET /notifications
   # GET /notifications.json
   def index
-    @notifications = Notification.all
+    @notifications = current_user.notifications
+    @notifications=@notifications.paginate(:page => params[:page], :per_page => 10).order('created_at DESC')
   end
 
   # GET /notifications/1
   # GET /notifications/1.json
   def show
+#    if request.format.json?
+#      respond_to do |format|
+#        format.json
+#      end
+#    else
+      if (@notification.user == current_user)
+        @notification.update(seen: true)
+        redirect_to @notification.url
+      end
+#    end
+
   end
 
   # GET /notifications/new
-  def new
-    @notification = Notification.new
-  end
+#  def new
+#    @notification = Notification.new
+#  end
 
   # GET /notifications/1/edit
-  def edit
-  end
+#  def edit
+#  end
 
   # POST /notifications
   # POST /notifications.json
@@ -41,17 +54,17 @@ class NotificationsController < ApplicationController
 
   # PATCH/PUT /notifications/1
   # PATCH/PUT /notifications/1.json
-  def update
-    respond_to do |format|
-      if @notification.update(notification_params)
-        format.html { redirect_to @notification, notice: 'Notification was successfully updated.' }
-        format.json { render :show, status: :ok, location: @notification }
-      else
-        format.html { render :edit }
-        format.json { render json: @notification.errors, status: :unprocessable_entity }
-      end
-    end
-  end
+#  def update
+#    respond_to do |format|
+#      if @notification.update(notification_params)
+#        format.html { redirect_to @notification, notice: 'Notification was successfully updated.' }
+#        format.json { render :show, status: :ok, location: @notification }
+#      else
+#        format.html { render :edit }
+#        format.json { render json: @notification.errors, status: :unprocessable_entity }
+#      end
+#    end
+#  end
 
   # DELETE /notifications/1
   # DELETE /notifications/1.json

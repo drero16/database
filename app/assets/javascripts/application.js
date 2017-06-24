@@ -16,3 +16,5 @@
 //= require jquery-ui
 //= require bootstrap-sprockets
 //= require jquery.backstretch
+//= require summernote
+//= require summernote/locales/es-ES

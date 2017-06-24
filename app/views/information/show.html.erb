@@ -1,52 +1,67 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Title:</strong>
-  <%= @information.title %>
-</p>
-
-<p>
-  <strong>Description:</strong>
-  <%= @information.description %>
-</p>
-
-<p>
-  <strong>User:</strong>
-  <%= @information.user %>
-</p>
-
-<%= link_to 'Edit', edit_information_path(@information) %> |
-<%= link_to 'Back', information_index_path %>
-
-
-<!-- Fotos -->
+<% content_for :stylesheets do %>
+  <%= stylesheet_link_tag "info" %>
+<% end %>
+<% content_for :js do %>
+  <script>
+    $(document).ready(function(){
+    $("img").addClass("img-responsive");
+});
+  </script>
+<% end %>
+<div class="container-fluid" style="padding-left:0px;">
+<div class="col-md-2" style="padding-left:0px;">
+  
 
 <div class="row">
-  <ul class="thumbnails files">
-<% unless @information.images.empty? %>
-  <% @information.images.each do |pic| %>
-    <li class="span3" id="image_<%= pic.id %>">
-    <div class="thumbnail">
-     <!-- <%= image_tag pic.image.url(:thumb) %> -->
-      <%=link_to image_tag(pic.image.url(:thumb)), pic.image.url(:original), :popup=>['original_image', 'height=700,width=900'] %>
-      <% if can? :destroy, pic %>
-      <%=
-          link_to "Delete image", [@information,pic],
-            :data => { :confirm => "Are you sure?" },
-            :method => :delete
-          %>
-          <% end %>
-      <div class="caption">
-        <p style="text-align: center;">
-       <!-- <%= link_to "Edit image", image_path(pic) %> -->
-
-        
-
-        </p>
-      </div>
-    </div>
-    </li>
-  <% end %>
-<% end %>
+<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-2" aria-expanded="false">
+<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar" style="background-color:black;"></span>
+        <span class="icon-bar" style="background-color:black;"></span>
+        <span class="icon-bar" style="background-color:black;"></span>
+</button>
+</div>
+<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2"  style="padding-left:0px;">
+    <ul class="nav nav-pills nav-stacked panel panel-default">
+      <% if can? :create, @information %>
+      <li role="presentation"><%=link_to "Agregar entrada", new_information_path%></li>
+      <% end %>
+    <% @allInfo=Information.order(:title) %>
+    <% @allInfo.each do |info| %>
+      <% if info==@information %>
+      <li role="presentation" class="active"><%= link_to info.title, info %></li>
+      <% elsif %>
+      <li role="presentation"><%= link_to info.title, info %></li>
+      <% end %>
+    <% end %>
 </ul>
+</div>
+
+</div>
+<div class="col-md-10 panel panel-default">
+<% if (can? :edit, @information) or (can? :destroy, @information) %>
+<div class="btn-group pull-right">
+  <button type="button" class="btn btn-default dropdown-toggle options" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <i class="fa fa-cog fa-lg"></i> Opciones<span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu">
+    <% if can? :edit, @information %>
+    <li><%= link_to edit_information_path(@information) do%>
+      <i class="fa fa-pencil fa-lg"></i> Editar
+      <% end %>
+    </li>
+    <% end %>
+
+    <% if can? :destroy, @event %>
+    <li><%= link_to @information, method: :delete, data: { confirm: 'Are you sure?' } do%>
+      <i class="fa fa-trash-o fa-lg"></i> Eliminar
+      <% end %>
+    </li>
+    <% end %>    
+    
+  </ul>
+</div>
+<% end %>
+  <h1 class="page-header"> <%=@information.title%></h1>
+  <%=@information.description.html_safe%>
+</div>
 </div>

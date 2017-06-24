@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="google" content="notranslate">
     <meta http-equiv="Content-Language" content="es">
-  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBFkGU6pJyyWqKe_ViHOQU_AZaXxXCVZAU"></script>
+  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBFkGU6pJyyWqKe_ViHOQU_AZaXxXCVZAU&libraries=places"></script>
 
   <%= stylesheet_link_tag    'application', media: 'all'%>
   <% @decodedVapidPublicKey = Base64.urlsafe_decode64(Rails.application.secrets.VAPID_PUBLIC_KEY).bytes%>
@@ -56,9 +56,9 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-right">
-      <li class="navbar-li"><a href="#">Acerca de RAM</a></li>
+      <li class="navbar-li"><a class= " grande" href="#">Acerca de RAM</a></li>
       <li class="navbar-li dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Registra tu animal <span class="caret"></span></a>
+          <a href="#" class="dropdown-toggle grande" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Publicar  <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a href="#">Mascota perdida</a></li>
             <li><a href="#">Animal encontrado</a></li>
@@ -66,8 +66,8 @@
             <li><a href="#">Mascota en adopción</a></li>
           </ul>
         </li>
-        <li class="navbar-li"><a href="#">Información de Interés</a></li>
-        <li class="navbar-li"><a href="#">Eventos RAM</a></li>
+        <li class="navbar-li"><a class= " grande" href="#">Información de Interés</a></li>
+        <li class="navbar-li"><a class= " grande" href="#">Eventos RAM</a></li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> 
             <% if user_signed_in? %>
@@ -78,7 +78,12 @@
               <%end %>
           <span class="caret"></span></a>
           <ul class="dropdown-menu">
-
+            <% if current_user.notifications.where(seen: false).count > 0 %>
+              <li><a href="/notifications">Notificaciones<span class="badge notification-badge"><%=current_user.notifications.where(seen: false).count%></span></a></li>
+            <% elsif %>
+              <li><a href="/notifications">Notificaciones</a></li>
+            <% end %>
+            <li role="separator" class="divider"></li>
             <li><%= link_to "Edit profile", edit_user_registration_path %></li>
             <li role="separator" class="divider"></li>
             <li><%= link_to "Sign out", destroy_user_session_path, :method => :delete, class: 'log-out-btn'%></li>

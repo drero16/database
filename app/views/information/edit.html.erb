@@ -1,6 +1,96 @@
-<h1>Editing Information</h1>
+<% content_for :stylesheets do %>
+  <%= stylesheet_link_tag "info" %>
+<% end %>
+<% content_for :js do %>
+  <script>
+    $(document).ready(function(){
+    $("img").addClass("img-responsive");
+});
+  </script>
+<% end %>
+<div class="container-fluid" style="padding-left:0px;">
+<div class="col-md-2" style="padding-left:0px;">
+  
 
-<%= render 'form' %>
+<div class="row">
+<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-2" aria-expanded="false">
+<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar" style="background-color:black;"></span>
+        <span class="icon-bar" style="background-color:black;"></span>
+        <span class="icon-bar" style="background-color:black;"></span>
+</button>
+</div>
+<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2"  style="padding-left:0px;">
+    <ul class="nav nav-pills nav-stacked panel panel-default">
+      <% if can? :create, @information %>
+      <li role="presentation"><%=link_to "Agregar entrada", new_information_path%></li>
+      <% end %>
+    <% @allInfo=Information.order(:title) %>
+    <% @allInfo.each do |info| %>
+      <% if info==@information %>
+      <li role="presentation" class="active"><%= link_to info.title, info %></li>
+      <% elsif %>
+      <li role="presentation"><%= link_to info.title, info %></li>
+      <% end %>
+    <% end %>
+</ul>
+</div>
 
-<%= link_to 'Show', @information %> |
-<%= link_to 'Back', information_index_path %>
+</div>
+<div class="col-md-10 panel panel-default">
+<% if (can? :edit, @information) or (can? :destroy, @information) %>
+<% end %>
+ <%= render 'form' %>
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+<% content_for :js do %>
+	<script>
+    	$(document).ready(function() { 
+  $('[data-provider="summernote"]').each(function() {
+    return $(this).summernote({
+      lang: 'es-ES',
+      height: 500,
+      callbacks: {
+        onImageUpload: function(files) {
+          return sendFile(files[0], $(this));
+        }
+      }
+    });
+  });
+  		});
+
+  		var sendFile;
+
+sendFile = function(file, toSummernote) {
+  var data;
+  data = new FormData;
+  data.append('image[image]', file);
+  return $.ajax({
+    data: data,
+    type: 'POST',
+    beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+    url: '/images',
+    cache: false,
+    contentType: false,
+    processData: false,
+    success: function(data) {
+      console.log('file uploading...');
+      return toSummernote.summernote("insertImage", data.url);
+      console.log('file uploaded!');
+    }
+  });
+};
+
+
+  	</script>
+<% end %>
