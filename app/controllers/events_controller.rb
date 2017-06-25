@@ -32,20 +32,28 @@ class EventsController < ApplicationController
     @event = Event.new(event_params)
     @event.user_id = current_user.id
     respond_to do |format|
-      if @event.save and params[:images].present?
-        if params[:images]
-          params[:images].each { |image|
-          @event.images.create(image: image)
-        }
+      if params[:images].present?
+        if @event.save and params[:images].present?
+          if params[:images]
+            params[:images].each { |image|
+            @event.images.create(image: image)
+          }
+          end
+          format.html { redirect_to @event}
+          format.json { render :show, status: :created, location: @event }
+        else
+          unless params[:images].present?
+            @event.errors.add(:images)
+          end
+          format.html { render :new }
+          format.json { render json: @event.errors, status: :unprocessable_entity }
         end
-        format.html { redirect_to @event}
-        format.json { render :show, status: :created, location: @event }
       else
         unless params[:images].present?
           @event.errors.add(:images)
         end
         format.html { render :new }
-        format.json { render json: @event.errors, status: :unprocessable_entity }
+        format.json { render json: @event.errors, status: :unprocessable_entity }        
       end
     end
   end
@@ -65,7 +73,7 @@ class EventsController < ApplicationController
             @event.images.destroy(selecte)
           }
         end        
-        format.html { redirect_to @event, notice: 'Event was successfully updated.' }
+        format.html { redirect_to @event, notice: 'Evento actualizado correctamente.' }
         format.json { render :show, status: :ok, location: @event }
       else
         format.html { render :edit }
@@ -79,7 +87,7 @@ class EventsController < ApplicationController
   def destroy
     @event.destroy
     respond_to do |format|
-      format.html { redirect_to events_url, notice: 'Event was successfully destroyed.' }
+      format.html { redirect_to events_url, notice: 'Evento eliminado correctamente.' }
       format.json { head :no_content }
     end
   end

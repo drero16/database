@@ -11,7 +11,7 @@ Rails.application.config.assets.version = '1.0'
 # Rails.application.config.assets.precompile += %w( search.js )
 Rails.application.configure do
 
-  config.assets.precompile += %w[index.scss serviceworker-companion.js.erb photoswipe.scss default-skin.scss photoswipe.js photoswipe-ui-default.js ram.scss serviceworker.js manifest.json form-elements.css style.scss styleLogin.css jquery.backstretch.js main.scss centered-columns.scss  ejemploPerdido.scss gmaps.js jquery.backstretch.json auth.scss info.scss]
+  config.assets.precompile += %w[print.js jquerySelectBoxes.js index.scss serviceworker-companion.js.erb photoswipe.scss default-skin.scss photoswipe.js photoswipe-ui-default.js ram.scss serviceworker.js manifest.json form-elements.css style.scss styleLogin.css jquery.backstretch.js main.scss centered-columns.scss  ejemploPerdido.scss gmaps.js jquery.backstretch.json auth.scss info.scss]
 
 end
 

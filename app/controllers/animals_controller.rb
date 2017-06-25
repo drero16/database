@@ -54,28 +54,39 @@ class AnimalsController < ApplicationController
     @animal.solved= false
   
     respond_to do |format|
-      if @animal.save
-        if params[:images]
-          params[:images].each { |image|
-          @animal.images.create(image: image)
-        }
-        end
-        format.html { redirect_to @animal, notice: 'Animal was successfully created.' }
-        format.json { render :show, status: :created, location: @animal }
- #       coord=Geocoder.coordinates(params[:location]) 
- #       @users_near= User.near(coord,2)
- #       @users_near.each do |near|
- #           unless (near==@animal.user)
- #             user=near
- #             title="Se ha perdido un animal cerca tuyo!"
- #             body= near.location
- #             url= animal_url(@animal)
- #             Notification.create(user: user, titulo: title, mensaje: body, url: url, seen: 0)
- #           end
+      if params[:images].present?
+        if @animal.save and params[:images].present?
+          if params[:images]
+            params[:images].each { |image|
+            @animal.images.create(image: image)
+          }
+          end
+          format.html { redirect_to @animal }
+          format.json { render :show, status: :created, location: @animal }
+ #         coord=Geocoder.coordinates(params[:location]) 
+ #         @users_near= User.near(coord,2)
+ #         @users_near.each do |near|
+ #             unless (near==@animal.user)
+ #               user=near
+ #               title="Se ha perdido un animal cerca tuyo!"
+ #               body= near.location
+ #               url= animal_url(@animal)
+ #               Notification.create(user: user, titulo: title, mensaje: body, url: url, seen: 0)
+ #             end
+          else
+            unless params[:images].present?
+              @animal.errors.add(:images)
+            end            
+           format.html { render :new }
+           format.json { render json: @animal.errors, status: :unprocessable_entity }
+          end
       else
+        unless params[:images].present?
+          @animal.errors.add(:images)
+        end
         format.html { render :new }
-        format.json { render json: @animal.errors, status: :unprocessable_entity }
-      end
+        format.json { render json: @animal.errors, status: :unprocessable_entity }      
+    end
     end
   end
 
@@ -95,7 +106,7 @@ class AnimalsController < ApplicationController
             @animal.images.destroy(selecte)
           }
         end
-        format.html { redirect_to @animal, notice: 'Animal was successfully updated.' }
+        format.html { redirect_to @animal, notice: 'Publicación actualizada correctamente.' }
         format.json { render :show, status: :ok, location: @animal }
       else
         format.html { render :edit }
@@ -109,13 +120,24 @@ class AnimalsController < ApplicationController
   def destroy
     @animal.destroy
     respond_to do |format|
-      format.html { redirect_to animals_url, notice: 'Animal was successfully destroyed.' }
+      format.html { redirect_to animals_url, notice: 'Publicación eliminada correctamente.' }
       format.json { head :no_content }
     end
   end
 
   def solved
     @animal=@animal.solved(animal_params[solved])
+  end
+
+  def get_drop_down_options
+    val = params[:animal_type]
+    #Use val to find records
+    @races= Race.where(description: val)
+    options = @races.collect{|x| "'#{x.id}' : '#{x.name}'"}    
+    render :text => "{#{options.join(",")}}" 
+  # respond_to do |format|
+  #   format.json { render :json => options}
+  # end
   end
 
   private

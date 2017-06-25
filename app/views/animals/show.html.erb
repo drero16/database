@@ -10,6 +10,7 @@
   <%= javascript_include_tag "gmaps" %>
   <%= javascript_include_tag "photoswipe" %>
   <%= javascript_include_tag "photoswipe-ui-default" %>
+  <%= javascript_include_tag "print"%>
   <script>
     $(document).ready(function() { 
       if($('#map').length ){
@@ -51,6 +52,13 @@
       document.getElementById('btn').onclick = openPhotoSwipe;
       jQuery(".best_in_place").best_in_place();
     });
+    (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
   </script>
 
 <% end %>
@@ -60,7 +68,7 @@
     <div class="panel panel-default col-xs-12 col-md-8 col-centered">
       <div class="col-md-4">
           <% unless @animal.images.empty? %>
-            <%= image_tag @animal.images.first.image.url(:original), :class=>"img-responsive"%>
+            <%= image_tag @animal.images.first.image.url(:original), :class=>"img-responsive", id:"print1"%>
           <% end %>
                 <dl class="dl-horizontal dl-info-user">
           <dt><i class="fa fa-user" aria-hidden="true"></i></dt>
@@ -114,7 +122,7 @@
     <% end %>
 
     <% if can? :destroy, @animal %>
-    <li><%= link_to @animal, method: :delete, data: { confirm: 'Are you sure?' } do%>
+    <li><%= link_to @animal, method: :delete, data: { confirm: '¿Estás seguro?' } do%>
       <i class="fa fa-trash-o fa-lg"></i> Eliminar
       <% end %>
     </li>
@@ -221,14 +229,11 @@
             <ul class="share-buttons">
           <li>
           <a href="https://www.facebook.com/sharer/sharer.php?u=#url&t=" title="Compartir en Facebook" target="_blank">
-          
            <%=image_tag("social_flat_rounded_rects_svg/Facebook.svg", alt: "" )%>
           </a>
           </li>
           <li>
-          <a href="https://twitter.com/intent/tweet?source=#&text=:%20" target="_blank" title="Tweet">
-          
-           <%=image_tag("social_flat_rounded_rects_svg/Twitter.svg", alt: "" )%>
+          <a href="https://twitter.com/intent/tweet?text=<%=request.original_url%>" target="_blank" title="Tweet"><%=image_tag("social_flat_rounded_rects_svg/Twitter.svg", alt: "" )%>
           </a>
           </li>
           <li>
@@ -287,7 +292,7 @@
                         <a id="activator<%=index%>"  role="button"><i class="fa fa-pencil fa-lg fa-fw" aria-hidden="true"></i></a>
                      <% end %>
                      <% if can? :destroy, comment %>
-                        <%= link_to raw('<i class="fa fa-trash fa-lg fa-fw" aria-hidden="true"></i>'), [@animal,comment], method: :delete, data: { confirm: 'Are you sure?' }, :remote => true, :class => 'delete_comment' %>
+                        <%= link_to raw('<i class="fa fa-trash fa-lg fa-fw" aria-hidden="true"></i>'), [@animal,comment], method: :delete, data: { confirm: '¿Estás seguro?' }, :remote => true, :class => 'delete_comment' %>
 
                      <%end%>
                     </div>
@@ -329,8 +334,8 @@
                 </div>
                 <div class="panel-body media-body">
                   <%= form_for [@animal,@comment] , remote: true do |f| %>
-                  <%= f.text_area :description, class: "comment-area" %>
-                  <%= f.submit 'Crear comentario', :role => 'button', :class => "btn btn-default" %>
+                  <%= f.text_area :description, class: "comment-area", id: "comment_area_new", placeholder: "Ingrese comentario...", "required"=>true %>
+                  <%= f.submit 'Crear comentario', :role => 'button', :class => "btn btn-default",data: { disable_with: "Por favor espere..." } %>
                   <%end %>
                 </div>
               </div>

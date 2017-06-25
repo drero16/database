@@ -31,6 +31,7 @@ post '/unsubscribe'=>"devices#unsubscribe"
   end
 
   resources :animals do
+    get 'get_drop_down_options'
     resources :comments
     resources :images
     collection do

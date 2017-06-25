@@ -7,6 +7,11 @@
     <meta charset="UTF-8">
     <meta name="google" content="notranslate">
     <meta http-equiv="Content-Language" content="es">
+    <meta property="og:url"           content=<%=request.original_url%> />
+    <meta property="og:type"          content="website" />
+    <meta property="og:title"         content="Rescate Animal Maipú" />
+    <meta property="og:description"   content="Aplicación de ayuda animal" />
+    <meta property="og:image"         content="<%=image_url("logoram.png")%>" />
   <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBFkGU6pJyyWqKe_ViHOQU_AZaXxXCVZAU&libraries=places"></script>
 
   <%= stylesheet_link_tag    'application', media: 'all'%>
@@ -104,13 +109,18 @@
 </nav>
 
 <div class="content"  id="loginContainer">
-<%= yield %>
-</div>
-
-<div class="errors">
+<% if flash.present? %>
+<div class="alert alert-success">
 <% flash.each do |name, msg| %>
   <%= content_tag :div, msg, id: "flash_#{name}" %>
 <% end %>
+</div>
+<% end %>
+
+<%= yield %>
+</div>
+
+
 
 </div>
 
