@@ -1,37 +1,99 @@
-<p id="notice"><%= notice %></p>
+<% content_for :js do %>
+  <script>
 
-<h1>Listing Users</h1>
+    function myFunction() {
+     var input, filter, table, tr, td, i;
+     input = document.getElementById("myInput");
+     filter = input.value.toUpperCase();
+     table = document.getElementById("myTable");
+     tr = table.getElementsByTagName("tr");
+     for (i = 0; i < tr.length; i++) {
+       td = tr[i].getElementsByTagName("td")[2];
+       if (td) {
+         if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+           tr[i].style.display = "";
+         } else {
+           tr[i].style.display = "none";
+         }
+       } 
+        tf = tr[i].getElementsByTagName("td")[3];
+       if (tf) {
+         if (tf.innerHTML.toUpperCase().indexOf(filter) > -1) {
+           tr[i].style.display = "";
+         } else {
+           tr[i].style.display = "none";
+         }
+       } 
+     } 
+   }
+  </script>
+<% end %>
+<div class="container">
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Address</th>
-      <th>Phone</th>
-      <th>Sex</th>
-      <th>Role</th>
-      <th>Email</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+            <div class="panel panel-default panel-table">
+              <div class="panel-heading">
+                <div class="row">
+                  <div class="col col-xs-6">
+                    <h3 class="panel-title">Administración de usuarios</h3>
+                  </div>
+                  <div class="col col-xs-6 text-right">
+                    <form action="/admin/users">
+                      <input type="text" name="email" value="<%=params[:email]%>">
+                      <button type="submit" class="btn"><i class="glyphicon glyphicon-search"></i></button>
+                    </form>
+                    <%= link_to 'Crear nuevo usuario',new_user_path, class:"btn btn-sm btn-primary btn-create", role: "button" %>
+                  </div>
+                </div>
+              </div>
+              <div class="panel-body">
+                <table class="table table-striped table-bordered table-list" id="myTable">
+                  <thead>
+                    <tr>
+                        <th class="text-center"><em class="fa fa-cog"></em></th>
+                        <th class="hidden-xs text-center">ID</th>
+                        <th class="text-center">Nombre</th>
+                        <th class="text-center">Email</th>
+                        <th class="hidden-xs text-center">Rol</th>
+                    </tr> 
+                  </thead>
+                  <tbody>
+                  <% @users.each do |user| %>
+                          <tr>
+                            <td align="center">
+                              <%= link_to user, class: "btn btn-info","data-toggle"=>"tooltip", "title"=>"Ver"  do %>
+                              <em class="fa fa-eye"></em>
+                              <% end %> 
+                              <%= link_to edit_user_path(user), class:"btn btn-default","data-toggle"=>"tooltip", "title"=>"Editar" do%>
+                              <em class="fa fa-pencil"></em>
+                              <%end%>
+                              <%= link_to user, class:"btn btn-danger", method: :delete, data: { confirm: 'Eliminar un usuario provocará que toda su actividad sea eliminada, ¿estas seguro?' },"data-toggle"=>"tooltip", "title"=>"Eliminar"  do%>
+                              <em class="fa fa-trash"></em>
+                              <% end %>
+                            </td>
+                            <td class="hidden-xs"><%=user.id%></td>
+                            <td><%=user.name%></td>
+                            <td><%=user.email%></td>
+                            <td class="hidden-xs">
+                              <% if user.admin?%>
+                              Administrador
+                              <% else %>
+                              Miembro
+                              <% end %>
+                            </td>
+                          </tr>
+                  <% end %>
+                    </tbody>
+                </table>
+            
+              </div>
+              <div class="panel-footer">
+                  <div class="row row-centered" ><%= will_paginate @notifications, :next_label => ">>", :previous_label => "<<"%>
+                  </div>
+              </div>
+            </div>
 
-  <tbody>
-    <% @users.each do |user| %>
-      <tr>
-        <td><%= user.name %></td>
-        <td><%= user.address %></td>
-        <td><%= user.phone %></td>
-        <td><%= user.sex %></td>
-        <td><%= user.role.name %></td>
-        <td><%= user.email %></td>
-        <td><%= link_to 'Show', user %></td>
-        <td><%= link_to 'Edit', edit_user_path(user) %></td>
-        <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+</div></div></div>
 
-<br>
 
-<%= link_to 'New User', new_user_path %>

@@ -40,7 +40,7 @@ Rails.application.configure do
   # config.action_view.raise_on_missing_translations = true
 
   config.action_mailer.default_url_options = {:host => 'localhost:3000'}
-  Paperclip.options[:command_path] = "/usr/local/bin/"
+  Paperclip.options[:command_path] = "/usr/bin/"
   VAPID_PUBLIC_KEY= Rails.application.secrets.VAPID_PUBLIC_KEY
   VAPID_PRIVATE_KEY= Rails.application.secrets.VAPID_PRIVATE_KEY
 end

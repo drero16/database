@@ -1,11 +1,16 @@
 class UsersController < ApplicationController
   before_filter :authenticate_user!
+  before_filter do 
+    redirect_to '/' unless current_user && current_user.admin?
+  end
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   # GET /users
   # GET /users.json
   def index
     @users = User.all
+    @users= @users.email(params[:email]) if params[:email].present?
+    @users = @users.paginate(:page => params[:page], :per_page => 10)
   end
 
   # GET /users/1
@@ -13,6 +18,9 @@ class UsersController < ApplicationController
   def show
   end
 
+  def all
+
+  end
   # GET /users/new
   def new
     @user = User.new
@@ -60,6 +68,8 @@ class UsersController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+
 
   private
     # Use callbacks to share common setup or constraints between actions.
