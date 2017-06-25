@@ -11,25 +11,19 @@
                 <div class="item active">
                  <%=image_tag("mejora4.jpg", alt: "" )%>
                   	<div class="carousel-caption">
-                    <h3>¡Conoce y sé parte de nuestra comunidad RAM!</h3>
-                    <p>Unete y participa con nosotros.</p>
-                  	</div>
+                    </div>
                 </div>
                 
                 <div class="item">
                  <%=image_tag("mejorado2.jpg", alt: "" )%>
                   	<div class="carousel-caption">
-                    <h2>Eventos RAM</h2>
-                    <p>Enterate de proximos eventos RAM en la comuna de Maipú y colabora.</p>
-                  	</div>
+                    </div>
                 </div>
 
                 <div class="item">
                   <%=image_tag("mejorado3.jpg", alt: "" )%>
                   	<div class="carousel-caption">
-                    <h2>Información de interés</h2>
-                    <p>Revisa articulos de interes para cualquier amante de los animales.</p>
-                  	</div>
+                    </div>
                 </div>
             </div>
               <a class="left carousel-control" href="#fullcarousel-example" data-slide="prev"><i class="icon-prev fa fa-angle-left"></i></a>
@@ -40,29 +34,30 @@
 
 	<div class="container">
 		<br>
+		<h1 class="text-center text-primary"> Conoce nuestras funcionalidades</h1>
 		<div class="row">
 
 
         	<div class=" col-xs-6 col-md-3 col-circle">
         	<h3 class="text-center">Mascotas perdidas</h3>
-         	<div class="circle-avatar" style="background-image:url(<%=image_url('Lucia.jpg')%>)"></div>     <p class="text-center"> Si se extravio tu mascota, este es el lugar indicado para ingresar tu caso.</p>
+         	<div class="circle-avatar" style="background-image:url(<%=image_url('perroperdido.jpg')%>)"></div>     <p class="text-center"> Si se extravio tu mascota, este es el lugar indicado para ingresar tu caso.</p>
             </div>
 
           	<div class=" col-xs-6 col-md-3 col-circle">
-          	<h3 class="text-center">Animales encontrados</h3>
-         	<div class="circle-avatar" style="background-image:url(<%=image_url('Gabriela.jpg')%>)"></div>
+          	<h3 class="text-center">Animales encontrados </h3>
+         	<div class="circle-avatar" style="background-image:url(<%=image_url('perroencontrado.jpg')%>)"></div>
             <p class="text-center">Si encuentras un animal en la calle y presumes que tiene dueño, ingresalo en este modulo. </p>
             </div>
 
             <div class=" col-xs-6 col-md-3 col-circle">
             <h3 class="text-center">Adopta una mascota</h3>
-         	<div class="circle-avatar" style="background-image:url(<%=image_url('David.jpg')%>)"></div>
+         	<div class="circle-avatar" style="background-image:url(<%=image_url('gatoenadopcion.jpg')%>)"></div>
             <p class="text-center">Este modulo permite buscar la mascota que desees adoptar. </p>
             </div>
 
           	<div class=" col-xs-6 col-md-3 col-circle">
           	<h3 class="text-center">Animales en riesgo</h3>
-         	<div class="circle-avatar" style="background-image:url(<%=image_url('Tamara.jpg')%>)"></div>
+         	<div class="circle-avatar" style="background-image:url(<%=image_url('animalenriesgo.jpg')%>)"></div>
             <p class="text-center">Si ves alguna situacion que atente contra la seguridad de un animal, ingresalo aqui.</p>
             </div>
             
@@ -73,43 +68,52 @@
 			
 		<div class="row about-section text-center">
 
-			<div class="container ">
-						<div class="row">
-          <div class="col-md-12">
-            <h1 class="text-center text-primary">Recientemente agregados</h1>
-            <p class="text-center"> </p>
-            <br></br>
-          </div>
-        </div> 
-
-        <div class="row">
-			<div class="col-xs-6 col-md-3">
-				<h2>Mascotas Perdidas</h2>
-				<div class="img1" ><%=image_tag("pic8.jpg",  class: "center-block img-responsive" )%></div>
-				<p><a class="btn" href="#">Ve detalles »</a></p>
-			</div>
 			
-			<div class="col-xs-6 col-md-3">
-				<h2>Animales encontrados</h2>
-				<div class="img1"><%=image_tag("pic8.jpg",  class: "center-block img-responsive" )%></div>
-				<p><a class="btn" href="#">Ve detalles »</a></p>
-			</div>
+		<div class="container">
+		<br>
+		<h1 class="text-center text-primary"> Agregados recientemente</h1>
+		<div class="row">
 
-			<div class="col-xs-6 col-md-3">
-				<h2>Mascotas en adopción</h2>
-				<div class="img1"><%=image_tag("pic8.jpg",  class: "center-block img-responsive" )%></div>
-				<p><a class="btn" href="#">Ve detalles »</a></p>
-			</div>
 
-			<div class="col-xs-6 col-md-3">
-				<h2>Animales en riesgo</h2> 
-				<div class="img1"><%=image_tag("pic8.jpg",  class: "center-block img-responsive" )%></div>
-				<p><a class="btn" href="#">Ve detalles »</a></p>
-			</div>
-			</div>
-			</div>	
+        	<div class=" col-xs-6 col-md-3 col-circle">
+        	<h3 class="text-center">Mascotas perdidas</h3>
+         	<div class=" nocircle" style="background-image:url(<%=image_url('ref1.jpg')%>)"></div>     
+         	<a class=" red btn btn-primary center-block  " href="/events/1">
+                Ver más <span class="glyphicon glyphicon-chevron-right">
+</span></a>
+            </div>
 
-		</div>
+          	<div class=" col-xs-6 col-md-3 col-circle">
+          	<h3 class="text-center">Animales encontrados </h3>
+         	<div class="nocircle" style="background-image:url(<%=image_url('ref2.jpg')%>)"></div>
+            <a class=" red btn btn-primary center-block  " href="/events/1">
+                Ver más <span class="glyphicon glyphicon-chevron-right">
+</span></a>
+            </div>
+
+            <div class=" col-xs-6 col-md-3 col-circle">
+            <h3 class="text-center">Adopta una mascota</h3>
+         	<div class="nocircle" style="background-image:url(<%=image_url('ref3.jpg')%>)"></div>
+            <a class=" red btn btn-primary center-block  " href="/events/1">
+                Ver más <span class="glyphicon glyphicon-chevron-right">
+</span></a>
+            </div>
+
+          	<div class=" col-xs-6 col-md-3 col-circle">
+          	<h3 class="text-center">Animales en riesgo</h3>
+         	<div class="nocircle" style="background-image:url(<%=image_url('ref4.jpg')%>)"></div>
+            <a class=" red btn btn-primary center-block  " href="/events/1">
+                Ver más <span class="glyphicon glyphicon-chevron-right">
+</span></a>
+            </div>
+            
+         </div>
+		<br>
+	</div>
+        
+		</div>	
+
+		
 
 	
 			

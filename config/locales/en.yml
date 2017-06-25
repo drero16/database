@@ -23,9 +23,48 @@ en:
   activerecord:
     models:
       user: "Usuario"
+      role: "Rol"
+      risk: "En riesgo"
+      race: "Raza"
+      pet: "Mascota"
+      notification: "Notificación"
+      information: "Información"
+      image: "Imagen"
+      event: "Evento"
+      device: "Dispositivo"
+      comment: "Comentario"
+      animal: "Animal"
+      adoption: "Adopción"
+      ability: "Capacidad"
     attributes:
       animal:
-        location: "Ubicacion"
+        location: "Ubicación"
+        age: "Edad"
+        sex: "Sexo"
+        description: "Descripción"
+      comment:
+        description: "Descripción"
+      event:
+        title: "Titulo"
+        description: "Descripción"
+        date_event: "Fecha de evento"
+        location: "Ubicación"
+      information:
+        title: "Titulo"
+        description: "Descripción"
+      pet:
+        sex: "Sexo"
+        name: "Nombre"
+        description: "Descripción"
+      role:
+        name: "Nombre"
+        description: "Descripción"
+      user:
+        name: "Nombre"
+        address: "Dirección"
+        phone: "Teléfono"
+        sex: "Sexo"
+
     errors:
       messages:
         record_invalid: "La validación falló: %{errors}"
