@@ -69,8 +69,58 @@ class UsersController < ApplicationController
     end
   end
 
+  def stats
 
+  end
 
+  def detailedstats
+    if params[:tipo]=="animal"
+      @data=Animal.all
+      if params[:solved]=="true"
+        @data=@data.where(solved: true)
+        @title="Casos resueltos de animales encontrados"
+      elsif params[:solved]=="false"
+        @data=@data.where(solved: false)
+        @title="Casos no resueltos de animales encontrados"
+      elsif params[:solved]=="all"
+        @title="Total de animales encontrados"
+      end
+
+    elsif params[:tipo]=="adoption"
+      @data=Adoption.all
+      if params[:solved]=="true"
+        @data=@data.where(solved: true)
+        @title="Casos resueltos de adopciones"
+      elsif params[:solved]=="false"
+        @data=@data.where(solved: false)
+        @title="Casos no resueltos de adopciones"
+      elsif params[:solved]=="all"
+        @title="Total de adopciones publicadas"
+      end      
+    elsif params[:tipo]=="pet"
+      @data=Pet.all
+      if params[:solved]=="true"
+        @data=@data.where(solved: true)
+        @title="Casos resueltos de mascotas perdidas"
+      elsif params[:solved]=="false"
+        @data=@data.where(solved: false)
+        @title="Casos no resueltos de mascotas perdidas"
+      elsif params[:solved]=="all"
+        @title="Total de publicaciones de mascotas perdidas"
+      end      
+    elsif params[:tipo]=="risk"
+      @data=Risk.all
+      if params[:solved]=="true"
+        @data=@data.where(solved: true)
+        @title="Casos resueltos de animales en riesgo"
+      elsif params[:solved]=="false"
+        @data=@data.where(solved: false)
+        @title="Casos no resueltos de animales en riesgo"
+      elsif params[:solved]=="all"
+        @title="Total de publicaciones de animales en riesgo"
+      end      
+    end
+  end
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user

@@ -45,6 +45,10 @@ post '/unsubscribe'=>"devices#unsubscribe"
 
   scope "/admin" do
   resources :users do
+    collection do
+      get 'stats'
+      get 'detailedstats'
+    end
     member do
       get 'all'
     end

@@ -1,0 +1,122 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+            <h1 align="center"><%=@title%></h1>
+            <div class="panel panel-default panel-table">
+              <div class="panel-heading">
+                <div class="row">
+                  <div class="col col-xs-6">
+                    <h3 class="panel-title">Perros por Raza</h3>
+                  </div>
+                  <div class="col col-xs-6 text-right">
+                    <h3 class= "panel-title">Total:<%=@data.where(animal_type: "Perro").count%></h3>
+                  </div>
+                </div>
+              </div>
+              <div class="panel-body">
+                <table class="table table-striped table-bordered table-list" id="myTable">
+                  <thead>
+                    <tr>
+                        <th class="text-center">Raza</th>
+                        <th class="text-center">Cantidad</th>
+                    </tr> 
+                  </thead>
+                  <tbody>
+                          <tr>
+                          <%@races=Race.where(description: "Perro")%>
+                          <% @races.each do |r| %>
+                            <td align="center">
+                              <%=r.name%>
+                            </td>
+                            <td align="center">
+                              <%=@data.race(r.id).count%>
+                            </td>
+
+                          </tr>
+                          <% end %>                                                                            
+                    </tbody>
+                </table>
+            
+              </div>
+
+            </div>
+
+            <div class="panel panel-default panel-table">
+              <div class="panel-heading">
+                <div class="row">
+                  <div class="col col-xs-6">
+                    <h3 class="panel-title">Gatos por Raza</h3>
+                  </div>
+                  <div class="col col-xs-6 text-right">
+                  <h3 class= "panel-title">Total:<%=@data.where(animal_type: "Gato").count%></h3>
+                  </div>
+                </div>
+              </div>
+              <div class="panel-body">
+                <table class="table table-striped table-bordered table-list" id="myTable">
+                  <thead>
+                    <tr>
+                        <th class="text-center">Raza</th>
+                        <th class="text-center">Cantidad</th>
+                    </tr> 
+                  </thead>
+                  <tbody>
+                          <tr>
+                          <%@races=Race.where(description: "Gato")%>
+                          <% @races.each do |r| %>
+                            <td align="center">
+                              <%=r.name%>
+                            </td>
+                            <td align="center">
+                              <%=@data.race(r.id).count%>
+                            </td>
+
+                          </tr>
+                          <% end %>                                                                            
+                    </tbody>
+                </table>
+            
+              </div>
+
+            </div>
+
+            <div class="panel panel-default panel-table">
+              <div class="panel-heading">
+                <div class="row">
+                  <div class="col col-xs-6">
+                    <h3 class="panel-title">Otros animales</h3>
+                  </div>
+                  <div class="col col-xs-6 text-right">
+                  <h3 class= "panel-title">Total:<%=@data.where(animal_type: "Otro").count%></h3>
+                  </div>
+                </div>
+              </div>
+              <div class="panel-body">
+                <table class="table table-striped table-bordered table-list" id="myTable">
+                  <thead>
+                    <tr>
+                        <th class="text-center">Raza</th>
+                        <th class="text-center">Cantidad</th>
+                    </tr> 
+                  </thead>
+                  <tbody>
+                          <tr>
+                          <%@races=Race.where(description: "Otro")%>
+                          <% @races.each do |r| %>
+                            <td align="center">
+                              <%=r.name%>
+                            </td>
+                            <td align="center">
+                              <%=@data.race(r.id).count%>
+                            </td>
+
+                          </tr>
+                          <% end %>                                                                            
+                    </tbody>
+                </table>
+            
+              </div>
+
+            </div>                        
+
+</div></div></div>
