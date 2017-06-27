@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   devise_for :users
  
   post 'images' => 'images#create'
-  root to: "information#index"
+  root to: "welcome#index"
 
   #resources :images
 #post '/push'=> "push_notifications#create"  

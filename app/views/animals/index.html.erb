@@ -95,6 +95,8 @@
         <div class="col-xs-6 col-sm-3 col-md-5 col-lg-4">
           <% unless animal.images.empty? %>
             <%= link_to image_tag(animal.images.first.image.url(:original), :class=>"img-responsive" ), animal%>
+            <% else %>
+            <%= link_to image_tag('logo.jpg', :class=>"img-responsive" ), animal%>
             <% end %>
             
         </div>

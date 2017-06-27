@@ -51,6 +51,44 @@
       
       document.getElementById('btn').onclick = openPhotoSwipe;
       jQuery(".best_in_place").best_in_place();
+
+      function Print()
+{
+var width = $(window).width() * 0.9;
+    var height = $(window).height() * 0.9;
+    var content = '<!DOCTYPE html>' + 
+                  '<html>' +
+                  '<head><title>Rescate Animal Maipú</title></head>' +
+                  '<body onload="window.focus(); window.print(); window.close();">' + 
+    '<b><h1 align="center">Animal Encontrado</h1></b>'+
+<% unless @animal.images.empty? %>
+            '<%= image_tag @animal.images.first.image.url(:original), style:"width: 100%;"%>'+
+<% else %>
+            '<%= image_tag ('logo.jpg'), align:"middle" %>'+
+<% end %>
+'<h2 align="center"><%=@animal.location%> </h2>'+
+'<h3 align="left">Sexo:<%=@animal.sex%></h3>'+
+'<h3 align="left">Raza:<%=@animal.race.name%></h3>'+
+'<h3 align="left"><%=@animal.description%></h4>'+
+'<h2 align= "left">Contacto</h3>'+
+'<h3 align="left">Email:<%=@animal.user.email%></h3>'+
+'<h3 align="left">N° Telefónico:<%=@animal.user.phone%></h3>'+
+'<h4 align="center"> Visítanos en rescateanimalmaipu.cl </h4>'+
+'</body>' +
+'</html>';
+    var options = "toolbar=no,location=no,directories=no,menubar=no,scrollbars=yes,width=" + width + ",height=" + height;
+    var printWindow = window.open('', 'print', options);
+    printWindow.document.open();
+    printWindow.document.write(content);
+    printWindow.document.close();
+    printWindow.focus();
+}
+  document.getElementById('imprimir').onclick= Print;
+
+
+
+
+
     });
     (function(d, s, id) {
     var js, fjs = d.getElementsByTagName(s)[0];
@@ -69,6 +107,8 @@
       <div class="col-md-4">
           <% unless @animal.images.empty? %>
             <%= image_tag @animal.images.first.image.url(:original), :class=>"img-responsive", id:"print1"%>
+            <% else %>
+            <%= image_tag ('logo.jpg'), :class=>"img-responsive", id:"print1" %>
           <% end %>
                 <dl class="dl-horizontal dl-info-user">
           <dt><i class="fa fa-user" aria-hidden="true"></i></dt>
@@ -92,7 +132,7 @@
               <button id="btn" class="btn btn-default"><i class="fa fa-picture-o fa-lg" aria-hidden="true"></i      >
       Mas fotos</button>
       <% end %> 
-
+      <button id="imprimir" class="btn btn-default"><i class="fa fa-print fa-lg" aria-hidden="true"></i      > Imprimir</button>
       <% if (can? :edit, @animal) or (can? :destroy, @animal) %>
 <div class="btn-group">
   <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -284,7 +324,7 @@
               <div class="panel-heading">
                 <strong><%=comment.user.name%></strong> <span class="text-muted">Hace <%=distance_of_time_in_words(Time.now,comment.created_at)%></span>
                  <div class="pull-right">
-                 <% if ((current_user == @animal.user) or (current_user.admin?))%>
+                 <% if can? :destroy, @animal%>
                     <a role="button" data-toggle="collapse" data-target="#comment<%=index%>"><i class="fa fa-id-card-o fa-lg fa-fw" aria-hidden="true"></i></a>
                     <%end%>
 
@@ -296,7 +336,7 @@
 
                      <%end%>
                     </div>
-                    <% if ((current_user == @animal.user) or (current_user.admin?))%>
+                    <% if can? :destroy, @animal%>
                     <div id="comment<%=index%>" class="collapse">
                       <dl class="dl-horizontal dl-data-comment">
                         <hr>
@@ -373,4 +413,3 @@
   </div>
 <% end %>
 -->
-  

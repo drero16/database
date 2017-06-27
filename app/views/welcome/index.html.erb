@@ -77,32 +77,60 @@
 
         	<div class=" col-xs-6 col-md-3 col-circle">
         	<h3 class="text-center">Mascotas perdidas</h3>
-         	<div class=" nocircle" style="background-image:url(<%=image_url('ref1.jpg')%>)"></div>     
-         	<a class=" red btn btn-primary center-block  " href="/events/1">
+          <% if Pet.last.present? %>
+            <% img=Pet.last.images.first.image.url(:original) %>
+            <% url=pet_path(Pet.last) %>
+          <% else %>
+            <% img=image_url('logo.jpg')%>
+            <% url= pets_path %>
+          <% end %>
+         	<div class=" nocircle" style="background-image:url(<%=img%>)"></div>     
+         	<a class=" red btn btn-primary center-block  " href="<%=url%>">
                 Ver más <span class="glyphicon glyphicon-chevron-right">
 </span></a>
             </div>
 
           	<div class=" col-xs-6 col-md-3 col-circle">
           	<h3 class="text-center">Animales encontrados </h3>
-         	<div class="nocircle" style="background-image:url(<%=image_url('ref2.jpg')%>)"></div>
-            <a class=" red btn btn-primary center-block  " href="/events/1">
+             <% if Animal.last.present? %>
+               <% img=Animal.last.images.first.image.url(:original) %>
+               <% url=animal_path(Animal.last) %>
+             <% else %>
+               <% img=image_url('logo.jpg')%>
+               <% url= animals_path %>
+             <% end %>
+         	<div class="nocircle" style="background-image:url(<%=img%>)"></div>
+            <a class=" red btn btn-primary center-block  " href="<%=url%>">
                 Ver más <span class="glyphicon glyphicon-chevron-right">
 </span></a>
             </div>
 
             <div class=" col-xs-6 col-md-3 col-circle">
             <h3 class="text-center">Adopta una mascota</h3>
-         	<div class="nocircle" style="background-image:url(<%=image_url('ref3.jpg')%>)"></div>
-            <a class=" red btn btn-primary center-block  " href="/events/1">
+          <% if Adoption.last.present? %>
+            <% img=Adoption.last.images.first.image.url(:original) %>
+            <% url=adoption_path(Adoption.last) %>
+          <% else %>
+            <% img=image_url('logo.jpg')%>
+            <% url= adoptions_path %>
+          <% end %>            
+         	<div class="nocircle" style="background-image:url(<%=img%>)"></div>
+            <a class=" red btn btn-primary center-block  " href="<%=url%>">
                 Ver más <span class="glyphicon glyphicon-chevron-right">
 </span></a>
             </div>
 
           	<div class=" col-xs-6 col-md-3 col-circle">
           	<h3 class="text-center">Animales en riesgo</h3>
-         	<div class="nocircle" style="background-image:url(<%=image_url('ref4.jpg')%>)"></div>
-            <a class=" red btn btn-primary center-block  " href="/events/1">
+          <% if Risk.last.present? %>
+            <% img=Risk.last.images.first.image.url(:original) %>
+            <% url=risk_path(Risk.last) %>
+          <% else %>
+            <% img=image_url('logo.jpg')%>
+            <% url= risks_path %>
+          <% end %>            
+         	<div class="nocircle" style="background-image:url(<%=img%>)"></div>
+            <a class=" red btn btn-primary center-block  " href="<%=url%>">
                 Ver más <span class="glyphicon glyphicon-chevron-right">
 </span></a>
             </div>
