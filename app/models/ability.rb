@@ -32,7 +32,9 @@ class Ability
     guest.role = Role.new
     guest.role.name = "Guest"
     user ||= guest # Guest user
-    
+    if guest
+        can :get_drop_down_options, Animal
+    end
     if user.admin?
       can :manage, :all
     elsif user.member?
@@ -107,9 +109,11 @@ class Ability
             risk.try(:user)==user
         end
 
+        can :get_drop_down_options, Animal
 
     else
       can :read, :all
+      can :get_drop_down_options, Animal
     end
   end
 end

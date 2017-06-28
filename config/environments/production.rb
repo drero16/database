@@ -42,7 +42,7 @@ Rails.application.configure do
   # config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect' # for NGINX
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
-  # config.force_ssl = true
+  config.force_ssl = true
 
   # Use the lowest log level to ensure availability of diagnostic information
   # when problems arise.
@@ -75,7 +75,26 @@ Rails.application.configure do
   config.log_formatter = ::Logger::Formatter.new
 
   # Do not dump schema after migrations.
+
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.raise_delivery_errors = true
+  #config.action_mailer.default_url_options = {:host => 'localhost:3000'}
+  config.action_mailer.default_url_options = { host: Rails.application.secrets.MAIL_HOST }
+  config.action_mailer.delivery_method = :smtp 
+  config.action_mailer.smtp_settings = { 
+    user_name: Rails.application.secrets.SENDMAIL_USERNAME,
+    password: Rails.application.secrets.SENDMAIL_PASSWORD, 
+    domain: Rails.application.secrets.MAIL_HOST, 
+    address: 'smtp.gmail.com', 
+    port: '587', 
+    authentication: :plain, 
+    enable_starttls_auto: true 
+  }
+
   config.active_record.dump_schema_after_migration = false
   VAPID_PUBLIC_KEY= Rails.application.secrets.VAPID_PUBLIC_KEY
   VAPID_PRIVATE_KEY= Rails.application.secrets.VAPID_PRIVATE_KEY
+  SENDMAIL_PASSWORD=Rails.application.secrets.SENDMAIL_PASSWORD
+  SENDMAIL_USERNAME=Rails.application.secrets.SENDMAIL_USERNAME
+  MAIL_HOST=Rails.application.secrets.MAIL_HOST
 end

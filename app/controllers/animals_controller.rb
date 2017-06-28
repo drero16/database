@@ -1,5 +1,5 @@
 class AnimalsController < ApplicationController
-  before_filter :authenticate_user!, except: [:index,:show]
+  before_filter :authenticate_user!, except: [:index,:show,:get_drop_down_options]
   #before_action :set_animal, only: [:show, :edit, :update, :destroy]
   load_and_authorize_resource
   # GET /animals
@@ -8,6 +8,7 @@ class AnimalsController < ApplicationController
     #@animals = Animal.where(animal_state: 0)
 #    @filters= Animal.new(animal_params)
     @animals = Animal.where(animal_state: 0)
+    @animals =Animal.where(solved: false)
     @animals = @animals.animal_type(params[:animal_type]) if params[:animal_type].present?
     @animals = @animals.sex(params[:sex]) if params[:sex].present?
     @animals = @animals.race(params[:race]) if params[:race].present?
@@ -15,8 +16,14 @@ class AnimalsController < ApplicationController
 #    @animals = @animals.status(params[:status]) if params[:status].present?
     if params[:location].present?
       coords=Geocoder.coordinates(params[:location]) 
-      @animals = @animals.near(coords,2)
+      @animals = @animals.near(coords,0.3)
     end
+
+    @animals=@animals.paginate(:page => params[:page], :per_page => 10).order('created_at DESC') if params[:sort]=="Recientes"
+    @animals=@animals.paginate(:page => params[:page], :per_page => 10).order('created_at ASC') if params[:sort]=="Antiguos"
+    @animals=@animals.paginate(:page => params[:page], :per_page => 10) if params[:sort]=="Cercanía"
+    @animals=@animals.paginate(:page => params[:page], :per_page => 10).includes(:race).joins(:race).order('name ASC') if params[:sort]=="Raza"
+    @animals=@animals.paginate(:page => params[:page], :per_page => 10).order('sex ASC') if params[:sort]=="Sexo"
     #@animals= @animals.paginate(page: params[:page], per_page: 5)
 #    filtering_params(params).each do |key, value|
 #      @animals=@animals.public_send(key,value) if value.present?
@@ -138,6 +145,7 @@ class AnimalsController < ApplicationController
   # respond_to do |format|
   #   format.json { render :json => options}
   # end
+
   end
 
   private
