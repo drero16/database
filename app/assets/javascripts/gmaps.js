@@ -94,8 +94,8 @@ function geocode_lookup( type, value, update ) {
 
       if( type == 'address' ) {
         // User has typed in an address which we can't geocode to a location
-        $('#gmaps-error').html("Sorry! We couldn't find " + value + ". Try a different search term, or click the map." );
-        $('#gmaps-error').show();
+       // $('#gmaps-error').html("Sorry! We couldn't find " + value + ". Try a different search term, or click the map." );
+        //$('#gmaps-error').show();
       } else {
         // User has clicked or dragged marker to somewhere that Google can't do a reverse lookup for
         // In this case we display a warning, clear the address box, but fill in LatLng
