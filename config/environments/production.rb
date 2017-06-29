@@ -92,6 +92,7 @@ Rails.application.configure do
   }
 
   config.active_record.dump_schema_after_migration = false
+  Paperclip.options[:command_path] = "/usr/bin/"
   VAPID_PUBLIC_KEY= Rails.application.secrets.VAPID_PUBLIC_KEY
   VAPID_PRIVATE_KEY= Rails.application.secrets.VAPID_PRIVATE_KEY
   SENDMAIL_PASSWORD=Rails.application.secrets.SENDMAIL_PASSWORD
