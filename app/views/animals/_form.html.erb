@@ -23,7 +23,7 @@
   <script>
   $(document).ready(function() { 
     $("#animal_animal_type").click(function(){
-  var url = 'animals/get_drop_down_options?animal_type=' + $(this).val();  
+  var url = '/animals/get_drop_down_options?animal_type=' + $(this).val();  
   $("#animal_race_id").removeOption(/./);
   $.get(url, function(data) {
     ss=eval('('+data+')');

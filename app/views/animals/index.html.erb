@@ -4,6 +4,7 @@
 
 <% content_for :js do %>
   <%= javascript_include_tag "gmaps" %>
+  <%= javascript_include_tag "jquerySelectBoxes" %>
   <script>
     $(document).ready(function() { 
   if( $('#gmaps-canvas').length  ) {
@@ -13,8 +14,24 @@
   
 
   });
+
+      $(document).ready(function() { 
+    $("#animal_type").click(function(){
+  var url = '/animals/get_drop_down_options?animal_type=' + $(this).val();  
+  $("#race").removeOption(/./);
+  $.get(url, function(data) {
+    ss=eval('('+data+')');
+    $('#race').addOption(ss, true);
+    $("#race").val($("#race option:first").val());
+  });
+});
+  })
+
   </script>
 <% end %>
+
+
+
 
 
 <div class="container-fluid">
@@ -25,7 +42,7 @@
   <form action="/animals">
     <div class="row row-centered">
       <div class="col-xs-8 col-md-8 col-centered">
-        <label for="gmaps-input-address" class="control-label">Dirección</label>
+        <label for="gmaps-input-address" class="control-label">Cercano a</label>
         <input type="text" name="location" class="form-control" id="gmaps-input-address" value="<%=params[:location]%>">
         <div id='gmaps-error'></div>
                 <div id='gmaps-canvas' class=" hidden"></div>
@@ -49,7 +66,8 @@
           <option>Pitbull</option>
           <option>Pastor Alemán</option>
         </select>-->
-        <% @races=Race.all %>
+        <% @races=Race.where(description: params[:animal_type]) %>
+
     <% options = options_from_collection_for_select(@races, 'id', 'name',:selected=> params[:race]) %>
     <%= select_tag :race,  options, {:class=>'form-control', :include_blank=>"Todas",}%>
       </div>
@@ -73,13 +91,8 @@
 
       <div class="col-xs-4 col-md-2  col-centered">
         <label for="sort">Ordenar por</label>
-        <select class="form-control" id="sort">
-          <option>Recientes</option>
-          <option>Antiguos</option>
-          <option>Cercanía</option>
-          <option>Raza</option>
-          <option>Sexo</option>
-        </select>
+        <% options3 = options_for_select(["Recientes","Antiguos","Cercanía","Raza","Sexo"],:selected=> params[:sort]) %>
+        <%= select_tag :sort,  options3, {:class=>'form-control'}%>        
       </div>
 
     </div>
@@ -101,9 +114,13 @@
             
         </div>
         <div class="col-xs-6 col-sm-9 col-md-7 col-lg-8 title">
-            <h3><%= animal.location%></h3>
-            <p><%= animal.description %>.</p>
-            <p><%= link_to 'Ver más', animal %></p>
+            <h4><%=animal.location%></h4>
+            <h5><%=animal.animal_type%></h5>
+            <h5><%=animal.race.name unless animal.race.name == "Sin definir"%></h5>
+            <h5><%=animal.created_at.strftime("%d/%m/%Y")%></h5>
+            <h5><%=animal.sex%></h5>
+            <h5><%=animal.description %>.</h5>
+            <h5><b><%=link_to 'Ver más', animal, class:"btn btn-primary" %></b></h5>
         </div>
   </div>
 </div>

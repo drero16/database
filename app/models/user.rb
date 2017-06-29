@@ -16,7 +16,7 @@ class User < ActiveRecord::Base
   before_create :set_default_role
   scope :email, -> (email) { where email: email }
   phony_normalize :phone, default_country_code: 'CL'
-
+  validates :name, presence: true
   has_attached_file :avatar,
 :styles => { :original => ["1000x1000",:jpg],:thumb => ["100x100#",:jpg]},
     :path => ":rails_root/public/profile/:id/:style/:filename",

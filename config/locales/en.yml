@@ -65,6 +65,10 @@ en:
         address: "Dirección"
         phone: "Teléfono"
         sex: "Sexo"
+        password_confirmation: "Contraseñas"
+        password: "Contraseña"
+        avatar: "Imagen"
+        reset_password_token: "Código de restablecer contraseña"
 
     errors:
       messages:
