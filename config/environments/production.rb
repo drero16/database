@@ -42,7 +42,7 @@ Rails.application.configure do
   # config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect' # for NGINX
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
-  config.force_ssl = true
+  config.force_ssl = false
 
   # Use the lowest log level to ensure availability of diagnostic information
   # when problems arise.
@@ -92,6 +92,7 @@ Rails.application.configure do
   }
 
   config.active_record.dump_schema_after_migration = false
+  Paperclip.options[:command_path] = "/usr/bin/"
   VAPID_PUBLIC_KEY= Rails.application.secrets.VAPID_PUBLIC_KEY
   VAPID_PRIVATE_KEY= Rails.application.secrets.VAPID_PRIVATE_KEY
   SENDMAIL_PASSWORD=Rails.application.secrets.SENDMAIL_PASSWORD
