@@ -42,6 +42,7 @@ en:
         age: "Edad"
         sex: "Sexo"
         description: "Descripción"
+        images: "Imagen"
       comment:
         description: "Descripción"
       event:
