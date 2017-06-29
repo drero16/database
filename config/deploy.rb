@@ -1,9 +1,9 @@
 # Change these
-server '179.4.9.242', port: 22, roles: [:web, :app, :db], primary: true
+server '170.239.84.97', port: 22222, roles: [:web, :app, :db], primary: true
 
 set :repo_url,        'git@github.com:drero16/database.git'
 set :application,     'database'
-set :user,            'deploy'
+set :user,            'rescateram'
 set :puma_threads,    [4, 16]
 set :puma_workers,    0
 
