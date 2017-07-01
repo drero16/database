@@ -1,6 +1,4 @@
 class Animal < ActiveRecord::Base
-	self.table_name = 'animals'
-  default_scope { where(animal_state: 0) }
   belongs_to :user
   belongs_to :race
   has_many :comments, :dependent => :destroy

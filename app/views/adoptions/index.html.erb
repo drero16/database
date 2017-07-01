@@ -1,25 +1,139 @@
-<p id="notice"><%= notice %></p>
+<% content_for :stylesheets do %>
+  <%= stylesheet_link_tag "centered-columns" %>
+<% end %>
 
-<h1>Listing Adoptions</h1>
+<% content_for :js do %>
+  <%= javascript_include_tag "gmaps" %>
+  <%= javascript_include_tag "jquerySelectBoxes" %>
+  <script>
+    $(document).ready(function() { 
+  if( $('#gmaps-canvas').length  ) {
+    gmaps_init();
+    autocomplete_init();
+  }; 
+  
 
-<table>
-  <thead>
-    <tr>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+  });
 
-  <tbody>
-    <% @adoptions.each do |adoption| %>
-      <tr>
-        <td><%= link_to 'Show', adoption %></td>
-        <td><%= link_to 'Edit', edit_adoption_path(adoption) %></td>
-        <td><%= link_to 'Destroy', adoption, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+      $(document).ready(function() { 
+    $("#animal_type").click(function(){
+  var url = '/adoptions/get_drop_down_options?animal_type=' + $(this).val();  
+  $("#race").removeOption(/./);
+  $.get(url, function(data) {
+    ss=eval('('+data+')');
+    $('#race').addOption(ss, true);
+    $("#race").val($("#race option:first").val());
+  });
+});
+  })
 
-<br>
+  </script>
+<% end %>
 
-<%= link_to 'New Adoption', new_adoption_path %>
+
+
+
+
+<div class="container-fluid">
+  <div class="row">
+        <h1 class="page-header text-center">Busca animales que otros han encontrado</h1>
+        <h5 class="text-center"> Puedes utilizar los filtros de abajo para personalizar tu búsqueda.</h5>
+        <div class="text-center">
+          <button class="btn btn-info" data-toggle="collapse" data-target="#screen" id="screen-collapse" aria-expanded="false"><i class="fa fa-search" aria-hidden="true"> Filtros</i>
+          </button>
+          <%=link_to "Ingresar animal encontrado",new_adoption_path, class: "btn btn-success" %>
+        </div>
+          
+  </div>
+
+
+
+</button>
+  <div id="screen" class="collapse">
+  <form action="/adoptions">
+    <div class="row row-centered">
+      <div class="col-xs-8 col-md-8 col-centered">
+        <label for="gmaps-input-address" class="control-label">Cercano a</label>
+        <input type="text" name="lost_in" class="form-control" id="gmaps-input-address" value="<%=params[:lost_in]%>">
+        <div id='gmaps-error'></div>
+                <div id='gmaps-canvas' class=" hidden"></div>
+      </div>
+      <div class="col-xs-4 col-md-2  col-centered">
+        <button type="submit" class="btn btn-success">Listo!</button>
+      </div>
+    </div>
+    
+    <div class="row row-centered">
+      <div class="col-xs-6 col-sm-6 col-md-2  col-centered">
+        <label for="animal">Animal</label>
+       
+         <% option = options_for_select(["Perro","Gato","Otro"],:selected=> params[:animal_type]) %>
+        <%= select_tag :animal_type,  option, {:class=>'form-control', :include_blank=>"Todas"}%>
+      </div>
+
+      <div class="col-xs-6 col-sm-6 col-md-2  col-centered">
+        <label for="raza">Raza</label>
+        <% @races=Race.where(description: params[:animal_type]) %>
+
+    <% options = options_from_collection_for_select(@races, 'id', 'name',:selected=> params[:race]) %>
+    <%= select_tag :race,  options, {:class=>'form-control', :include_blank=>"Todas",}%>
+      </div>
+
+      <div class="col-xs-6 col-sm-6 col-md-2  col-centered">
+        <label for="sexo">Sexo</label>
+        <% options2 = options_for_select(["Macho","Hembra"],:selected=> params[:sex]) %>
+        <%= select_tag :sex,  options2, {:class=>'form-control', :include_blank=>"Cualquiera"}%>
+
+      </div>
+
+      <div class="col-xs-6 col-sm-6 col-md-2  col-centered">
+        <label for="fecha">Fecha</label>
+        <input name="date" type="date" id="fecha" value="<%=params[:date]%>"class="form-control">
+      </div>
+
+      <div class="col-xs-6 col-sm-6 col-md-2  col-centered">
+        <label for="sort">Ordenar por</label>
+        <% options3 = options_for_select(["Recientes","Antiguos","Cercanía","Raza","Sexo"],:selected=> params[:sort]) %>
+        <%= select_tag :sort,  options3, {:class=>'form-control'}%>        
+      </div>
+
+    </div>
+  </form>
+  </div>
+</div>
+
+
+<div class="row row-centered">
+<div class="panel panel-default col-md-8 col-centered", style="margin-right: 0px;
+">
+<% if @adoptions.empty?%>
+<div class="alert alert-danger fade in alert-dismissable" style="margin-top:20px;">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
+    <strong>No se encontraron resultados.</strong>
+</div>
+<% end %>
+<% @adoptions.each do |adoption| %>
+<div class="well search-result">
+  <div class="row">
+        <div class="col-xs-6 col-sm-3 col-md-5 col-lg-4">
+          <% unless adoption.images.empty? %>
+            <%= link_to image_tag(adoption.images.first.image.url(:original), :class=>"img-responsive" ), adoption%>
+            <% else %>
+            <%= link_to image_tag('logo.jpg', :class=>"img-responsive" ), adoption%>
+            <% end %>
+            
+        </div>
+        <div class="col-xs-6 col-sm-9 col-md-7 col-lg-8 title">
+            <h4><%=adoption.lost_in%></h4>
+            <h5><%=adoption.adoption_type%></h5>
+            <h5><%=adoption.race.name unless adoption.race.name == "Sin definir"%></h5>
+            <h5><%=adoption.created_at.strftime("%d/%m/%Y")%></h5>
+            <h5><%=adoption.sex%></h5>
+            <h5><%=adoption.description %>.</h5>
+            <h5><b><%=link_to 'Ver más', adoption, class:"btn btn-primary" %></b></h5>
+        </div>
+  </div>
+</div>
+<%end%>
+</div>
+</div>

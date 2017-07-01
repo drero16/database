@@ -2,7 +2,9 @@ class CommentsController < ApplicationController
   #before_action :set_comment, only: [:show, :edit, :update, :destroy]
   load_and_authorize_resource :animal
   load_and_authorize_resource :pet
-  load_and_authorize_resource :comment, :through => [:animal,:pet]
+  load_and_authorize_resource :risk
+  load_and_authorize_resource :adoption
+  load_and_authorize_resource :comment, :through => [:animal,:pet,:risk,:adoption]
   # GET /comments
   # GET /comments.json
   def index
@@ -30,6 +32,8 @@ class CommentsController < ApplicationController
     @comment.user_id=current_user.id
     @comment.animal_id=params[:animal_id]
     @comment.pet_id=params[:pet_id]
+    @comment.risk_id=params[:risk_id]
+    @comment.adoption_id=params[:adoption_id]
     respond_to do |format|
       if @comment.save
           if (params[:animal_id])
@@ -38,6 +42,13 @@ class CommentsController < ApplicationController
           elsif (params[:pet_id])
             post=Pet.find(params[:pet_id])
             url="/pets/"+params[:pet_id]
+          elsif (params[:risk_id])
+            post=Risk.find(params[:risk_id])
+            url="/risks/"+params[:risk_id]
+          elsif (params[:adoption_id])
+            post=Adoption.find(params[:adoption_id])
+            url="/adoptions/"+params[:adoption_id]                 
+
           end
 
           user=post.user
@@ -57,6 +68,22 @@ class CommentsController < ApplicationController
             #notify(user,noti.id)
             end
         end
+
+       
+          post.comments.select(:user_id).distinct.each do |userid|
+            unless (@comment.user_id==userid)
+              unless (user_id==userid)
+                Spawnling.new do
+                  title=@comment.user.name << " ha respondido una publicación donde comentaste."
+              body=@comment.description
+            pic_url=@comment.user.avatar.url
+            noti=Notification.create(user_id: userid, titulo: title, mensaje: body, url: url, seen: 0, pic_url: pic_url, comment: @comment)
+            notify(User.find(userid),title,body,notification_url(noti))
+                end
+              end
+            end
+          end
+        
 
       else
         format.html { render :new }
@@ -100,6 +127,6 @@ class CommentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def comment_params
-      params.require(:comment).permit(:description, :animal_id, :pet_id, :user_id)
+      params.require(:comment).permit(:description, :animal_id, :pet_id, :user_id, :risk_id, :adoption_id)
     end
 end

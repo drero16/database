@@ -1,12 +1,27 @@
 class AdoptionsController < ApplicationController
-  #before_action :set_adoption, only: [:show, :edit, :update, :destroy]
-  before_filter :authenticate_user!, except: [:index]
+  before_filter :authenticate_user!, except: [:index,:show,:get_drop_down_options]
   load_and_authorize_resource
 
   # GET /adoptions
   # GET /adoptions.json
   def index
-    @adoptions = Adoption.where(animal_state: 1)
+    @adoptions =Adoption.where(solved: false)
+    @adoptions = @adoptions.animal_type(params[:animal_type]) if params[:animal_type].present?
+    @adoptions = @adoptions.sex(params[:sex]) if params[:sex].present?
+    @adoptions = @adoptions.race(params[:race]) if params[:race].present?
+    @adoptions = @adoptions.date(params[:date]) if params[:date].present?
+#    @adoptions = @adoptions.status(params[:status]) if params[:status].present?
+    if params[:lost_in].present?
+      coords=Geocoder.coordinates(params[:lost_in]) 
+      @adoptions = @adoptions.near(coords,0.3)
+    end
+
+    @adoptions=@adoptions.paginate(:page => params[:page], :per_page => 10).order('created_at DESC') if params[:sort]=="Recientes"
+    @adoptions=@adoptions.paginate(:page => params[:page], :per_page => 10).order('created_at ASC') if params[:sort]=="Antiguos"
+    @adoptions=@adoptions.paginate(:page => params[:page], :per_page => 10) if params[:sort]=="Cercanía"
+    @adoptions=@adoptions.paginate(:page => params[:page], :per_page => 10).includes(:race).joins(:race).order('name ASC') if params[:sort]=="Raza"
+    @adoptions=@adoptions.paginate(:page => params[:page], :per_page => 10).order('sex ASC') if params[:sort]=="Sexo"
+
   end
 
   # GET /adoptions/1
@@ -29,34 +44,66 @@ class AdoptionsController < ApplicationController
   def create
     @adoption = Adoption.new(adoption_params)
     @adoption.user_id = current_user.id
-    @adoption.animal_state= 1
+    @adoption.solved= false
+  
     respond_to do |format|
-      if @adoption.save
-        if params[:images]
-          params[:images].each { |image|
-          @adoption.images.create(image: image)
-        }
-        end
-        format.html { redirect_to @adoption, notice: 'Adoption was successfully created.' }
-        format.json { render :show, status: :created, location: @adoption }
+      if params[:images].present?
+        if @adoption.save and params[:images].present?
+          if params[:images]
+            params[:images].each { |image|
+            @adoption.images.create(image: image)
+          }
+          end
+          format.html { redirect_to @adoption }
+          format.json { render :show, status: :created, location: @adoption }
+ #         coord=Geocoder.coordinates(params[:location]) 
+ #         @users_near= User.near(coord,2)
+ #         @users_near.each do |near|
+ #             unless (near==@adoption.user)
+ #               user=near
+ #               title="Se ha perdido un animal cerca tuyo!"
+ #               body= near.location
+ #               url= animal_url(@adoption)
+ #               Notification.create(user: user, titulo: title, mensaje: body, url: url, seen: 0)
+ #             end
+          else
+            unless params[:images].present?
+              @adoption.errors.add(:images)
+            end            
+           format.html { render :new }
+           format.json { render json: @adoption.errors, status: :unprocessable_entity }
+          end
       else
+        unless params[:images].present?
+          @adoption.errors.add(:images)
+        end
         format.html { render :new }
-        format.json { render json: @adoption.errors, status: :unprocessable_entity }
-      end
+        format.json { render json: @adoption.errors, status: :unprocessable_entity }      
+    end
     end
   end
 
   # PATCH/PUT /adoptions/1
   # PATCH/PUT /adoptions/1.json
   def update
-    respond_to do |format|
+   respond_to do |format|
+      
       if @adoption.update(adoption_params)
         if params[:images]
           params[:images].each { |image|
           @adoption.images.create(image: image)
         }
         end
-        format.html { redirect_to @adoption, notice: 'Adoption was successfully updated.' }
+        if params[:selected]
+          params[:selected].each { |selecte|
+            @adoption.images.destroy(selecte)
+          }
+        end
+        if adoption_params[:solved]
+        format.html { redirect_to @adoption}
+        else
+        format.html { redirect_to @adoption, notice: 'Publicación actualizada correctamente.' }
+        end
         format.json { render :show, status: :ok, location: @adoption }
       else
         format.html { render :edit }
@@ -72,6 +119,7 @@ class AdoptionsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to adoptions_url, notice: 'Adoption was successfully destroyed.' }
       format.json { head :no_content }
+      format.js
     end
   end
 
@@ -83,6 +131,6 @@ class AdoptionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def adoption_params
-      params.require(:adoption).permit(:animal_type, :sex, :name, :description, :lost_on, :lost_in, :user_id, :race_id)
+      params.require(:adoption).permit(:animal_type, :age,:sex, :name, :description, :lost_on, :lost_in, :user_id, :race_id)
     end
 end

@@ -1,6 +1,76 @@
-<h1>Editing User</h1>
+<% content_for :stylesheets do %>
+  <%= stylesheet_link_tag "auth" %>
+<% end %>
+<% content_for :js do %>
+  <%= javascript_include_tag "gmaps" %>
+  <script>
+    $(document).ready(function() { 
+  if( $('#gmaps-canvas').length  ) {
+    gmaps_init();
+    autocomplete_init();
+  }; 
+  });
+  </script>
+<% end %>
 
-<%= render 'form' %>
+<div class="panel panel-default col-md-4 col-md-offset-4">
+<h2>Editar mi perfil</h2>
 
-<%= link_to 'Show', @user %> |
-<%= link_to 'Back', users_path %>
+<%= form_for(@user, html: { :multipart => true, method: :put,:class => 'form-group' }) do |f| %>
+  <% if @user.errors.any? %>
+    <div class="alert alert-danger ">
+      <h4>Se encontraron los siguientes errores:</h4>
+      <ul>
+      <% @user.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+<div class="form-group">
+    <%= f.label :name, "Nombre", class: "control-label" %><br />
+    <%= f.text_field :name, autofocus: true, class:"form-control"%>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :address, class: "control-label" %><br />
+    <%= f.text_field :address, autofocus: true, class:"form-control", id:"gmaps-input-address"%>
+    <div id='gmaps-error'></div>
+    <div id='gmaps-canvas' class=" hidden"></div>
+  </div>  
+
+  <div class="form-group">
+    <%= f.label :email, class: "control-label" %><br />
+    <%= f.email_field :email, autofocus: true, class:"form-control" %>
+  </div>
+
+    <div class="form-group">
+    <%= f.label :phone, "Teléfono", class: "control-label" %><br />
+    <%= f.telephone_field :phone, class: "form-control"%>
+  </div>
+
+  <div class="form-group">
+      <%= f.label :avatar,"Actualizar foto de perfil", class: "control-label" %><i> (Dejar en blanco si no se desea cambiar.)</i> 
+      <%= f.file_field :avatar,class: "form-control" %>
+  </div>   
+
+
+  <div class="form-group">
+    <%= f.label :password, "Nueva Contraseña", class: "control-label" %> <i>(Dejar en blanco si no se desea cambiar.)</i><br />
+    <%= f.password_field :password, autocomplete: "off", class:"form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :password_confirmation, "Confirmar Nueva Contraseña", class: "control-label" %><br />
+    <%= f.password_field :password_confirmation, autocomplete: "off", class:"form-control" %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "Guardar", class:"btn btn-primary" %>
+  </div>
+<% end %>
+
+
+
+
+</div>

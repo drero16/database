@@ -65,9 +65,7 @@
                               <%= link_to user, class: "btn btn-info","data-toggle"=>"tooltip", "title"=>"Ver"  do %>
                               <em class="fa fa-eye"></em>
                               <% end %> 
-                              <%= link_to edit_user_path(user), class:"btn btn-default","data-toggle"=>"tooltip", "title"=>"Editar" do%>
-                              <em class="fa fa-pencil"></em>
-                              <%end%>
+
                               <%= link_to user, class:"btn btn-danger", method: :delete, data: { confirm: 'Eliminar un usuario provocará que toda su actividad sea eliminada, ¿estas seguro?' },"data-toggle"=>"tooltip", "title"=>"Eliminar"  do%>
                               <em class="fa fa-trash"></em>
                               <% end %>
@@ -89,7 +87,7 @@
             
               </div>
               <div class="panel-footer">
-                  <div class="row row-centered" ><%= will_paginate @notifications, :next_label => ">>", :previous_label => "<<"%>
+                  <div class="row row-centered" ><%= will_paginate @users, :next_label => ">>", :previous_label => "<<"%>
                   </div>
               </div>
             </div>

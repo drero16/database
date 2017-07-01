@@ -1,4 +1,388 @@
-<p id="notice"><%= notice %></p>
+<% content_for :stylesheets do %>
+  <%= stylesheet_link_tag "centered-columns" %>
+  <%= stylesheet_link_tag "ejemploPerdido" %>
+  <%= stylesheet_link_tag "photoswipe" %>
+  <%= stylesheet_link_tag "default-skin" %>
+<% end %>
 
-<%= link_to 'Edit', edit_adoption_path(@adoption) %> |
-<%= link_to 'Back', adoptions_path %>
+<% content_for :js do %>
+
+  <%= javascript_include_tag "gmaps" %>
+  <%= javascript_include_tag "photoswipe" %>
+  <%= javascript_include_tag "photoswipe-ui-default" %>
+  <script>
+    $(document).ready(function() { 
+      if($('#map').length ){
+        onlymap("<%=@adoption.lost_in%>");
+      }
+      <% if @adoption.images.present? %>
+            var openPhotoSwipe = function() {
+            var pswpElement = document.querySelectorAll('.pswp')[0];
+      
+
+            var items = [
+              <% @adoption.images.each do |attach| %>
+              {
+                src: '<%=image_path attach.image%>'
+                <%@dim=Paperclip::Geometry.from_file(attach.image)%>,
+                w: <%=@dim.width.to_i%>,
+                h: <%=@dim.height.to_i%>
+              },
+      <% end %>
+            ];
+          
+        
+            var options = {
+                    
+              history: false,
+              focus: false,
+      
+              showAnimationDuration: 0,
+              hideAnimationDuration: 0
+              
+            };
+          
+            var gallery = new PhotoSwipe( pswpElement, PhotoSwipeUI_Default, items, options);
+            gallery.init();
+          };
+          document.getElementById('btn').onclick = openPhotoSwipe;
+      <% end %>
+      
+      jQuery(".best_in_place").best_in_place();
+      
+      
+
+      function Print()
+{
+var width = $(window).width() * 0.9;
+    var height = $(window).height() * 0.9;
+    var content = '<!DOCTYPE html>' + 
+                  '<html>' +
+                  '<head><title>Rescate Animal Maipú</title></head>' +
+                  '<body onload="window.focus(); window.print(); window.close();">' + 
+    '<b><h1 align="center">Animal Encontrado</h1></b>'+
+<% unless @adoption.images.empty? %>
+            '<%= image_tag @adoption.images.first.image.url(:original), style:"width: 100%;"%>'+
+<% else %>
+            '<%= image_tag ('logo.jpg'), align:"middle" %>'+
+<% end %>
+'<h2 align="center"><%=@adoption.lost_in%> </h2>'+
+'<h3 align="left">Sexo:<%=@adoption.sex%></h3>'+
+'<h3 align="left">Raza:<%=@adoption.race.name%></h3>'+
+'<h3 align="left"><%=@adoption.description%></h4>'+
+'<h2 align= "left">Contacto</h3>'+
+'<h3 align="left">Email:<%=@adoption.user.email%></h3>'+
+'<h3 align="left">N° Telefónico:<%=@adoption.user.phone%></h3>'+
+'<h4 align="center"> Visítanos en rescateanimalmaipu.cl </h4>'+
+'</body>' +
+'</html>';
+    var options = "toolbar=no,location=no,directories=no,menubar=no,scrollbars=yes,width=" + width + ",height=" + height;
+    var printWindow = window.open('', 'print', options);
+    printWindow.document.open();
+    printWindow.document.write(content);
+    printWindow.document.close();
+    printWindow.focus();
+}
+  document.getElementById('imprimir').onclick= Print;
+
+
+
+
+
+    });
+    (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+  </script>
+
+<% end %>
+
+<div class="container-fluid">
+    <div class="row row-centered">
+    <div class="panel panel-default col-xs-12 col-md-8 col-centered">
+      <div class="col-md-4">
+          <% unless @adoption.images.empty? %>
+            <%= image_tag @adoption.images.first.image.url(:original), :class=>"img-responsive", id:"print1"%>
+            <% else %>
+            <%= image_tag ('logo.jpg'), :class=>"img-responsive", id:"print1" %>
+          <% end %>
+                <dl class="dl-horizontal dl-info-user">
+          <dt><i class="fa fa-user" aria-hidden="true"></i></dt>
+          <dd><%=@adoption.user.name%></dd>
+          <hr>
+          <% if @adoption.user.phone.presence %>
+          <dt><i class="fa fa-phone" aria-hidden="true"></i></dt>
+          <dd><%=@adoption.user.phone%></dd>
+          <hr>
+          <% end %>
+          <dt><i class="fa fa-envelope" aria-hidden="true"></i></dt>
+          <dd><%=@adoption.user.email%></dd>
+        </dl>
+
+
+
+
+
+      <% if (@adoption.images.count==1) %>
+      <button id="btn" class="btn btn-default"><i class="fa fa-picture-o fa-lg" aria-hidden="true"></i      >
+      Ver foto</button>
+      <% elsif (@adoption.images.count>1)%>
+              <button id="btn" class="btn btn-default"><i class="fa fa-picture-o fa-lg" aria-hidden="true"></i      >
+      Mas fotos</button>
+      <% end %> 
+      <button id="imprimir" class="btn btn-default"><i class="fa fa-print fa-lg" aria-hidden="true"></i      > Imprimir</button>
+      <% if (can? :edit, @adoption) or (can? :destroy, @adoption) %>
+<div class="btn-group">
+  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <i class="fa fa-cog fa-lg"></i> Opciones<span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu">
+    <% if can? :edit, @adoption %>
+        <% if @adoption.solved == false %>
+          <li> 
+            <%= link_to adoption_path(@adoption, adoption: {solved: true}), method: :put do %>
+              <i class="fa fa-check fa-lg"></i> Marcar como resuelto
+            <% end %>
+          </li>
+        <% elsif %>
+          <li> 
+            <%= link_to adoption_path(@adoption, adoption: {solved: false}), method: :put do %>
+              <i class="fa fa-times fa-lg"></i> Marcar como no resuelto
+            <% end %>
+          </li>
+        <% end %>
+    <li><%= link_to edit_adoption_path(@adoption) do%>
+      <i class="fa fa-pencil fa-lg"></i> Editar
+      <% end %>
+    </li>
+
+
+    <% end %>
+
+    <% if can? :destroy, @adoption %>
+    <li><%= link_to @adoption, method: :delete, data: { confirm: '¿Estás seguro?' } do%>
+      <i class="fa fa-trash-o fa-lg"></i> Eliminar
+      <% end %>
+    </li>
+    <% end %>    
+    
+  </ul>
+</div>
+<% end %>
+
+
+      <!-- Root element of PhotoSwipe. Must have class pswp. -->
+      <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+      
+          <!-- Background of PhotoSwipe. 
+               It's a separate element, as animating opacity is faster than rgba(). -->
+          <div class="pswp__bg"></div>
+      
+          <!-- Slides wrapper with overflow:hidden. -->
+          <div class="pswp__scroll-wrap">
+      
+              <!-- Container that holds slides. PhotoSwipe keeps only 3 slides in DOM to save memory.       -->
+              <div class="pswp__container">
+                  <!-- don't modify these 3 pswp__item elements, data is added later on -->
+                  <div class="pswp__item"></div>
+                  <div class="pswp__item"></div>
+                  <div class="pswp__item"></div>
+              </div>
+      
+              <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed.       -->
+              <div class="pswp__ui pswp__ui--hidden">
+      
+                  <div class="pswp__top-bar">
+      
+                      <!--  Controls are self-explanatory. Order can be changed. -->
+      
+                      <div class="pswp__counter"></div>
+      
+                      <button class="pswp__button pswp__button--close" title="Cerrar"></button>
+      
+                      <button class="pswp__button pswp__button--share" title="Compartir"></button>
+      
+                      <button class="pswp__button pswp__button--fs" title="Pantalla completa"></button      >
+      
+                      <button class="pswp__button pswp__button--zoom" title="Zoom +/-"></button>
+      
+                      <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                      <!-- element will get class pswp__preloader--active when preloader is running       -->
+                      <div class="pswp__preloader">
+                          <div class="pswp__preloader__icn">
+                            <div class="pswp__preloader__cut">
+                              <div class="pswp__preloader__donut"></div>
+                            </div>
+                          </div>
+                      </div>
+                  </div>
+      
+                  <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                      <div class="pswp__share-tooltip"></div> 
+                  </div>
+      
+                  <button class="pswp__button pswp__button--arrow--left" title="Anterior">
+                  </button>
+      
+                  <button class="pswp__button pswp__button--arrow--right" title="Siguiente">
+                  </button>
+      
+                  <div class="pswp__caption">
+                      <div class="pswp__caption__center"></div>
+                  </div>
+      
+                </div>
+      
+              </div>
+      
+      </div>
+    </div>
+
+      <div class="panel-body col-md-8 ">
+        <dl class="dl-horizontal">
+        <% if @adoption.solved == true %>
+        <div class="alert alert-success fade in alert-dismissable" style="margin-top:18px;">
+          <a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
+          <strong>Resuelta!</strong> Esta publicación ha sido marcada como resuelta!.
+        </div>
+        <% end %>
+          <dt>Animal</dt>
+          <dd><%=@adoption.animal_type%></dd>
+          <hr>
+          <dt>Raza</dt>
+          <dd><%=@adoption.race.name%></dd>
+          <hr>
+          <dt>Nombre</dt>
+          <dd><%=@adoption.name%></dd>
+          <hr>
+          <dt>Edad</dt>
+          <dd><%=@adoption.age%></dd>
+          <hr>                     
+          <dt>Sexo</dt>
+          <dd><%=@adoption.sex%></dd>
+          <hr>
+          <dt>Ubicación</dt>
+          <dd><%=@adoption.lost_in%></dd>
+          <hr>
+          <dt>Descripción</dt>
+          <dd><%=@adoption.description%></dd>
+          <hr>
+          
+          <dt>Comparte!</dt>
+          <dd>
+            <ul class="share-buttons">
+          <li>
+          <a href="https://www.facebook.com/sharer/sharer.php?u=#url&t=" title="Compartir en Facebook" target="_blank">
+           <%=image_tag("social_flat_rounded_rects_svg/Facebook.svg", alt: "" )%>
+          </a>
+          </li>
+          <li>
+          <a href="https://twitter.com/intent/tweet?text=<%=request.original_url%>" target="_blank" title="Tweet"><%=image_tag("social_flat_rounded_rects_svg/Twitter.svg", alt: "" )%>
+          </a>
+          </li>
+          <li>
+          <a href="https://plus.google.com/share?url=#url" target="_blank" title="Compartir en Google+">
+          
+           <%=image_tag("social_flat_rounded_rects_svg/Google.svg", alt: "" )%>
+          </a>
+          </li>
+        </ul>
+          </dd>
+
+        </dl>
+
+        <div class="col-md-12" id="map" style="height:200px;"></div>
+
+      </div>
+      
+
+    </div>
+  </div>
+</div>
+
+
+  <div class="container">
+    <div class="row row-centered" id="all_comments">
+    <h3>Comentarios</h3>
+      <% @i=1 %>
+      <% @adoption.comments.each_with_index do |comment,index|%>
+        <div class="col-md-8 col-xs-12 col-centered" id="comment_box" >
+          <div class="col-md-2 col-xs-3">
+            <div class="thumbnail">
+              <%= image_tag comment.user.avatar, class: "img-responsive" %>
+            </div>
+          </div>
+      
+          <div class="col-md-10 col-xs-9">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <strong><%=comment.user.name%></strong>
+                <br>
+                 <span class="text-muted">Hace <%=distance_of_time_in_words(Time.now,comment.created_at)%></span>
+                 <div class="pull-right">
+                 <% if can? :destroy, @adoption%>
+                    <a role="button" data-toggle="collapse" data-target="#comment<%=index%>"><i class="fa fa-id-card-o fa-lg fa-fw" aria-hidden="true"></i></a>
+                    <%end%>
+
+                    <% if can? :edit, comment %>
+                        <a id="activator<%=index%>"  role="button"><i class="fa fa-pencil fa-lg fa-fw" aria-hidden="true"></i></a>
+                     <% end %>
+                     <% if can? :destroy, comment %>
+                        <%= link_to raw('<i class="fa fa-trash fa-lg fa-fw" aria-hidden="true"></i>'), [@adoption,comment], method: :delete, data: { confirm: '¿Estás seguro?' }, :remote => true, :class => 'delete_comment' %>
+
+                     <%end%>
+                    </div>
+                    <% if can? :destroy, @adoption%>
+                    <div id="comment<%=index%>" class="collapse">
+                      <dl class="dl-horizontal dl-data-comment">
+                        <hr>
+                        <% if comment.user.phone.presence %>
+                        <dt><i class="fa fa-phone" aria-hidden="true"></i></dt>
+                        <dd><%=comment.user.phone%></dd>
+                        <hr>
+                        <% end %>
+                        <dt><i class="fa fa-envelope" aria-hidden="true"></i></dt>
+                        <dd><%=comment.user.email%></dd>
+                      </dl>
+                    </div>
+
+                  <% end %>
+              </div>
+            <div class="panel-body media-body">
+            
+              <%= best_in_place_if (can? :edit, comment),   [@adoption,comment], :description, :as => :textarea, :inner_class =>"comment-area", :activator => "#activator#{index}",:ok_button => "Listo",:ok_button_class=>"btn btn-default" %>
+
+            </div>
+            </div>
+          </div>
+        
+        </div>
+      <% end%>
+<% if user_signed_in? %>
+        <div class="col-md-8 col-xs-12 col-centered" id="new_comment_box" >
+          <div class="col-md-2 col-xs-3">
+            <div class="thumbnail">
+              <%= image_tag current_user.avatar, class: "img-responsive" %>
+            </div>
+          </div>
+            <div class="col-md-10 col-xs-9">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <strong><%=current_user.name%></strong>
+                </div>
+                <div class="panel-body media-body">
+                  <%= form_for [@adoption,@comment] , remote: true do |f| %>
+                  <%= f.text_area :description, class: "comment-area", id: "comment_area_new", placeholder: "Ingrese comentario...", "required"=>true %>
+                  <%= f.submit 'Crear comentario', :role => 'button', :class => "btn btn-default",data: { disable_with: "Por favor espere..." } %>
+                  <%end %>
+                </div>
+              </div>
+            </div>
+        </div>
+<% end %>
+    </div> 
+  </div>

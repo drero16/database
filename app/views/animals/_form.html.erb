@@ -4,19 +4,6 @@
   <%= stylesheet_link_tag "ejemploPerdido" %>
 <% end %>
 
-<!--<% content_for :js do %>
-  <%= javascript_include_tag "jquery.backstretch" %>
-  <%= javascript_include_tag "gmaps" %>
-  <script>
-
-    $(document).on('turbolinks:load', function() {
-      if( $('#gmaps-canvas').length  ) {
-    gmaps_init();
-    autocomplete_init();
-  }; 
-});
-  </script>
-<% end %> -->
 
 <% content_for :js do %>
 <%= javascript_include_tag "jquerySelectBoxes" %>
@@ -98,11 +85,6 @@
                   <!-- <%= image_tag pic.image.url(:thumb) %> -->
                   <%=link_to image_tag(pic.image.url(:thumb)), pic.image.url(:original), :popup=>[  '   original_image', 'height=700,width=900'] %>
                   <% if can? :destroy, pic %>
-                   <!-- <%=
-                      link_to '<i class="fa fa-times fa-2x" aria-hidden="true"></i>'.html_safe, [@animal,pic],
-                      :data => { :confirm => "Are you sure?" },
-                      :method => :delete
-                    %> -->
                     <%= check_box_tag "selected[]", pic.id, false, :id => pic.id%>
 
                   <% end %> 
@@ -125,7 +107,7 @@
    <div class="form-group">
       <%= f.label :image_id,"¡Sube una foto del animal!", class: "col-sm-2 control-label" %>
        <div class="col-sm-10">    
-          <%= file_field_tag "images[]", type: :file, multiple: true,class: "form-control"%>
+          <%= file_field_tag "images[]", type: :file, multiple: true,class: "form-control", "required"=>true%>
         </div>
     </div>
   <%end%>

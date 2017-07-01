@@ -2,7 +2,6 @@ class CreateAnimals < ActiveRecord::Migration
   def change
     create_table :animals do |t|
       t.string :animal_type
-      t.integer :age
       t.string :sex
       t.text :location
       t.text :description

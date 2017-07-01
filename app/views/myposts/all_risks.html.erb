@@ -1,0 +1,76 @@
+<% content_for :stylesheets do %>
+  <%= stylesheet_link_tag "info" %>
+<% end %>
+
+
+<div class="container-fluid" style="padding-left:0px;">
+
+  <div class="col-md-2" style="padding-left:0px;">
+    
+  <div class="row">
+  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="  #bs-example-navbar-collapse-2" aria-expanded="false">
+  <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar" style="background-color:black;"></span>
+          <span class="icon-bar" style="background-color:black;"></span>
+          <span class="icon-bar" style="background-color:black;"></span>
+  </button>
+  </div>
+  
+  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2"  style="padding-left:0px;">
+      <ul class="nav nav-pills nav-stacked panel panel-default">
+    <li role="presentation"><a href="#">Notificaciones</a></li>
+    <li role="presentation" class="active"><a href="#">Mis temas creados</a></li>
+    
+  
+  </ul>
+  </div>
+  </div>
+
+<div class="col-md-10 panel panel-default">
+  <h1 class="page-header centered">Mis animales en riesgo</h1>
+              <div class="panel panel-default panel-table">
+                  <ul class="nav nav-tabs">
+                    <li role="presentation"><%=link_to "Animales encontrados",myposts_all_animals_path%></li>
+                    <li role="presentation"  class="active"><%=link_to "Animales en riesgo",myposts_all_risks_path%></li>
+                    <li role="presentation"><%=link_to "Mascotas perdidas",myposts_all_pets_path%></li>
+                    <li role="presentation"><%=link_to "Mascotas en adopción",myposts_all_adoptions_path%></li>
+                  </ul>
+              <div class="panel-body">
+                <table class="table table-striped table-bordered table-list" id="myTable">
+                  <thead>
+                    <tr>
+                        <th class="text-center"><em class="fa fa-cog"></em></th>
+                        <th class="hidden-xs text-center">ID</th>
+                        <th class="text-center">Tipo</th>
+                        <th class="text-center">Fecha de publicación</th>
+                    </tr> 
+                  </thead>
+                  <tbody>
+                  <% @posts.each do |post| %>
+                          <tr>
+                            <td align="center">
+                              <%= link_to post, class: "btn btn-info","data-toggle"=>"tooltip", "title"=>"Ver"  do %>
+                              <em class="fa fa-eye"></em>
+                              <% end %> 
+                              <% if can? :destroy, post %>
+                              <%= link_to raw('<i class="fa fa-trash" aria-hidden="true"></i>'), post, method: :delete, data: { confirm: '¿Estás seguro?' }, :remote => true, :class => 'btn btn-danger delete-row' %>
+                              <% end %>  
+                            </td>
+                            <td class="hidden-xs"><%=post.id%></td>
+                            <td><%=post.animal_type%></td>
+                            <td><%=post.created_at.strftime('%d/%m/%Y')%></td>
+                          </tr>
+                  <% end %>
+                    </tbody>
+                </table>
+            
+              </div>
+              <div class="panel-footer">
+                  <div class="row row-centered" ><%= will_paginate @posts, :next_label => ">>", :previous_label => "<<"%>
+                  </div>
+              </div>
+            </div>
+
+</div>
+</div>
+

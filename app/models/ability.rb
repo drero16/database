@@ -34,6 +34,10 @@ class Ability
     user ||= guest # Guest user
     if guest
         can :get_drop_down_options, Animal
+        can :get_drop_down_options, Risk
+        can :get_drop_down_options, Pet
+        can :get_drop_down_options, Adoption
+
     end
     if user.admin?
       can :manage, :all
@@ -110,10 +114,17 @@ class Ability
         end
 
         can :get_drop_down_options, Animal
+        can :get_drop_down_options, Risk
+        can :get_drop_down_options, Pet
+        can :get_drop_down_options, Adoption
 
     else
       can :read, :all
       can :get_drop_down_options, Animal
+        can :get_drop_down_options, Risk
+        can :get_drop_down_options, Pet
+        can :get_drop_down_options, Adoption
+
     end
   end
 end

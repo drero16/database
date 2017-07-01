@@ -4,6 +4,7 @@ class CreatePets < ActiveRecord::Migration
       t.string :animal_type
       t.string :sex
       t.string :name
+      t.integer :age      
       t.text :description
       t.date :lost_on
       t.text :lost_in

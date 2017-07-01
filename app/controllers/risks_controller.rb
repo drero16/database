@@ -1,11 +1,27 @@
 class RisksController < ApplicationController
-  before_filter :authenticate_user!, except: [:index]
+  before_filter :authenticate_user!, except: [:index,:show,:get_drop_down_options]
   #before_action :set_risk, only: [:show, :edit, :update, :destroy]
   load_and_authorize_resource
   # GET /risks
   # GET /risks.json
   def index
-    @risks = Risk.where(animal_state: 1)
+    #@risks = Risk.where(risk_state: 1)
+    @risks = Risk.where(solved: false)
+    @risks = @risks.animal_type(params[:animal_type]) if params[:animal_type].present?
+    @risks = @risks.sex(params[:sex]) if params[:sex].present?
+    @risks = @risks.race(params[:race]) if params[:race].present?
+    @risks = @risks.date(params[:date]) if params[:date].present?
+#    @risks = @risks.status(params[:status]) if params[:status].present?
+    if params[:location].present?
+      coords=Geocoder.coordinates(params[:location]) 
+      @risks = @risks.near(coords,0.3)
+    end
+
+    @risks=@risks.paginate(:page => params[:page], :per_page => 10).order('created_at DESC') if params[:sort]=="Recientes"
+    @risks=@risks.paginate(:page => params[:page], :per_page => 10).order('created_at ASC') if params[:sort]=="Antiguos"
+    @risks=@risks.paginate(:page => params[:page], :per_page => 10) if params[:sort]=="Cercanía"
+    @risks=@risks.paginate(:page => params[:page], :per_page => 10).includes(:race).joins(:race).order('name ASC') if params[:sort]=="Raza"
+    @risks=@risks.paginate(:page => params[:page], :per_page => 10).order('sex ASC') if params[:sort]=="Sexo"
   end
   # GET /risks/1
   # GET /risks/1.json
@@ -33,21 +49,42 @@ class RisksController < ApplicationController
      
     @risk = Risk.new(risk_params)
     @risk.user_id = current_user.id
-    @risk.animal_state= 1
+    @risk.solved= false
   
     respond_to do |format|
-      if @risk.save
-        if params[:images]
-          params[:images].each { |image|
-          @risk.images.create(image: image)
-        }
-        end
-        format.html { redirect_to @risk, notice: 'Risk was successfully created.' }
-        format.json { render :show, status: :created, location: @risk }
+      if params[:images].present?
+        if @risk.save and params[:images].present?
+          if params[:images]
+            params[:images].each { |image|
+            @risk.images.create(image: image)
+          }
+          end
+          format.html { redirect_to @risk }
+          format.json { render :show, status: :created, location: @risk }
+ #         coord=Geocoder.coordinates(params[:location]) 
+ #         @users_near= User.near(coord,2)
+ #         @users_near.each do |near|
+ #             unless (near==@risk.user)
+ #               user=near
+ #               title="Se ha perdido un risk cerca tuyo!"
+ #               body= near.location
+ #               url= risk_url(@risk)
+ #               Notification.create(user: user, titulo: title, mensaje: body, url: url, seen: 0)
+ #             end
+          else
+            unless params[:images].present?
+              @risk.errors.add(:images)
+            end            
+           format.html { render :new }
+           format.json { render json: @risk.errors, status: :unprocessable_entity }
+          end
       else
+        unless params[:images].present?
+          @risk.errors.add(:images)
+        end
         format.html { render :new }
-        format.json { render json: @risk.errors, status: :unprocessable_entity }
-      end
+        format.json { render json: @risk.errors, status: :unprocessable_entity }      
+    end
     end
   end
 
@@ -55,13 +92,23 @@ class RisksController < ApplicationController
   # PATCH/PUT /risks/1.json
   def update
     respond_to do |format|
+      
       if @risk.update(risk_params)
         if params[:images]
           params[:images].each { |image|
           @risk.images.create(image: image)
         }
         end
-        format.html { redirect_to @risk, notice: 'Risk was successfully updated.' }
+        if params[:selected]
+          params[:selected].each { |selecte|
+            @risk.images.destroy(selecte)
+          }
+        end
+        if risk_params[:solved]
+        format.html { redirect_to @risk}
+        else
+        format.html { redirect_to @risk, notice: 'Publicación actualizada correctamente.' }
+        end
         format.json { render :show, status: :ok, location: @risk }
       else
         format.html { render :edit }
@@ -75,9 +122,22 @@ class RisksController < ApplicationController
   def destroy
     @risk.destroy
     respond_to do |format|
-      format.html { redirect_to risks_url, notice: 'Risk was successfully destroyed.' }
+      format.html { redirect_to risks_url, notice: 'Publicación eliminada correctamente.' }
       format.json { head :no_content }
+      format.js
     end
+  end
+
+  def solved
+    @risk=@risk.solved(risk_params[solved])
+  end
+
+    def get_drop_down_options
+    val = params[:animal_type]
+    #Use val to find records
+    @races= Race.where(description: val)
+    options = @races.collect{|x| "'#{x.id}' : '#{x.name}'"}    
+    render :text => "{#{options.join(",")}}" 
   end
 
   private
@@ -88,6 +148,9 @@ class RisksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def risk_params
-      params.require(:risk).permit(:animal_type, :age, :sex, :location, :description, :user_id, :race_id)
+      params.require(:risk).permit(:animal_type, :age, :sex, :location, :description, :user_id, :race_id, :solved)
+    end
+    def filtering_params
+      params.slice(:animal_type, :sex, :location)
     end
 end

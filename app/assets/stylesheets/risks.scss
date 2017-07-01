@@ -1,3 +1,31 @@
 // Place all the styles related to the risks controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.dl-data-comment
+{
+	margin-bottom: 0px;
+
+}
+
+.dl-data-comment dd, .dl-data-comment dt {
+	display: inline-block;
+}
+
+.dl-data-comment dd{
+	display: inline-block;
+	margin-left: 10px !important;
+}
+
+.dl-info-user dd, .dl-info-user dt {
+	display: inline-block;
+}
+
+.dl-info-user dd{
+	display: inline-block;
+	margin-left: 10px !important;
+}
+
+.panel.panel-default.col-md-8.col-centered {
+	margin-top: 40px;
+}

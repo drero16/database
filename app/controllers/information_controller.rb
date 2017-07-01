@@ -5,8 +5,8 @@ class InformationController < ApplicationController
   # GET /information
   # GET /information.json
   def index
-    @information = Information.all
-    @secret=ENV['secret_key_base']
+    @allInfo=Information.order(:title)
+   # @secret=ENV['secret_key_base']
   end
 
   # GET /information/1
@@ -35,7 +35,7 @@ class InformationController < ApplicationController
           @information.images.create(image: image)
         }
         end
-        format.html { redirect_to @information, notice: 'Information was successfully created.' }
+        format.html { redirect_to @information, notice: 'Información creada correctamente.' }
         format.json { render :show, status: :created, location: @information }
       else
         format.html { render :new }
@@ -54,7 +54,7 @@ class InformationController < ApplicationController
           @information.images.create(image: image)
         }
         end
-        format.html { redirect_to @information, notice: 'Information was successfully updated.' }
+        format.html { redirect_to @information, notice: 'Información actualizada correctamente.' }
         format.json { render :show, status: :ok, location: @information }
       else
         format.html { render :edit }
@@ -68,7 +68,7 @@ class InformationController < ApplicationController
   def destroy
     @information.destroy
     respond_to do |format|
-      format.html { redirect_to information_index_url, notice: 'Information was successfully destroyed.' }
+      format.html { redirect_to information_index_url, notice: 'Información eliminada correctamente.' }
       format.json { head :no_content }
     end
   end

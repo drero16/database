@@ -7,6 +7,8 @@ class CreateImages < ActiveRecord::Migration
       t.belongs_to :event, index: true
       t.belongs_to :information, index: true
       t.belongs_to :user, index: true
+      t.belongs_to :risk, index: true
+      t.belongs_to :adoption, index: true
 
       t.timestamps null: false
     end
@@ -15,5 +17,7 @@ class CreateImages < ActiveRecord::Migration
     add_foreign_key :images, :events
     add_foreign_key :images, :information
     add_foreign_key :images, :users
+    add_foreign_key :images, :adoptions
+    add_foreign_key :images, :risks
   end
 end

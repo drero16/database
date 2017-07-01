@@ -4,7 +4,7 @@
 <% content_for :js do %>
   <script>
     $(document).ready(function(){
-    $("img").addClass("img-responsive");
+    $("img:not(#not-responsive)").addClass("img-responsive");
 });
   </script>
 <% end %>

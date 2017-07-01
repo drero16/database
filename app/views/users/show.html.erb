@@ -1,34 +1,76 @@
-<p id="notice"><%= notice %></p>
+<% content_for :stylesheets do %>
+  <%= stylesheet_link_tag "centered-columns" %>
+  <%= stylesheet_link_tag "ejemploPerdido" %>
+  <%= stylesheet_link_tag "photoswipe" %>
+  <%= stylesheet_link_tag "default-skin" %>
+<% end %>
 
-<p>
-  <strong>Name:</strong>
-  <%= @user.name %>
-</p>
+<% content_for :js do %>
 
-<p>
-  <strong>Address:</strong>
-  <%= @user.address %>
-</p>
+  <%= javascript_include_tag "gmaps" %>
+  <%= javascript_include_tag "photoswipe" %>
+  <%= javascript_include_tag "photoswipe-ui-default" %>
+  <script>
+    $(document).ready(function() { 
+      if($('#map').length ){
+        onlymap("<%=@user.address%>");
+      }
+      
 
-<p>
-  <strong>Phone:</strong>
-  <%= @user.phone %>
-</p>
+    });
+  </script>
 
-<p>
-  <strong>Sex:</strong>
-  <%= @user.sex %>
-</p>
+<% end %>
 
-<p>
-  <strong>Role:</strong>
-  <%= @user.role %>
-</p>
+<div class="container-fluid">
+    <div class="row row-centered">
+    <div class="panel panel-default col-xs-12 col-md-8 col-centered">
+      <div class="col-md-4">
+            <%= image_tag @user.avatar.url(:original), :class=>"img-responsive", id:"print1"%>
+      <% if (can? :destroy, @user) %>
+<div class="btn-group">
+ <%= link_to @user, method: :delete, class:"btn btn-danger", data: { confirm: '¿Estás seguro?' } do%>
+      <i class="fa fa-trash-o fa-lg"></i> Eliminar Usuario
+      <% end %>
+ <%= link_to @user, class:"btn btn-info" do%>
+      <i class="fa fa-eye fa-lg"></i> Ver temas creados
+      <% end %>      
+</div>
+<% end %>
+    </div>
 
-<p>
-fotos
-<%=image_tag @user.avatar%>
-</p>
+      <div class="panel-body col-md-8 ">
+        <dl class="dl-horizontal">
+          <dt>Rol</dt>
+          <dd><%=@user.role.description%></dd>
+          <hr>        
+          <dt>Usuario</dt>
+          <dd><%=@user.name%></dd>
+          <hr>
+          <dt>Email</dt>
+          <dd><%=@user.email%></dd>
+          <hr>
+          <dt>Teléfono</dt>
+          <dd><%=@user.phone%></dd>
+          <hr>
+          <dt>Dirección</dt>
+          <dd><%=@user.address%></dd>
+          <hr>
+          <dt>Fecha de registro</dt>
+          <dd><%=@user.created_at%></dd>
+          <hr>
+          <dt>Temas creados</dt>
+          <dd><%=@user.risks.count + @user.animals.count + @user.adoptions.count + @user.pets.count%></dd>
+          <hr>                    
 
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
+
+        </dl>
+
+        <div class="col-md-12" id="map" style="height:200px;"></div>
+
+      </div>
+      
+
+    </div>
+  </div>
+</div>

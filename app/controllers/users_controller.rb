@@ -18,8 +18,28 @@ class UsersController < ApplicationController
   def show
   end
 
-  def all
+  def all_animals
+    @user=User.find(params[:id])
+    @posts=@user.animals
+    @posts=@posts.paginate(:page => params[:page], :per_page => 10).order('created_at DESC')
+  end
 
+   def all_pets
+    @user=User.find(params[:id])
+    @posts=@user.pets
+    @posts=@posts.paginate(:page => params[:page], :per_page => 10).order('created_at DESC')
+  end
+
+   def all_risks
+    @user=User.find(params[:id])
+    @posts=@user.risks
+    @posts=@posts.paginate(:page => params[:page], :per_page => 10).order('created_at DESC')
+  end
+
+   def all_adoptions
+    @user=User.find(params[:id])
+    @posts=@user.adoptions
+    @posts=@posts.paginate(:page => params[:page], :per_page => 10).order('created_at DESC')
   end
   # GET /users/new
   def new
@@ -27,8 +47,8 @@ class UsersController < ApplicationController
   end
 
   # GET /users/1/edit
-  def edit
-  end
+ # def edit
+ # end
 
   # POST /users
   # POST /users.json
@@ -129,6 +149,6 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:name, :address, :phone, :sex, :role_id)
+      params.require(:user).permit(:name, :email, :address, :phone, :password, :password_confirmation, :role_id)
     end
 end

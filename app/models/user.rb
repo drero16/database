@@ -23,6 +23,8 @@ class User < ActiveRecord::Base
     :url  => "/profile/:id/:style/:filename",
     default_url: "/profile/missing.png"
   validates_attachment_content_type :avatar, content_type: ['image/jpeg', 'image/png', 'image/gif']
+    geocoded_by :address
+  after_validation :geocode
 
 
   def admin?

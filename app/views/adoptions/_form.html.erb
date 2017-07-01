@@ -1,8 +1,32 @@
-<%= form_for(@adoption) do |f| %>
+<% content_for :stylesheets do %>
+  <%= stylesheet_link_tag "gmaps" %>
+    <%= stylesheet_link_tag "centered-columns" %>
+  <%= stylesheet_link_tag "ejemploPerdido" %>
+<% end %>
+
+
+<% content_for :js do %>
+<%= javascript_include_tag "jquerySelectBoxes" %>
+  <script>
+  $(document).ready(function() { 
+    $("#adoption_animal_type").click(function(){
+  var url = '/adoptions/get_drop_down_options?animal_type=' + $(this).val();  
+  $("#animal_race_id").removeOption(/./);
+  $.get(url, function(data) {
+    ss=eval('('+data+')');
+    $('#animal_race_id').addOption(ss, true);
+    $("#animal_race_id").val($("#animal_race_id option:first").val());
+  });
+});
+  })
+  </script>
+<% end %>
+
+
+<%= form_for @adoption, :html => {:multipart => true,:class => "form-horizontal form-bottom"}  do |f| %>
   <% if @adoption.errors.any? %>
     <div class="alert alert-danger ">
       <h4>Se encontraron los siguientes errores:</h4>
-
       <ul>
       <% @adoption.errors.full_messages.each do |message| %>
         <li><%= message %></li>
@@ -11,7 +35,97 @@
     </div>
   <% end %>
 
-  <div class="actions">
-    <%= f.submit %>
+  <div class="form-group">
+    <%= f.label :animal_type, "Tipo de animal", class: "col-sm-2 control-label" %>
+    <div class="col-sm-10">
+      <%= f.select :animal_type, ["Gato","Perro","Otro" ],{},{class: 'form-control'}%>
+    </div>  
+  </div>
+
+  <div class="form-group">
+    <%= f.label :race_id, "Raza", class: "col-sm-2 control-label" %>
+    <div class="col-sm-10">
+      <% @races=Race.where(description: 'Gato') %>
+      <% options = options_from_collection_for_select(@races, 'id', 'name') %>
+      <%= f.select :race_id,  options,{},{class: 'form-control'} %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%=f.label :name, "Nombre",class: "col-sm-2 control-label"%> 
+    <div class="col-sm-10">
+      <%=f.text_field :name, class: "form-control"%>
+    </div>
+  </div>
+    <div class="form-group">
+    <%=f.label :age, "Edad",class: "col-sm-2 control-label"%> 
+    <div class="col-sm-10">
+      <%=f.number_field :age, class: "form-control"%>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :sex, "Sexo", class: "col-sm-2 control-label" %>
+    <div class="col-sm-10">
+      <%= f.select :sex, ["Hembra","Macho","Otro"],{},{class: 'form-control'}%>
+    </div>  
+  </div>
+  <div class="form-group">
+    <%= f.label :lost_in,"¿Dónde lo encontraste?", class: "col-sm-2 control-label", for:"gmaps-input-address" %>
+     <div class="col-sm-10">
+        <%= f.text_field :lost_in,class: "form-control",id:"gmaps-input-address",placeholder:"Empieza escribiendo una dirección...", "required" => true%>
+        <div id='gmaps-error'></div>
+        <div id='gmaps-canvas' class=" hidden-sm hidden-xs"></div>
+     </div>
+
+  </div>
+
+  <div class="form-group">
+    <%= f.label :description,"Descripción", class: "col-sm-2 control-label" %>
+     <div class="col-sm-10">
+        <%= f.text_area :description, class: "form-control",rows: "5","required" => true %>
+     </div>
+  </div>
+  <% if @adoption.persisted?%>
+    <div class="form-group">
+      <%= f.label "Selecciona las fotos que deseas eliminar", class: "col-sm-2 control-label" %>
+      <div class="col-sm-10">
+        <ul class="thumbnails files list-inline">
+          <% unless @adoption.images.empty? %>
+            <% @adoption.images.each do |pic| %>
+              <li class="span3" id="image_<%= pic.id %>">
+                <div class="thumbnail">
+                  <!-- <%= image_tag pic.image.url(:thumb) %> -->
+                  <%=link_to image_tag(pic.image.url(:thumb)), pic.image.url(:original), :popup=>[  '   original_image', 'height=700,width=900'] %>
+                  <% if can? :destroy, pic %>
+                    <%= check_box_tag "selected[]", pic.id, false, :id => pic.id%>
+
+                  <% end %> 
+                </div>
+             </li>
+            <% end %>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+    
+
+    <div class="form-group">
+      <%= f.label :image_id,"¡Sube mas fotos del animal!", class: "col-sm-2 control-label" %>
+       <div class="col-sm-10">    
+          <%= file_field_tag "images[]", type: :file, multiple: true,class: "form-control" %>
+        </div>
+    </div> 
+  <% else %>
+   <div class="form-group">
+      <%= f.label :image_id,"¡Sube una foto del animal!", class: "col-sm-2 control-label" %>
+       <div class="col-sm-10">    
+          <%= file_field_tag "images[]", type: :file, multiple: true,class: "form-control", "required"=>true%>
+        </div>
+    </div>
+  <%end%>
+  
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <%= f.submit "¡Listo!",class: "btn btn-default" %>
+    </div>  
   </div>
 <% end %>

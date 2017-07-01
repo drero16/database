@@ -7,7 +7,7 @@ class AnimalsController < ApplicationController
   def index
     #@animals = Animal.where(animal_state: 0)
 #    @filters= Animal.new(animal_params)
-    @animals = Animal.where(animal_state: 0)
+    #@animals = Animal.where(animal_state: 0)
     @animals =Animal.where(solved: false)
     @animals = @animals.animal_type(params[:animal_type]) if params[:animal_type].present?
     @animals = @animals.sex(params[:sex]) if params[:sex].present?
@@ -57,7 +57,6 @@ class AnimalsController < ApplicationController
      
     @animal = Animal.new(animal_params)
     @animal.user_id = current_user.id
-    @animal.animal_state= 0
     @animal.solved= false
   
     respond_to do |format|
@@ -113,7 +112,11 @@ class AnimalsController < ApplicationController
             @animal.images.destroy(selecte)
           }
         end
+        if animal_params[:solved]
+        format.html { redirect_to @animal}
+        else
         format.html { redirect_to @animal, notice: 'Publicación actualizada correctamente.' }
+        end
         format.json { render :show, status: :ok, location: @animal }
       else
         format.html { render :edit }
@@ -129,6 +132,7 @@ class AnimalsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to animals_url, notice: 'Publicación eliminada correctamente.' }
       format.json { head :no_content }
+      format.js
     end
   end
 

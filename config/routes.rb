@@ -1,8 +1,22 @@
 Rails.application.routes.draw do
 
-  resources :adoptions
+  resources :adoptions do
+    
+    resources :comments
+    resources :images
+    collection do
+    get 'get_drop_down_options'
+  end
+  end
 
-  resources :risks
+  resources :risks do
+    
+    resources :comments
+    resources :images
+    collection do
+    get 'get_drop_down_options'
+  end
+  end
 
   devise_for :users
  
@@ -26,8 +40,12 @@ post '/unsubscribe'=>"devices#unsubscribe"
  resources :comments, only: [:show]
 
   resources :pets do
+    
     resources :comments
     resources :images
+    collection do
+    get 'get_drop_down_options'
+  end
   end
 
   resources :animals do
@@ -35,7 +53,6 @@ post '/unsubscribe'=>"devices#unsubscribe"
     resources :comments
     resources :images
     collection do
-    get 'perdidos'
     get 'get_drop_down_options'
   end
   end
@@ -45,44 +62,52 @@ post '/unsubscribe'=>"devices#unsubscribe"
   #resources :roles
 
   scope "/admin" do
-  resources :users do
+  resources :users, except: [:edit] do
     collection do
       get 'stats'
       get 'detailedstats'
     end
     member do
-      get 'all'
+      get 'all_animals'
+      get 'all_adoptions'
+      get 'all_pets'
+      get 'all_risks'
     end
   end
   end
 
   resources :devices, :only => [:create]
 
-  get 'nav/index'
-
-  get 'welcome/nav'
-
+   get 'myposts/all_animals'
+   get 'myposts/all_adoptions'
+   get 'myposts/all_pets'
+   get 'myposts/all_risks'
+  #get 'nav/index'
+#
+  #get 'welcome/nav'
+#
   get 'welcome/index'
-
-  get 'welcome/login'
-  get 'welcome/perdido'
-  get 'welcome/buscarperdido'
-  get 'welcome/ejemploperdido'
-  get 'welcome/info'
-  get 'welcome/ejemploencontrado'
-  get 'welcome/encontrado'
-  get 'welcome/eventos'
-  get 'welcome/buscarencontrado'
-  get 'welcome/buscaradoptado'
-  get 'welcome/adoptado'
-  get 'welcome/ejemploadoptado'
-  get 'welcome/buscarenriesgo'
-  get 'welcome/animalenriesgo'
-  get 'welcome/ejemploenriesgo'
+#
+  #get 'welcome/login'
+  #get 'welcome/perdido'
+  #get 'welcome/buscarperdido'
+  #get 'welcome/ejemploperdido'
+  #get 'welcome/info'
+  #get 'welcome/ejemploencontrado'
+  #get 'welcome/encontrado'
+  #get 'welcome/eventos'
+  #get 'welcome/buscarencontrado'
+  #get 'welcome/buscaradoptado'
+  #get 'welcome/adoptado'
+  #get 'welcome/ejemploadoptado'
+  #get 'welcome/buscarenriesgo'
+  #get 'welcome/animalenriesgo'
+  #get 'welcome/ejemploenriesgo'
+  #
   get 'welcome/ram'
-  get 'welcome/notificaciones'
-  get 'welcome/temascreados'
-
+  #get 'welcome/notificaciones'
+  #get 'welcome/temascreados'
+#
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

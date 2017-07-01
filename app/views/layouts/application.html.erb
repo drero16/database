@@ -14,7 +14,7 @@
     <meta property="og:image"         content="<%=image_url("logoram.png")%>" />
   <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBFkGU6pJyyWqKe_ViHOQU_AZaXxXCVZAU&libraries=places"></script>
 
-  <%= stylesheet_link_tag    'application', media: 'all'%>
+  <%= stylesheet_link_tag 'application', media: 'all'%>
   <% @decodedVapidPublicKey = Base64.urlsafe_decode64(Rails.application.secrets.VAPID_PUBLIC_KEY).bytes%>
   <script>
     window.vapidPublicKey = new Uint8Array(<%= @decodedVapidPublicKey %>);
@@ -53,33 +53,33 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">
-        <%=image_tag("logoram.png", alt: "example")%>
+      <a class="navbar-brand" href="<%=root_path%>">
+        <%=image_tag("logoram.png", alt: "example", id: "not-responsive")%>
       </a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-right">
-      <li class="navbar-li"><a class= " grande" href="#">Acerca de RAM</a></li>
+      <li class="navbar-li"><%=link_to "Acerca de RAM",welcome_ram_path, class: "grande"%></li>
       <li class="navbar-li dropdown">
-          <a href="#" class="dropdown-toggle grande" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Publicar  <span class="caret"></span></a>
+          <a href="#" class="dropdown-toggle grande" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Buscar  <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a href="#">Mascota perdida</a></li>
-            <li><a href="#">Animal encontrado</a></li>
-            <li><a href="#">Animal en riesgo</a></li>
-            <li><a href="#">Mascota en adopción</a></li>
+            <li><%=link_to "Animales encontrados", animals_path %></li>
+            <li><%=link_to "Animales en riesgo",risks_path %></li>
+            <li><%=link_to "Mascotas perdidas",pets_path %></li>
+            <li><%=link_to "Mascotas en adopción",adoptions_path %></li>
           </ul>
         </li>
-        <li class="navbar-li"><a class= " grande" href="#">Información de Interés</a></li>
-        <li class="navbar-li"><a class= " grande" href="#">Eventos RAM</a></li>
+        <li class="navbar-li"><%=link_to "Información de Interés",information_index_path  , class: "grande"%></li>
+        <li class="navbar-li"><%=link_to "Eventos",events_path  , class: "grande"%></li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> 
             <% if user_signed_in? %>
               <% if current_user.avatar.present? %>
-            <%=image_tag(current_user.avatar(:thumb), alt: "example",width:"50",height: "50", class: "img-circle" )%>
+            <%=image_tag(current_user.avatar(:thumb), alt: "example",width:"50 important!",height: "50", class: "img-circle", id: "not-responsive" )%>
               <% else %>
-                <%=image_tag("profile-pictures.png", alt: "example",width:"50",height: "50" )%>
+                <%=image_tag("profile-pictures.png", alt: "example",width:"50",height: "50", id: "not-responsive" )%>
               <%end %>
           <span class="caret"></span></a>
           <ul class="dropdown-menu">

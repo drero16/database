@@ -2,10 +2,12 @@ class ImagesController < ApplicationController
   before_action :set_image, only: [:show, :edit, :update, :destroy]
   load_and_authorize_resource :animal
   load_and_authorize_resource :pet
+  load_and_authorize_resource :risk
+  load_and_authorize_resource :adoption
   load_and_authorize_resource :event
   load_and_authorize_resource :information
   load_and_authorize_resource :user
-  load_and_authorize_resource :comment, :through => [:animal,:pet,:event,:information,:user]
+  load_and_authorize_resource :comment, :through => [:animal,:pet,:risk,:adoption,:event,:information,:user]
   # GET /images
   # GET /images.json
   def index
@@ -45,7 +47,7 @@ class ImagesController < ApplicationController
   def update
     respond_to do |format|
       if @image.update(image_params)
-        format.html { redirect_to :back, notice: 'Image was successfully updated.' }
+        format.html { redirect_to :back, notice: 'Imagen actualizada correctamente.' }
         format.json { render :show, status: :ok, location: @image }
       else
         format.html { render :edit }
@@ -59,7 +61,7 @@ class ImagesController < ApplicationController
   def destroy
     @image.destroy
     respond_to do |format|
-      format.html { redirect_to :back, notice: 'Image was successfully destroyed.' }
+      format.html { redirect_to :back, notice: 'Imagen eliminada correctamente.' }
       format.json { head :no_content }
     end
   end
@@ -72,6 +74,6 @@ class ImagesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def image_params
-      params.require(:image).permit(:link, :animal_id, :pet_id, :event_id, :information_id, :user_id,:image, :image_file_name, :image_content_type, :image_file_size, :image_updated_at)
+      params.require(:image).permit(:link, :animal_id, :pet_id,:risk_id,:adoption_id, :event_id, :information_id, :user_id,:image, :image_file_name, :image_content_type, :image_file_size, :image_updated_at)
     end
 end

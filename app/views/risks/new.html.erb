@@ -1,5 +1,25 @@
-<h1>New Risk</h1>
+<div class="container-fluid">
+  <div class="row row-centered">
+    <div class="panel panel-default col-xs-12 col-md-8 col-centered">
+      <div class="row text-center">
+        <h1 class="page-header">Publica un animal encontrado</h1>
+        <h5> ¿Encontraste un animal?, ingresa los siguientes datos para ayudar a tu rescatado y así encontrar a su dueño.</h5>
+			<%= render 'form' %>
+      </div>
+    </div>
+  </div>
+</div>			
 
-<%= render 'form' %>
 
-<%= link_to 'Back', risks_path %>
+<% content_for :js do %>
+	<%= javascript_include_tag "jquery.backstretch"  %>
+	<%= javascript_include_tag "gmaps" %>
+	<script>
+    	$(document).ready(function() { 
+			if( $('#gmaps-canvas').length  ) {
+    		gmaps_init();
+    		autocomplete_init();
+  			}; 
+  		});
+  	</script>
+<% end %>

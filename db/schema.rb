@@ -11,23 +11,37 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170623043531) do
+ActiveRecord::Schema.define(version: 20170701003350) do
+
+  create_table "adoptions", force: :cascade do |t|
+    t.string   "animal_type"
+    t.string   "sex"
+    t.string   "name"
+    t.text     "description"
+    t.integer  "age"
+    t.date     "lost_on"
+    t.text     "lost_in"
+    t.float    "latitude"
+    t.float    "longitude"
+    t.boolean  "solved"
+    t.integer  "user_id"
+    t.integer  "race_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "adoptions", ["race_id"], name: "index_adoptions_on_race_id"
+  add_index "adoptions", ["user_id"], name: "index_adoptions_on_user_id"
 
   create_table "animals", force: :cascade do |t|
     t.string   "animal_type"
-    t.integer  "age"
     t.string   "sex"
     t.text     "location"
     t.text     "description"
     t.integer  "user_id"
     t.integer  "race_id"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
-    t.string   "image_file_name"
-    t.string   "image_content_type"
-    t.integer  "image_file_size"
-    t.datetime "image_updated_at"
-    t.integer  "animal_state"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
     t.float    "latitude"
     t.float    "longitude"
     t.boolean  "solved"
@@ -41,12 +55,16 @@ ActiveRecord::Schema.define(version: 20170623043531) do
     t.integer  "animal_id"
     t.integer  "pet_id"
     t.integer  "user_id"
+    t.integer  "adoption_id"
+    t.integer  "risk_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
 
+  add_index "comments", ["adoption_id"], name: "index_comments_on_adoption_id"
   add_index "comments", ["animal_id"], name: "index_comments_on_animal_id"
   add_index "comments", ["pet_id"], name: "index_comments_on_pet_id"
+  add_index "comments", ["risk_id"], name: "index_comments_on_risk_id"
   add_index "comments", ["user_id"], name: "index_comments_on_user_id"
 
   create_table "devices", force: :cascade do |t|
@@ -82,6 +100,8 @@ ActiveRecord::Schema.define(version: 20170623043531) do
     t.integer  "event_id"
     t.integer  "information_id"
     t.integer  "user_id"
+    t.integer  "risk_id"
+    t.integer  "adoption_id"
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
     t.string   "image_file_name"
@@ -90,10 +110,12 @@ ActiveRecord::Schema.define(version: 20170623043531) do
     t.datetime "image_updated_at"
   end
 
+  add_index "images", ["adoption_id"], name: "index_images_on_adoption_id"
   add_index "images", ["animal_id"], name: "index_images_on_animal_id"
   add_index "images", ["event_id"], name: "index_images_on_event_id"
   add_index "images", ["information_id"], name: "index_images_on_information_id"
   add_index "images", ["pet_id"], name: "index_images_on_pet_id"
+  add_index "images", ["risk_id"], name: "index_images_on_risk_id"
   add_index "images", ["user_id"], name: "index_images_on_user_id"
 
   create_table "information", force: :cascade do |t|
@@ -118,25 +140,29 @@ ActiveRecord::Schema.define(version: 20170623043531) do
     t.integer  "comment_id"
     t.integer  "animal_id"
     t.integer  "pet_id"
+    t.integer  "risk_id"
+    t.integer  "adoption_id"
   end
 
+  add_index "notifications", ["adoption_id"], name: "index_notifications_on_adoption_id"
   add_index "notifications", ["animal_id"], name: "index_notifications_on_animal_id"
   add_index "notifications", ["comment_id"], name: "index_notifications_on_comment_id"
   add_index "notifications", ["pet_id"], name: "index_notifications_on_pet_id"
+  add_index "notifications", ["risk_id"], name: "index_notifications_on_risk_id"
   add_index "notifications", ["user_id"], name: "index_notifications_on_user_id"
 
   create_table "pets", force: :cascade do |t|
     t.string   "animal_type"
     t.string   "sex"
     t.string   "name"
+    t.integer  "age"
     t.text     "description"
     t.date     "lost_on"
     t.text     "lost_in"
     t.integer  "user_id"
     t.integer  "race_id"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
-    t.integer  "animal_state"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
     t.float    "latitude"
     t.float    "longitude"
     t.boolean  "solved"
@@ -151,6 +177,23 @@ ActiveRecord::Schema.define(version: 20170623043531) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
+
+  create_table "risks", force: :cascade do |t|
+    t.string   "animal_type"
+    t.string   "sex"
+    t.text     "location"
+    t.text     "description"
+    t.float    "latitude"
+    t.float    "longitude"
+    t.boolean  "solved"
+    t.integer  "user_id"
+    t.integer  "race_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "risks", ["race_id"], name: "index_risks_on_race_id"
+  add_index "risks", ["user_id"], name: "index_risks_on_user_id"
 
   create_table "roles", force: :cascade do |t|
     t.string   "name"

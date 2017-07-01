@@ -3,15 +3,19 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 before_filter :configure_permitted_parameters, if: :devise_controller?
+before_action :store_current_location, :unless => :devise_controller?
 
 # Overwriting the sign_out redirect path method
   def after_sign_out_path_for(resource_or_scope)
     "#{root_path}?logout=true"
   end
 
+
+
 #  def after_sign_in_path_for(resource)
-#    "#{request.env['omniauth.origin']}?login=true" || "#{stored_location_for(resource)}?login=true" || "#{root_path}?login=true"
-#  end
+ #   "#{request.env['omniauth.origin']}?login=true" || "#{stored_location_for(resource)}?login=true" || "#{root_path}?login=true"
+  #end
+
 
 
   def notify(user,title,body,url)
@@ -69,6 +73,13 @@ before_filter :configure_permitted_parameters, if: :devise_controller?
   #    end
   #  end 
   #end
+private
+  # override the devise helper to store the current location so we can
+  # redirect to it after loggin in or out. This override makes signing in
+  # and signing up work automatically.
+  def store_current_location
+    store_location_for(:user, request.url) if request.get?
+  end
 
 protected
 def configure_permitted_parameters

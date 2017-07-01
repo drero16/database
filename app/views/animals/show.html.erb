@@ -10,7 +10,6 @@
   <%= javascript_include_tag "gmaps" %>
   <%= javascript_include_tag "photoswipe" %>
   <%= javascript_include_tag "photoswipe-ui-default" %>
-  <%= javascript_include_tag "print"%>
   <script>
     $(document).ready(function() { 
       if($('#map').length ){
@@ -20,7 +19,7 @@
             var openPhotoSwipe = function() {
             var pswpElement = document.querySelectorAll('.pswp')[0];
       
-            // build items array
+
             var items = [
               <% @animal.images.each do |attach| %>
               {
@@ -32,9 +31,9 @@
       <% end %>
             ];
           
-          // define options (if needed)
+        
             var options = {
-                   // history & focus options are disabled on CodePen        
+                    
               history: false,
               focus: false,
       
@@ -46,11 +45,12 @@
             var gallery = new PhotoSwipe( pswpElement, PhotoSwipeUI_Default, items, options);
             gallery.init();
           };
+          document.getElementById('btn').onclick = openPhotoSwipe;
       <% end %>
       
-      
-      document.getElementById('btn').onclick = openPhotoSwipe;
       jQuery(".best_in_place").best_in_place();
+      
+      
 
       function Print()
 {
@@ -114,9 +114,11 @@ var width = $(window).width() * 0.9;
           <dt><i class="fa fa-user" aria-hidden="true"></i></dt>
           <dd><%=@animal.user.name%></dd>
           <hr>
+          <% if @animal.user.phone.presence %>
           <dt><i class="fa fa-phone" aria-hidden="true"></i></dt>
           <dd><%=@animal.user.phone%></dd>
           <hr>
+          <% end %>
           <dt><i class="fa fa-envelope" aria-hidden="true"></i></dt>
           <dd><%=@animal.user.email%></dd>
         </dl>
@@ -202,7 +204,7 @@ var width = $(window).width() * 0.9;
       
                       <button class="pswp__button pswp__button--close" title="Cerrar"></button>
       
-                      <button class="pswp__button pswp__button--share" title="Share"></button>
+                      <button class="pswp__button pswp__button--share" title="Compartir"></button>
       
                       <button class="pswp__button pswp__button--fs" title="Pantalla completa"></button      >
       
@@ -297,16 +299,6 @@ var width = $(window).width() * 0.9;
 </div>
 
 
-
-<!--Fotos de animal -->
-
-
-
-<!--Listar todos los comentarios del animal mostrado -->
-
-
-
-
   <div class="container">
     <div class="row row-centered" id="all_comments">
     <h3>Comentarios</h3>
@@ -316,13 +308,15 @@ var width = $(window).width() * 0.9;
           <div class="col-md-2 col-xs-3">
             <div class="thumbnail">
               <%= image_tag comment.user.avatar, class: "img-responsive" %>
-            </div><!-- /thumbnail -->
-          </div><!-- /col-sm-1 -->
+            </div>
+          </div>
       
           <div class="col-md-10 col-xs-9">
             <div class="panel panel-default">
               <div class="panel-heading">
-                <strong><%=comment.user.name%></strong> <span class="text-muted">Hace <%=distance_of_time_in_words(Time.now,comment.created_at)%></span>
+                <strong><%=comment.user.name%></strong>
+                <br>
+                 <span class="text-muted">Hace <%=distance_of_time_in_words(Time.now,comment.created_at)%></span>
                  <div class="pull-right">
                  <% if can? :destroy, @animal%>
                     <a role="button" data-toggle="collapse" data-target="#comment<%=index%>"><i class="fa fa-id-card-o fa-lg fa-fw" aria-hidden="true"></i></a>
@@ -340,9 +334,11 @@ var width = $(window).width() * 0.9;
                     <div id="comment<%=index%>" class="collapse">
                       <dl class="dl-horizontal dl-data-comment">
                         <hr>
+                        <% if comment.user.phone.presence %>
                         <dt><i class="fa fa-phone" aria-hidden="true"></i></dt>
                         <dd><%=comment.user.phone%></dd>
                         <hr>
+                        <% end %>
                         <dt><i class="fa fa-envelope" aria-hidden="true"></i></dt>
                         <dd><%=comment.user.email%></dd>
                       </dl>
@@ -354,9 +350,9 @@ var width = $(window).width() * 0.9;
             
               <%= best_in_place_if (can? :edit, comment),   [@animal,comment], :description, :as => :textarea, :inner_class =>"comment-area", :activator => "#activator#{index}",:ok_button => "Listo",:ok_button_class=>"btn btn-default" %>
 
-            </div><!-- /panel-body -->
-            </div><!-- /panel panel-default -->
-          </div><!-- /col-sm-5 -->
+            </div>
+            </div>
+          </div>
         
         </div>
       <% end%>
@@ -365,8 +361,8 @@ var width = $(window).width() * 0.9;
           <div class="col-md-2 col-xs-3">
             <div class="thumbnail">
               <%= image_tag current_user.avatar, class: "img-responsive" %>
-            </div><!-- /thumbnail -->
-          </div><!-- /col-sm-1 -->
+            </div>
+          </div>
             <div class="col-md-10 col-xs-9">
               <div class="panel panel-default">
                 <div class="panel-heading">
@@ -382,34 +378,5 @@ var width = $(window).width() * 0.9;
             </div>
         </div>
 <% end %>
-    </div> <!-- row centered -->
+    </div> 
   </div>
-
-
-<!--Formulario para ingresar comentarios -->
-
-
-<!--<%= form_for [@animal,@comment], remote: true do |f| %>
-
-  <% if @comment.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@comment.errors.count, "error") %> prohibited this comment from being saved:</h2>
-
-      <ul>
-      <% @comment.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="field">
-
-    <%= f.label :description, "Comentario" %><br>
-    <%= f.text_area :description %>
-  <div class="actions">
-  
-    <%= f.submit 'ss', class: 'create_comment' %>
-  </div>
-<% end %>
--->
