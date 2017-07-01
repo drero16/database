@@ -89,6 +89,14 @@
               <li><a href="/notifications">Notificaciones</a></li>
             <% end %>
             <li role="separator" class="divider"></li>
+            <% if current_user.admin? %>
+            <li><a href="/admin/users">Administrar usuarios</a></li>
+            <li role="separator" class="divider"></li>
+            <% end %>
+            <% if current_user %>
+             <li><a href="/myposts/all_animals">Mis publicaciones</a></li>
+            <li role="separator" class="divider"></li>           
+            <% end %>
             <li><%= link_to "Editar perfil", edit_user_registration_path %></li>
             <li role="separator" class="divider"></li>
             <li><%= link_to "Cerrar sesión", destroy_user_session_path, :method => :delete, class: 'log-out-btn'%></li>
