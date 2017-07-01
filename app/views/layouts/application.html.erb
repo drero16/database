@@ -14,7 +14,7 @@
     <% if content_for?(:meta)%>
     <%= yield :meta %>
     <% else %>
-    <meta property="og:image:secure_url" content="<%=image_url("logo.jpg")%>" />
+    <meta property="og:image" content="<%=image_url("logo.jpg")%>" />
     <% end %>    
     
   <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBFkGU6pJyyWqKe_ViHOQU_AZaXxXCVZAU&libraries=places"></script>
@@ -33,6 +33,15 @@
   <%= javascript_include_tag 'serviceworker-companion' %>
   <link rel="manifest" href="/manifest.json" />
   <%= stylesheet_link_tag "application", params[:controller], :media => "all" %>
+  <script>
+            (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+  </script>
   <%= yield :js%>
   <%= yield :stylesheets%>
   <%= csrf_meta_tags %>

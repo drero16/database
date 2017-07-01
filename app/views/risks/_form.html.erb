@@ -70,7 +70,7 @@
   <div class="form-group">
     <%= f.label :description,"Descripción", class: "col-sm-2 control-label" %>
      <div class="col-sm-10">
-        <%= f.text_area :description, class: "form-control",rows: "5","required" => true %>
+        <%= f.text_area :description, class: "form-control",rows: "5","required" => true, placeholder:"Describa su situación..." %>
      </div>
   </div>
   <% if @risk.persisted?%>

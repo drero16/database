@@ -1,3 +1,16 @@
+
+
+
+<% content_for :meta do %>
+<% unless @event.images.empty? %>
+    <meta property="og:image" content="<%=@event.images.first.image.url(:original, timestamp: false)%>"/>
+<% else %>
+    
+    <meta property="og:image" content="<%=image_url("logo.jpg")%>" />
+<% end %>
+
+<% end %>
+
 <% content_for :stylesheets do %>
   <%= stylesheet_link_tag "centered-columns" %>
   <%= stylesheet_link_tag "ejemploPerdido" %>
@@ -51,6 +64,7 @@
       document.getElementById('btn').onclick = openPhotoSwipe;
       jQuery(".best_in_place").best_in_place();
     });
+    
   </script>
 
 <% end %>

@@ -1,3 +1,12 @@
+<% content_for :meta do %>
+<% unless @adoption.images.empty? %>
+    <meta property="og:image" content="<%=@adoption.images.first.image.url(:original, timestamp: false)%>"/>
+<% else %>
+    
+    <meta property="og:image" content="<%=image_url("logo.jpg")%>" />
+<% end %>
+
+<% end %>
 <% content_for :stylesheets do %>
   <%= stylesheet_link_tag "centered-columns" %>
   <%= stylesheet_link_tag "ejemploPerdido" %>
@@ -90,13 +99,7 @@ var width = $(window).width() * 0.9;
 
 
     });
-    (function(d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) return;
-    js = d.createElement(s); js.id = id;
-    js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1";
-    fjs.parentNode.insertBefore(js, fjs);
-  }(document, 'script', 'facebook-jssdk'));
+
   </script>
 
 <% end %>
