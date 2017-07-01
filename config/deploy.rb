@@ -33,7 +33,7 @@ set :default_env, {VAPID_PUBLIC_KEY:'BLkuGusxjLlZdYSi0pk1RoMdVQbK6AEsdNej2RwVG9i
 
 ## Linked Files & Directories (Default None):
 # set :linked_files, %w{config/database.yml}
- set :linked_dirs,  %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
+ set :linked_dirs,  %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system public/images public/profile}
   namespace :puma do
   desc 'Create Directories for Puma Pids and Socket'
   task :make_dirs do
