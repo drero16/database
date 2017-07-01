@@ -98,4 +98,7 @@ Rails.application.configure do
   SENDMAIL_PASSWORD=Rails.application.secrets.SENDMAIL_PASSWORD
   SENDMAIL_USERNAME=Rails.application.secrets.SENDMAIL_USERNAME
   MAIL_HOST=Rails.application.secrets.MAIL_HOST
+  config.to_prepare { Devise::SessionsController.force_ssl }
+  config.to_prepare { Devise::RegistrationsController.force_ssl }
+  config.to_prepare { Devise::PasswordsController.force_ssl }
 end

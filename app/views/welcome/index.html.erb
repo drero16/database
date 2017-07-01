@@ -39,25 +39,29 @@
 
 
         	<div class=" col-xs-6 col-md-3 col-circle">
-        	<h3 class="text-center">Mascotas perdidas</h3>
-         	<div class="circle-avatar" style="background-image:url(<%=image_url('perroperdido.jpg')%>)"></div>     <p class="text-center"> Si se extravio tu mascota, este es el lugar indicado para ingresar tu caso.</p>
+        	<h3 class="text-center">Perdidos</h3>
+          <a href=<%=pets_path%>>
+         	<div class="circle-avatar" style="background-image:url(<%=image_url('perroperdido.jpg')%>)"></div></a>     <p class="text-center"> Si se extravio tu mascota, este es el lugar indicado para ingresar tu caso.</p>
             </div>
 
           	<div class=" col-xs-6 col-md-3 col-circle">
-          	<h3 class="text-center">Animales encontrados </h3>
-         	<div class="circle-avatar" style="background-image:url(<%=image_url('perroencontrado.jpg')%>)"></div>
+          	<h3 class="text-center">Encontrados</h3>
+            <a href=<%=animals_path%>>
+         	<div class="circle-avatar" style="background-image:url(<%=image_url('perroencontrado.jpg')%>)"></div></a>
             <p class="text-center">Si encuentras un animal en la calle y presumes que tiene dueño, ingresalo en este modulo. </p>
             </div>
 
             <div class=" col-xs-6 col-md-3 col-circle">
-            <h3 class="text-center">Adopta una mascota</h3>
-         	<div class="circle-avatar" style="background-image:url(<%=image_url('gatoenadopcion.jpg')%>)"></div>
+            <h3 class="text-center">Adopciones</h3>
+            <a href=<%=adoptions_path%>>
+         	<div class="circle-avatar" style="background-image:url(<%=image_url('gatoenadopcion.jpg')%>)"></div></a>
             <p class="text-center">Este modulo permite buscar la mascota que desees adoptar. </p>
             </div>
 
           	<div class=" col-xs-6 col-md-3 col-circle">
-          	<h3 class="text-center">Animales en riesgo</h3>
-         	<div class="circle-avatar" style="background-image:url(<%=image_url('animalenriesgo.jpg')%>)"></div>
+          	<h3 class="text-center">En riesgo</h3>
+            <a href=<%=risks_path%>>
+         	<div class="circle-avatar" style="background-image:url(<%=image_url('animalenriesgo.jpg')%>)"></div></a>
             <p class="text-center">Si ves alguna situacion que atente contra la seguridad de un animal, ingresalo aqui.</p>
             </div>
             

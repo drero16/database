@@ -11,7 +11,12 @@
     <meta property="og:type"          content="website" />
     <meta property="og:title"         content="Rescate Animal Maipú" />
     <meta property="og:description"   content="Aplicación de ayuda animal" />
-    <meta property="og:image"         content="<%=image_url("logoram.png")%>" />
+    <% if content_for?(:meta)%>
+    <% else %>
+    <meta property="og:image"         content="<%=image_url("logo.jpg")%>" />
+    <meta property="og:image:secure_url" content="<%=image_url("logo.jpg")%>" />
+    <% end %>    
+    
   <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBFkGU6pJyyWqKe_ViHOQU_AZaXxXCVZAU&libraries=places"></script>
 
   <%= stylesheet_link_tag 'application', media: 'all'%>
