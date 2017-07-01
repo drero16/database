@@ -71,8 +71,8 @@ class CommentsController < ApplicationController
 
        
           post.comments.select(:user_id).distinct.each do |userid|
-            unless (@comment.user_id==userid)
-              unless (user_id==userid)
+            unless (@comment.user.id==userid)
+              unless (user.id==userid)
                 Spawnling.new do
                   title=@comment.user.name << " ha respondido una publicación donde comentaste."
               body=@comment.description
