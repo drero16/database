@@ -21,7 +21,7 @@ class User < ActiveRecord::Base
 :styles => { :original => ["1000x1000",:jpg],:thumb => ["100x100#",:jpg]},
     :path => ":rails_root/public/profile/:id/:style/:filename",
     :url  => "/profile/:id/:style/:filename",
-    default_url: "/profile/missing.png"
+    default_url: "/missing.png"
   validates_attachment_content_type :avatar, content_type: ['image/jpeg', 'image/png', 'image/gif']
     geocoded_by :address
   after_validation :geocode
