@@ -5,4 +5,5 @@ class Notification < ActiveRecord::Base
   belongs_to :comment
   belongs_to :pet
   belongs_to :risk
+  belongs_to :event
 end

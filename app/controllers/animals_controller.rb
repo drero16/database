@@ -79,6 +79,26 @@ class AnimalsController < ApplicationController
  #               url= animal_url(@animal)
  #               Notification.create(user: user, titulo: title, mensaje: body, url: url, seen: 0)
  #             end
+            Spawnling.new do
+             if @animal.location
+               coords=Geocoder.coordinates(@animal.location) 
+               @users = User.near(coords,0.3)
+               @users.each do |x|
+                unless x==@animal.user
+                title="Se ha encontrado un animal cerca tuyo!"
+                body= @animal.location
+                url= animal_url(@animal)
+               if @animal.images.first.image.url
+                  pic_url=@animal.images.first.image.url
+                else
+                  pic_url=image_path('logo.jpg')
+                end                
+                noti=Notification.create(user: x, titulo: title, mensaje: body, url: url, seen: 0, pic_url: pic_url, animal: @animal)
+                notify(x,title,body,notification_url(noti))
+              end
+               end
+             end  
+             end        
           else
             unless params[:images].present?
               @animal.errors.add(:images)

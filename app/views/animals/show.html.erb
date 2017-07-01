@@ -299,25 +299,23 @@ var width = $(window).width() * 0.9;
 </div>
 
 
-  <div class="container">
+  <div class="container-fluid">
     <div class="row row-centered" id="all_comments">
     <h3>Comentarios</h3>
       <% @i=1 %>
       <% @animal.comments.each_with_index do |comment,index|%>
-        <div class="col-md-8 col-xs-12 col-centered" id="comment_box" >
-          <div class="col-md-2 col-xs-3">
+        <div class="col-md-8 col-sm-12 col-xs-12 col-centered" id="comment_box" >
+          <div class="col-md-2 col-xs-2 col-sm-2">
             <div class="thumbnail">
               <%= image_tag comment.user.avatar, class: "img-responsive" %>
             </div>
           </div>
       
-          <div class="col-md-10 col-xs-9">
+          <div class="col-md-10 col-xs-10 col-sm-10">
             <div class="panel panel-default">
               <div class="panel-heading">
-                <strong><%=comment.user.name%></strong>
-                <br>
-                 <span class="text-muted">Hace <%=distance_of_time_in_words(Time.now,comment.created_at)%></span>
-                 <div class="pull-right">
+                <strong><%=comment.user.name%>
+                <div class="pull-right">
                  <% if can? :destroy, @animal%>
                     <a role="button" data-toggle="collapse" data-target="#comment<%=index%>"><i class="fa fa-id-card-o fa-lg fa-fw" aria-hidden="true"></i></a>
                     <%end%>
@@ -329,7 +327,10 @@ var width = $(window).width() * 0.9;
                         <%= link_to raw('<i class="fa fa-trash fa-lg fa-fw" aria-hidden="true"></i>'), [@animal,comment], method: :delete, data: { confirm: '¿Estás seguro?' }, :remote => true, :class => 'delete_comment' %>
 
                      <%end%>
-                    </div>
+                    </div></strong>
+                <br>
+                 <span class="text-muted">Hace <%=distance_of_time_in_words(Time.now,comment.created_at)%></span>
+
                     <% if can? :destroy, @animal%>
                     <div id="comment<%=index%>" class="collapse">
                       <dl class="dl-horizontal dl-data-comment">
@@ -357,13 +358,13 @@ var width = $(window).width() * 0.9;
         </div>
       <% end%>
 <% if user_signed_in? %>
-        <div class="col-md-8 col-xs-12 col-centered" id="new_comment_box" >
-          <div class="col-md-2 col-xs-3">
+        <div class="col-md-8 col-sm-12 col-xs-12 col-centered" id="new_comment_box" >
+          <div class="col-md-2 col-xs-2 col-sm-2">
             <div class="thumbnail">
               <%= image_tag current_user.avatar, class: "img-responsive" %>
             </div>
           </div>
-            <div class="col-md-10 col-xs-9">
+            <div class="col-md-10 col-xs-10 col-sm-10">
               <div class="panel panel-default">
                 <div class="panel-heading">
                   <strong><%=current_user.name%></strong>

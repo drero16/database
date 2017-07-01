@@ -71,6 +71,26 @@ class RisksController < ApplicationController
  #               url= risk_url(@risk)
  #               Notification.create(user: user, titulo: title, mensaje: body, url: url, seen: 0)
  #             end
+             Spawnling.new do
+             if @risk.location
+               coords=Geocoder.coordinates(@risk.location) 
+               @users = User.near(coords,0.3)
+               @users.each do |x|
+                unless x==@risk.user
+                title="Un animal cerca tuyo está en riesgo."
+                body= @risk.location
+                url= risk_url(@risk)
+               if @risk.images.first.image.url
+                  pic_url=@risk.images.first.image.url
+                else
+                  pic_url=image_path('logo.jpg')
+                end                
+                noti=Notification.create(user: x, titulo: title, mensaje: body, url: url, seen: 0, pic_url: pic_url, risk: @risk)
+                notify(x,title,body,notification_url(noti))
+              end
+               end
+             end  
+             end  
           else
             unless params[:images].present?
               @risk.errors.add(:images)

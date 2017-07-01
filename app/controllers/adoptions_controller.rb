@@ -66,6 +66,26 @@ class AdoptionsController < ApplicationController
  #               url= animal_url(@adoption)
  #               Notification.create(user: user, titulo: title, mensaje: body, url: url, seen: 0)
  #             end
+             Spawnling.new do
+             if @adoption.lost_in
+               coords=Geocoder.coordinates(@adoption.lost_in) 
+               @users = User.near(coords,0.3)
+               @users.each do |x|
+                unless x==@adoption.user
+                title="Una mascota cerca tuyo necesita adopción."
+                body= @adoption.lost_in
+                url= adoption_url(@adoption)
+               if @adoption.images.first.image.url
+                  pic_url=@adoption.images.first.image.url
+                else
+                  pic_url=image_path('logo.jpg')
+                end                
+                noti=Notification.create(user: x, titulo: title, mensaje: body, url: url, seen: 0, pic_url: pic_url, adoption: @adoption)
+                notify(x,title,body,notification_url(noti))
+              end
+               end
+             end  
+             end  
           else
             unless params[:images].present?
               @adoption.errors.add(:images)

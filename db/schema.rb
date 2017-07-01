@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170701003350) do
+ActiveRecord::Schema.define(version: 20170701083521) do
 
   create_table "adoptions", force: :cascade do |t|
     t.string   "animal_type"
@@ -142,11 +142,13 @@ ActiveRecord::Schema.define(version: 20170701003350) do
     t.integer  "pet_id"
     t.integer  "risk_id"
     t.integer  "adoption_id"
+    t.integer  "event_id"
   end
 
   add_index "notifications", ["adoption_id"], name: "index_notifications_on_adoption_id"
   add_index "notifications", ["animal_id"], name: "index_notifications_on_animal_id"
   add_index "notifications", ["comment_id"], name: "index_notifications_on_comment_id"
+  add_index "notifications", ["event_id"], name: "index_notifications_on_event_id"
   add_index "notifications", ["pet_id"], name: "index_notifications_on_pet_id"
   add_index "notifications", ["risk_id"], name: "index_notifications_on_risk_id"
   add_index "notifications", ["user_id"], name: "index_notifications_on_user_id"

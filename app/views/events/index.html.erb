@@ -4,6 +4,9 @@
         <div class="row">
           <div class="col-md-12">
             <h1 class="text-center">Eventos RAM</h1>
+            <% if can? :create, Event %>
+            <%= link_to "Crear evento", new_event_path, class: "btn btn-success pull-right"%>
+            <% end %>
           </div>
         </div>
         <% @events.each do |event| %>

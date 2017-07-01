@@ -310,14 +310,14 @@ var width = $(window).width() * 0.9;
     <h3>Comentarios</h3>
       <% @i=1 %>
       <% @adoption.comments.each_with_index do |comment,index|%>
-        <div class="col-md-8 col-xs-12 col-centered" id="comment_box" >
-          <div class="col-md-2 col-xs-3">
+        <div class="col-md-8 col-sm-12 col-xs-12 col-centered" id="comment_box" >
+          <div class="col-md-2 col-xs-2 col-sm-2">
             <div class="thumbnail">
               <%= image_tag comment.user.avatar, class: "img-responsive" %>
             </div>
           </div>
       
-          <div class="col-md-10 col-xs-9">
+          <div class="col-md-10 col-xs-10 col-sm-10">
             <div class="panel panel-default">
               <div class="panel-heading">
                 <strong><%=comment.user.name%></strong>
@@ -363,13 +363,13 @@ var width = $(window).width() * 0.9;
         </div>
       <% end%>
 <% if user_signed_in? %>
-        <div class="col-md-8 col-xs-12 col-centered" id="new_comment_box" >
-          <div class="col-md-2 col-xs-3">
+        <div class="col-md-8 col-sm-12 col-xs-12 col-centered" id="new_comment_box" >
+          <div class="col-md-2 col-xs-2 col-sm-2">
             <div class="thumbnail">
               <%= image_tag current_user.avatar, class: "img-responsive" %>
             </div>
           </div>
-            <div class="col-md-10 col-xs-9">
+            <div class="col-md-10 col-xs-10 col-sm-10">
               <div class="panel panel-default">
                 <div class="panel-heading">
                   <strong><%=current_user.name%></strong>

@@ -39,8 +39,29 @@ class EventsController < ApplicationController
             @event.images.create(image: image)
           }
           end
+                     Spawnling.new do
+              User.all.each do |x|
+                unless (@event.user==x)
+            
+                    
+                      title=@event.user.name << " ha creado un evento!."
+                  body=@event.title
+                  url= events_url(@event)
+                if @event.images.first.image.url
+                  pic_url=@event.images.first.image.url
+                else
+                  pic_url=image_path('logo.jpg')
+                end
+                noti=Notification.create(user: x, titulo: title, mensaje: body, url: url, seen: 0, pic_url: pic_url, event: @event)
+                notify(x,title,body,notification_url(noti))
+                    
+                  
+                end
+              end
+            end  
           format.html { redirect_to @event}
           format.json { render :show, status: :created, location: @event }
+        
         else
           unless params[:images].present?
             @event.errors.add(:images)
