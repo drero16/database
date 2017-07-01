@@ -72,6 +72,8 @@ group :development do
     gem 'capistrano-rails-console', require: false
     gem 'capistrano-rake', require: false
     gem 'capistrano-lets-encrypt'
+    gem 'capistrano-rails-collection'
+
 end
 
 gem 'puma'
