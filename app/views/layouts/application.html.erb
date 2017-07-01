@@ -14,7 +14,6 @@
     <% if content_for?(:meta)%>
     <%= yield :meta %>
     <% else %>
-    <meta property="og:image"         content="<%=image_url("logo.jpg")%>" />
     <meta property="og:image:secure_url" content="<%=image_url("logo.jpg")%>" />
     <% end %>    
     

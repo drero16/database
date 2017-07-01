@@ -1,9 +1,7 @@
 <% content_for :meta do %>
 <% unless @animal.images.empty? %>
-    <meta property="og:image"         content="<%=@animal.images.first.image.url(:original)%>"/>
-    <meta property="og:image:secure_url" content="<%=@animal.images.first.image.url(:original)%>"/>
+    <meta property="og:image:secure_url" content="<%=image_url(@animal.images.first.image)%>"/>
 <% else %>
-    <meta property="og:image"         content="<%=image_url("logo.jpg")%>" />
     <meta property="og:image:secure_url" content="<%=image_url("logo.jpg")%>" />
 <% end %>
 
