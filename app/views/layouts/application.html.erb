@@ -33,6 +33,13 @@
   <%= javascript_include_tag 'serviceworker-companion' %>
   <link rel="manifest" href="/manifest.json" />
   <%= stylesheet_link_tag "application", params[:controller], :media => "all" %>
+
+  <%= yield :js%>
+  <%= yield :stylesheets%>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+<div id="fb-root"></div>
   <script>
             (function(d, s, id) {
     var js, fjs = d.getElementsByTagName(s)[0];
@@ -42,11 +49,6 @@
     fjs.parentNode.insertBefore(js, fjs);
   }(document, 'script', 'facebook-jssdk'));
   </script>
-  <%= yield :js%>
-  <%= yield :stylesheets%>
-  <%= csrf_meta_tags %>
-</head>
-<body>
 <!--
 <% if user_signed_in? %>
   Signed in as <%= current_user.email %>. Not you?
