@@ -1,16 +1,3 @@
-<% content_for :meta do %>
-<% unless @animal.images.empty? %>
-    <meta property="og:image" content="https://rescateanimalmaipu.cl<%=@animal.images.first.image.url(:original, timestamp: false)%>"/>
-    <meta property="og:image:secure_url" content="https://rescateanimalmaipu.cl<%=@animal.images.first.image.url(:original, timestamp: false)%>"/>
-    <meta property="og:image:secure_url" content="https://rescateanimalmaipu.cl<%=@animal.images.first.image.url(:original, timestamp: false)%>"/>
-    <meta property="og:image:type" content="image/jpeg" />
-    <meta property="og:image:width" content="400" />
-    <meta property="og:image:height" content="300" />
-<% else %>
-    
-    <meta property="og:image" content="<%=image_url("logo.jpg")%>" />
-<% end %>
-<% end %>
 <% content_for :stylesheets do %>
   <%= stylesheet_link_tag "centered-columns" %>
   <%= stylesheet_link_tag "ejemploPerdido" %>
@@ -276,7 +263,7 @@ var width = $(window).width() * 0.9;
           
           <dt>Comparte!</dt>
           <dd>
-          <%= social_share_button_tag("Animal encontrado",:image => @animal.images.first.image.url, desc: @animal.location) %>
+          <%= social_share_button_tag("Animal encontrado", desc: @animal.description) %>
           </dd>
 
         </dl>
