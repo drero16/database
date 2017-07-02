@@ -179,3 +179,13 @@ body {
   padding-right: 7px;
 }
 }
+
+$size: 32px;
+
+.social-share-button {
+  .ssb-icon {
+    background-size: $size $size;
+    height: $size;
+    width: $size;
+  }
+}

@@ -1,12 +1,4 @@
-<% content_for :meta do %>
-<% unless @animal.images.empty? %>
-    <meta property="og:image" content="https://www.rescateanimalmaipu.cl<%=@animal.images.first.image.url(:original, timestamp: false)%>"/>
-<% else %>
-    
-    <meta property="og:image" content="<%=image_url("logo.jpg")%>" />
-<% end %>
 
-<% end %>
 <% content_for :stylesheets do %>
   <%= stylesheet_link_tag "centered-columns" %>
   <%= stylesheet_link_tag "ejemploPerdido" %>
@@ -272,24 +264,7 @@ var width = $(window).width() * 0.9;
           
           <dt>Comparte!</dt>
           <dd>
-          <%= social_share_button_tag(@animal.animal_type,:image => @animal.images.first.image.url) %>
-            <ul class="share-buttons">
-          <li>
-          <a href="https://www.facebook.com/sharer/sharer.php?u=#url;src=sdkpreparse" title="Compartir en Facebook" target="_blank">
-           <%=image_tag("social_flat_rounded_rects_svg/Facebook.svg", alt: "" )%>
-          </a>
-          </li>
-          <li>
-          <a href="https://twitter.com/intent/tweet?text=<%=request.original_url%>" target="_blank" title="Tweet"><%=image_tag("social_flat_rounded_rects_svg/Twitter.svg", alt: "" )%>
-          </a>
-          </li>
-          <li>
-          <a href="https://plus.google.com/share?url=#url" target="_blank" title="Compartir en Google+">
-          
-           <%=image_tag("social_flat_rounded_rects_svg/Google.svg", alt: "" )%>
-          </a>
-          </li>
-        </ul>
+          <%= social_share_button_tag("Animal encontrado",:image => @animal.images.first.image.url, desc: @animal.location) %>
           </dd>
 
         </dl>
