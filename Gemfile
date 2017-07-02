@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-
+gem 'social-share-button'
 gem 'paperclip-compression'
 gem 'summernote-rails', '0.7.1.0'
 gem 'simple_form'

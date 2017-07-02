@@ -212,6 +212,8 @@ GEM
     simple_form (3.5.0)
       actionpack (> 4, < 5.2)
       activemodel (> 4, < 5.2)
+    social-share-button (0.10.0)
+      coffee-rails
     spawnling (2.1.6)
     spring (2.0.1)
       activesupport (>= 4.2)
@@ -285,6 +287,7 @@ DEPENDENCIES
   sdoc (~> 0.4.0)
   serviceworker-rails
   simple_form
+  social-share-button
   spawnling (~> 2.1)
   spring
   sqlite3

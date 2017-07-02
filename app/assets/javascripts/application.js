@@ -18,3 +18,4 @@
 //= require jquery.backstretch
 //= require summernote
 //= require summernote/locales/es-ES
+//= require social-share-button
