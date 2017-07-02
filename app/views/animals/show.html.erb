@@ -1,6 +1,6 @@
 <% content_for :meta do %>
 <% unless @animal.images.empty? %>
-    <meta property="og:image:url" content="https://www.rescateanimalmaipu.cl<%=@animal.images.first.image.url(:original, timestamp: false)%>"/>
+    <meta property="og:image" content="https://www.rescateanimalmaipu.cl<%=@animal.images.first.image.url(:original, timestamp: false)%>"/>
 <% else %>
     
     <meta property="og:image" content="<%=image_url("logo.jpg")%>" />
@@ -245,7 +245,7 @@ var width = $(window).width() * 0.9;
       
       </div>
     </div>
-          
+
       <div class="panel-body col-md-8 ">
         <dl class="dl-horizontal">
         <% if @animal.solved == true %>
@@ -272,8 +272,7 @@ var width = $(window).width() * 0.9;
           
           <dt>Comparte!</dt>
           <dd>
-<%= social_share_button_tag(@animal.animal_type, :url => animal_path(@animal), :image => @animal.images.first.image.url(:original,timestamp: false), desc: "The summary of page", via: "MyTwitterName") %>
-
+          <%= social_share_button_tag(@animal.animal_type,:image => @animal.images.first.image.url) %>
             <ul class="share-buttons">
           <li>
           <a href="https://www.facebook.com/sharer/sharer.php?u=#url;src=sdkpreparse" title="Compartir en Facebook" target="_blank">
