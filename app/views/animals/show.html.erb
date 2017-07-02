@@ -1,4 +1,10 @@
-
+<% content_for :meta do %>
+<% unless @pet.images.empty? %>
+    <meta property="og:image:secure_url" content="https://rescateanimalmaipu.cl<%=@animal.images.first.image.url(:original, timestamp: false)%>"/>
+<% else %>
+    
+    <meta property="og:image" content="<%=image_url("logo.jpg")%>" />
+<% end %>
 <% content_for :stylesheets do %>
   <%= stylesheet_link_tag "centered-columns" %>
   <%= stylesheet_link_tag "ejemploPerdido" %>
