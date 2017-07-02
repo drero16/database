@@ -263,7 +263,7 @@ var width = $(window).width() * 0.9;
           
           <dt>Comparte!</dt>
           <dd>
-          <%= social_share_button_tag("Animal encontrado", desc: @animal.description) %>
+          <%= social_share_button_tag("Animal encontrado", desc: "#{@animal.location}\n#{@animal.description}") %>
           </dd>
 
         </dl>
