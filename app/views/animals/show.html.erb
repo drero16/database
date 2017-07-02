@@ -1,6 +1,6 @@
 <% content_for :meta do %>
 <% unless @animal.images.empty? %>
-    <meta property="og:image" content="https://www.rescateanimalmaipu.cl<%=@animal.images.first.image.url(:original, timestamp: false)%>"/>
+    <meta property="og:image:url" content="https://www.rescateanimalmaipu.cl<%=@animal.images.first.image.url(:original, timestamp: false)%>"/>
 <% else %>
     
     <meta property="og:image" content="<%=image_url("logo.jpg")%>" />
