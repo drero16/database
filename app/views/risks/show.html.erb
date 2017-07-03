@@ -1,12 +1,4 @@
-<% content_for :meta do %>
-<% unless @risk.images.empty? %>
-    <meta property="og:image" content="<%=@risk.images.first.image.url(:original, timestamp: false)%>"/>
-<% else %>
-    
-    <meta property="og:image" content="<%=image_url("logo.jpg")%>" />
-<% end %>
 
-<% end %>
 <% content_for :stylesheets do %>
   <%= stylesheet_link_tag "centered-columns" %>
   <%= stylesheet_link_tag "ejemploPerdido" %>
@@ -271,7 +263,7 @@ var width = $(window).width() * 0.9;
           
           <dt>Comparte!</dt>
           <dd>
-            <%= social_share_button_tag("Animal en riesgo",:image => @risk.images.first.image.url, desc: @risk.location) %>
+            <%= social_share_button_tag("Animal en riesgo", desc: @risk.location) %>
           </dd>
 
         </dl>

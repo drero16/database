@@ -1,12 +1,4 @@
-<% content_for :meta do %>
-<% unless @adoption.images.empty? %>
-    <meta property="og:image" content="<%=@adoption.images.first.image.url(:original, timestamp: false)%>"/>
-<% else %>
-    
-    <meta property="og:image" content="<%=image_url("logo.jpg")%>" />
-<% end %>
 
-<% end %>
 <% content_for :stylesheets do %>
   <%= stylesheet_link_tag "centered-columns" %>
   <%= stylesheet_link_tag "ejemploPerdido" %>
@@ -277,7 +269,7 @@ var width = $(window).width() * 0.9;
           
           <dt>Comparte!</dt>
           <dd>
-          <%= social_share_button_tag("Adoptame",:image => @adoption.images.first.image.url, desc: @adoption.lost_in) %>
+          <%= social_share_button_tag("Adoptame", desc: @adoption.lost_in) %>
           </dd>
 
         </dl>

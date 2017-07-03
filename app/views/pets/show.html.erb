@@ -1,12 +1,4 @@
-<% content_for :meta do %>
-<% unless @pet.images.empty? %>
-    <meta property="og:image" content="<%=@pet.images.first.image.url(:original, timestamp: false)%>"/>
-<% else %>
-    
-    <meta property="og:image" content="<%=image_url("logo.jpg")%>" />
-<% end %>
 
-<% end %>
 <% content_for :stylesheets do %>
   <%= stylesheet_link_tag "centered-columns" %>
   <%= stylesheet_link_tag "ejemploPerdido" %>
@@ -280,7 +272,7 @@ var width = $(window).width() * 0.9;
           
           <dt>Comparte!</dt>
           <dd>
-          <%= social_share_button_tag("Mascota perdida",:image => @pet.images.first.image.url, desc: @pet.lost_in) %>
+          <%= social_share_button_tag("Mascota perdida", desc: @pet.lost_in) %>
           </dd>
 
         </dl>
