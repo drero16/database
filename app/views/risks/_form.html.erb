@@ -1,4 +1,4 @@
-<% content_for :stylesheets do %>
+risk<% content_for :stylesheets do %>
   <%= stylesheet_link_tag "gmaps" %>
     <%= stylesheet_link_tag "centered-columns" %>
   <%= stylesheet_link_tag "ejemploPerdido" %>
@@ -11,11 +11,11 @@
   $(document).ready(function() { 
     $("#risk_animal_type").click(function(){
   var url = '/risks/get_drop_down_options?animal_type=' + $(this).val();  
-  $("#animal_race_id").removeOption(/./);
+  $("#risk_race_id").removeOption(/./);
   $.get(url, function(data) {
     ss=eval('('+data+')');
-    $('#animal_race_id').addOption(ss, true);
-    $("#animal_race_id").val($("#animal_race_id option:first").val());
+    $('#risk_race_id').addOption(ss, true);
+    $("#risk_race_id").val($("#risk_race_id option:first").val());
   });
 });
   })

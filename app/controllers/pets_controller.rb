@@ -1,6 +1,6 @@
 class PetsController < ApplicationController
   #before_action :set_pet, only: [:show, :edit, :update, :destroy]
-  before_filter :authenticate_user!, except: [:index]
+  before_filter :authenticate_user!, except: [:index, :show, :get_drop_down_options]
   load_and_authorize_resource
 
   # GET /pets
@@ -142,6 +142,18 @@ class PetsController < ApplicationController
       format.json { head :no_content }
       format.js
     end
+  end
+
+    def get_drop_down_options
+    val = params[:animal_type]
+    #Use val to find records
+    @races= Race.where(description: val)
+    options = @races.collect{|x| "'#{x.id}' : '#{x.name}'"}    
+    render :text => "{#{options.join(",")}}" 
+  # respond_to do |format|
+  #   format.json { render :json => options}
+  # end
+
   end
 
   private

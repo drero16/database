@@ -11,11 +11,11 @@
   $(document).ready(function() { 
     $("#adoption_animal_type").click(function(){
   var url = '/adoptions/get_drop_down_options?animal_type=' + $(this).val();  
-  $("#animal_race_id").removeOption(/./);
+  $("#adoption_race_id").removeOption(/./);
   $.get(url, function(data) {
     ss=eval('('+data+')');
-    $('#animal_race_id').addOption(ss, true);
-    $("#animal_race_id").val($("#animal_race_id option:first").val());
+    $('#adoption_race_id').addOption(ss, true);
+    $("#adoption_race_id").val($("#adoption_race_id option:first").val());
   });
 });
   })

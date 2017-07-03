@@ -143,6 +143,18 @@ class AdoptionsController < ApplicationController
     end
   end
 
+    def get_drop_down_options
+    val = params[:animal_type]
+    #Use val to find records
+    @races= Race.where(description: val)
+    options = @races.collect{|x| "'#{x.id}' : '#{x.name}'"}    
+    render :text => "{#{options.join(",")}}" 
+  # respond_to do |format|
+  #   format.json { render :json => options}
+  # end
+
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_adoption
