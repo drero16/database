@@ -27,16 +27,38 @@
     <div class="panel panel-default col-xs-12 col-md-8 col-centered">
       <div class="col-md-4">
             <%= image_tag @user.avatar.url(:original), :class=>"img-responsive", id:"print1"%>
-      <% if (can? :destroy, @user) %>
-<div class="btn-group">
- <%= link_to @user, method: :delete, class:"btn btn-danger", data: { confirm: '¿Estás seguro?' } do%>
+
+  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <i class="fa fa-cog fa-lg"></i> Opciones<span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu">
+        <% if (can? :destroy, @user) %>
+          <li>
+<%= link_to @user, method: :delete, data: { confirm: '¿Estás seguro?' } do%>
       <i class="fa fa-trash-o fa-lg"></i> Eliminar Usuario
-      <% end %>
- <%= link_to @user, class:"btn btn-info" do%>
+      <% end %>           
+          </li>
+          <% end %>
+          <li>
+            <%= link_to all_animals_user_path do%>
       <i class="fa fa-eye fa-lg"></i> Ver temas creados
-      <% end %>      
-</div>
-<% end %>
+      <% end %>
+          </li>
+          <li>
+                   <% if @user.role_id == 1 %>
+            <%= link_to user_path(@user, user: {role_id: 2}), method: :put do %>
+              <i class="fa fa-level-down"></i> Establecer como Miembro
+            <% end %>
+        <% elsif %>
+          <%= link_to user_path(@user, user: {role_id: 1}), method: :put do %>
+              <i class="fa fa-level-up"></i> Establecer como Administrador
+              <% end %>
+        <% end %>
+          </li>
+  </ul>
+
+
+
     </div>
 
       <div class="panel-body col-md-8 ">
