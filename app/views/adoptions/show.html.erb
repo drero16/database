@@ -67,13 +67,13 @@ var width = $(window).width() * 0.9;
 <% else %>
             '<%= image_tag ('logo.jpg'), align:"middle" %>'+
 <% end %>
-'<h2 align="center"><%=@adoption.lost_in%> </h2>'+
-'<h3 align="left">Sexo:<%=@adoption.sex%></h3>'+
-'<h3 align="left">Raza:<%=@adoption.race.name%></h3>'+
-'<h3 align="left"><%=@adoption.description%></h4>'+
+'<h2 align="center"><%=escape_javascript(@adoption.lost_in)%> </h2>'+
+'<h3 align="left">Sexo:<%=escape_javascript(@adoption.sex)%></h3>'+
+'<h3 align="left">Raza:<%=escape_javascript(@adoption.race.name)%></h3>'+
+'<h3 align="left"><%=escape_javascript(@adoption.description)%></h4>'+
 '<h2 align= "left">Contacto</h3>'+
-'<h3 align="left">Email:<%=@adoption.user.email%></h3>'+
-'<h3 align="left">N° Telefónico:<%=@adoption.user.phone%></h3>'+
+'<h3 align="left">Email:<%=escape_javascript(@adoption.user.email)%></h3>'+
+'<h3 align="left">N° Telefónico:<%=escape_javascript(@adoption.user.phone)%></h3>'+
 '<h4 align="center"> Visítanos en rescateanimalmaipu.cl </h4>'+
 '</body>' +
 '</html>';
