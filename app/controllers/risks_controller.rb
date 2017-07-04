@@ -16,7 +16,7 @@ class RisksController < ApplicationController
       coords=Geocoder.coordinates(params[:location]) 
       @risks = @risks.near(coords,0.3)
     end
-
+    @risks=@risks.paginate(:page => params[:page], :per_page => 10).order('created_at DESC') unless params[:sort].present?
     @risks=@risks.paginate(:page => params[:page], :per_page => 10).order('created_at DESC') if params[:sort]=="Recientes"
     @risks=@risks.paginate(:page => params[:page], :per_page => 10).order('created_at ASC') if params[:sort]=="Antiguos"
     @risks=@risks.paginate(:page => params[:page], :per_page => 10) if params[:sort]=="Cercanía"

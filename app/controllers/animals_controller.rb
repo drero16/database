@@ -18,7 +18,7 @@ class AnimalsController < ApplicationController
       coords=Geocoder.coordinates(params[:location]) 
       @animals = @animals.near(coords,0.3)
     end
-
+    @animals=@animals.paginate(:page => params[:page], :per_page => 10).order('created_at DESC') unless params[:sort].present?
     @animals=@animals.paginate(:page => params[:page], :per_page => 10).order('created_at DESC') if params[:sort]=="Recientes"
     @animals=@animals.paginate(:page => params[:page], :per_page => 10).order('created_at ASC') if params[:sort]=="Antiguos"
     @animals=@animals.paginate(:page => params[:page], :per_page => 10) if params[:sort]=="Cercanía"

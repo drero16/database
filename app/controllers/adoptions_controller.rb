@@ -15,7 +15,7 @@ class AdoptionsController < ApplicationController
       coords=Geocoder.coordinates(params[:lost_in]) 
       @adoptions = @adoptions.near(coords,0.3)
     end
-
+    @adoptions=@adoptions.paginate(:page => params[:page], :per_page => 10).order('created_at DESC') unless params[:sort].present?
     @adoptions=@adoptions.paginate(:page => params[:page], :per_page => 10).order('created_at DESC') if params[:sort]=="Recientes"
     @adoptions=@adoptions.paginate(:page => params[:page], :per_page => 10).order('created_at ASC') if params[:sort]=="Antiguos"
     @adoptions=@adoptions.paginate(:page => params[:page], :per_page => 10) if params[:sort]=="Cercanía"
