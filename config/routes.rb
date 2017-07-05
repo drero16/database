@@ -57,7 +57,7 @@ post '/unsubscribe'=>"devices#unsubscribe"
   end
   end
 
-  resources :races
+  #resources :races
 
   #resources :roles
 

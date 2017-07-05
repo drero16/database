@@ -42,7 +42,7 @@ class EventsController < ApplicationController
                      Spawnling.new do
                       title=@event.user.name << " ha creado un evento!."
                   body=@event.title
-                  url= events_url(@event)
+                  url= event_url(@event)
                 if @event.images.first.image.url
                   pic_url=@event.images.first.image.url
                 else
