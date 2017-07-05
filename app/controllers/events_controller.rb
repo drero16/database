@@ -40,10 +40,6 @@ class EventsController < ApplicationController
           }
           end
                      Spawnling.new do
-              User.all.each do |x|
-                unless (@event.user==x)
-            
-                    
                       title=@event.user.name << " ha creado un evento!."
                   body=@event.title
                   url= events_url(@event)
@@ -51,7 +47,10 @@ class EventsController < ApplicationController
                   pic_url=@event.images.first.image.url
                 else
                   pic_url=image_path('logo.jpg')
-                end
+                end                      
+              User.all.each do |x|
+
+                unless (@event.user==x)
                 noti=Notification.create(user: x, titulo: title, mensaje: body, url: url, seen: 0, pic_url: pic_url, event: @event)
                 notify(x,title,body,notification_url(noti))
                     

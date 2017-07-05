@@ -70,13 +70,12 @@ class CommentsController < ApplicationController
         end
 
        Spawnling.new do
+                  title=@comment.user.name << " ha respondido una publicación donde comentaste."
+              body=@comment.description
+            pic_url=@comment.user.avatar.url        
           post.comments.select(:user_id).distinct.each do |x|
             unless (@comment.user==x.user)
               unless (user==x.user)
-                
-                  title=@comment.user.name << " ha respondido una publicación donde comentaste."
-              body=@comment.description
-            pic_url=@comment.user.avatar.url
             noti=Notification.create(user: x.user, titulo: title, mensaje: body, url: url, seen: 0, pic_url: pic_url, comment: @comment)
             notify(x.user,title,body,notification_url(noti))
                 

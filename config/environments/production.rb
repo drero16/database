@@ -101,4 +101,6 @@ Rails.application.configure do
   config.to_prepare { Devise::SessionsController.force_ssl }
   config.to_prepare { Devise::RegistrationsController.force_ssl }
   config.to_prepare { Devise::PasswordsController.force_ssl }
+  set :console_env, :production
+  set :console_user, :rescateram
 end

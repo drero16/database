@@ -75,8 +75,6 @@ class RisksController < ApplicationController
              if @risk.location
                coords=Geocoder.coordinates(@risk.location) 
                @users = User.near(coords,0.3)
-               @users.each do |x|
-                unless x==@risk.user
                 title="Un animal cerca tuyo está en riesgo."
                 body= @risk.location
                 url= risk_url(@risk)
@@ -85,6 +83,9 @@ class RisksController < ApplicationController
                 else
                   pic_url=image_path('logo.jpg')
                 end                
+               @users.each do |x|
+                unless x==@risk.user
+               
                 noti=Notification.create(user: x, titulo: title, mensaje: body, url: url, seen: 0, pic_url: pic_url, risk: @risk)
                 notify(x,title,body,notification_url(noti))
               end

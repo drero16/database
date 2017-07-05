@@ -31,28 +31,6 @@
 </div>
 </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <% content_for :stylesheets do %>
   <%= stylesheet_link_tag "info" %>
 <% end %>
@@ -63,7 +41,7 @@
   $('[data-provider="summernote"]').each(function() {
     return $(this).summernote({
       lang: 'es-ES',
-      height: 100,
+      height: 500,
       callbacks: {
         onImageUpload: function(files) {
           return sendFile(files[0], $(this));

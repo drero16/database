@@ -70,8 +70,6 @@ class AdoptionsController < ApplicationController
              if @adoption.lost_in
                coords=Geocoder.coordinates(@adoption.lost_in) 
                @users = User.near(coords,0.3)
-               @users.each do |x|
-                unless x==@adoption.user
                 title="Una mascota cerca tuyo necesita adopción."
                 body= @adoption.lost_in
                 url= adoption_url(@adoption)
@@ -79,7 +77,10 @@ class AdoptionsController < ApplicationController
                   pic_url=@adoption.images.first.image.url
                 else
                   pic_url=image_path('logo.jpg')
-                end                
+                end               
+               @users.each do |x|
+                unless x==@adoption.user
+                
                 noti=Notification.create(user: x, titulo: title, mensaje: body, url: url, seen: 0, pic_url: pic_url, adoption: @adoption)
                 notify(x,title,body,notification_url(noti))
               end
