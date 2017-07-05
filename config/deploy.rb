@@ -35,7 +35,7 @@ set :console_user, :rescateram
 
 ## Linked Files & Directories (Default None):
  # set :linked_files, %w{public/profile/missing.png}
- set :linked_dirs,  %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system public/images public/profile}
+ set :linked_dirs,  %w{log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system public/images public/profile}
 
   namespace :puma do
   desc 'Create Directories for Puma Pids and Socket'
