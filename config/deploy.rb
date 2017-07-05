@@ -24,6 +24,8 @@ set :puma_worker_timeout, nil
 set :puma_init_active_record, true  # Change to false when not using ActiveRecord
 set :default_env, {VAPID_PUBLIC_KEY:'BLkuGusxjLlZdYSi0pk1RoMdVQbK6AEsdNej2RwVG9iRgdti0VTju1qZXic-wW72EfbzwrpLsqmdgPjrxEV58mw=',
   VAPID_PRIVATE_KEY:'l1dfTrdJPbZvJCh9Awg5dyhAnxiGuASp9jfsU1vI928='}
+set :console_env, :production
+set :console_user, :rescateram  
 ## Defaults:
 # set :scm,           :git
 # set :branch,        :master
