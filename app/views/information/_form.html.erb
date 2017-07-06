@@ -7,7 +7,7 @@
   <% if @information.persisted? %>
     <%= f.button :submit, "Actualizar información" %>
     <% elsif %>
-    <%= f.button :submit, "Crear información", class: "btn btn-success", style:"margin-bottom:15px;" %>
+    <%= f.button :submit, "Crear información", class: "btn btn-success", style:"margin-bottom:15px;",data: { disable_with: "Por favor espere..." } %>
       <% end %>
   </div>
 <% end %>

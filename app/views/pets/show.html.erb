@@ -63,9 +63,9 @@ var width = $(window).width() * 0.9;
                   '<body onload="window.focus(); window.print(); window.close();">' + 
     '<b><h1 align="center">Animal Encontrado</h1></b>'+
 <% unless @pet.images.empty? %>
-            '<%= image_tag @pet.images.first.image.url(:original), style:"width: 100%;"%>'+
+            '<center><%= image_tag @pet.images.first.image.url(:original), style:"width: 400px;"%></center>'+
 <% else %>
-            '<%= image_tag ('logo.jpg'), align:"middle" %>'+
+            '<center><%= image_tag ('logo.jpg'), align:"middle" %></center>'+
 <% end %>
 '<h2 align="center"><%=escape_javascript(@pet.lost_in)%> </h2>'+
 '<h3 align="left">Sexo:<%=escape_javascript(@pet.sex)%></h3>'+
